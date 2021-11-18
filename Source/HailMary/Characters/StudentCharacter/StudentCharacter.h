@@ -31,11 +31,37 @@ public:
 
 protected:
 
+	UPROPERTY(EditDefaultsOnly, Category="Movement")
+	float SprintSpeed;
+	
+	UPROPERTY(EditDefaultsOnly, Category="Movement")
+	float WalkSpeed;
+
+	UPROPERTY(VisibleAnywhere, Category="Movement")
+	float CrouchSpeed = 100;
+
+	UPROPERTY(EditDefaultsOnly, Category="Movement")
+	bool IsPlayerSprint;
+	
 	/** Called for forwards/backward input */
 	void MoveForward(float Value);
 
 	/** Called for side to side input */
 	void MoveRight(float Value);
+	
+	/** Player sprint system */
+	UFUNCTION()
+	void Sprint();
+
+	UFUNCTION()
+	void Walk();
+
+	/** Player crouch system */
+	UFUNCTION()
+	void CrouchPlayer();
+
+	UFUNCTION()
+	void UnCrouchPlayer();
 
 	/** 
 	 * Called via input to turn at a given rate. 

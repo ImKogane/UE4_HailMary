@@ -13,6 +13,8 @@ class AHailMaryGameMode : public AGameModeBase
 
 public:
 	AHailMaryGameMode();
+
+	void BeginPlay() override;
 };
 
 
