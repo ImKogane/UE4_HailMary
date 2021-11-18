@@ -10,12 +10,19 @@ UCLASS()
 class HAILMARY_API AAICharacter : public ACharacter
 {
 	GENERATED_BODY()
-
+	
+	UFUNCTION()
+	void OnSeePlayer(APawn* Pawn);
+	
 public:
 
 	/*The Behavior Tree of the Character */
 	UPROPERTY(EditAnywhere, Category =AI)
 	class UBehaviorTree* BehaviorTree;
+
+	/*The Component which is used for the "seeing" sense of the AI*/
+	UPROPERTY(VisibleAnywhere,Category="AI")
+	class UPawnSensingComponent* PawnSensingComp;
 	
 	// Sets default values for this character's properties
 	AAICharacter();

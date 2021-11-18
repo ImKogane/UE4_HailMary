@@ -25,20 +25,22 @@ class HAILMARY_API AMyAIController : public AAIController
 	/*----------Blackboard----------*/
 	/*Blackboard comp ref*/
 	UBlackboardComponent* BlackboardComp;
-
-	/*Blackboard keys*/
-	UPROPERTY(EditDefaultsOnly, Category = "AI")
-	FName LocationToGoKey;
-	
 	/*----------Blackboard----------*/
+	
+	/*Blackboard key*/
+	UPROPERTY(EditDefaultsOnly, Category = AI)
+	FName LocationToGoKey;
 
+	UPROPERTY(EditDefaultsOnly, Category = AI)
+	FName BlackboardKey ;
+	
 	TArray<AActor*> BotTargetPoints;
 
 	/*Executes right when the controller possess a Pawn*/
 	virtual void OnPossess(APawn* InPawn) override;
 
 	public:
- 
+	
 	/*----------Constructeur----------*/
 	AMyAIController();
 
@@ -47,4 +49,8 @@ class HAILMARY_API AMyAIController : public AAIController
 	FORCEINLINE UBlackboardComponent* GetBlackboardComp() const { return BlackboardComp; }
  
 	FORCEINLINE TArray<AActor*> GetAvailableTargetPoints() { return BotTargetPoints; }
+	
+	/*Sets the sensed target in the blackboard*/
+	void SetSeenTarget(APawn* InPawn);
+
 };

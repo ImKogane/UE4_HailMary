@@ -13,7 +13,7 @@ AMyAIController::AMyAIController()
 	BlackboardComp = CreateDefaultSubobject<UBlackboardComponent>(TEXT("BlackboardComp"));
  
 	LocationToGoKey = "LocationToGo";
- 
+	BlackboardKey = "Target";
 }
 
 void AMyAIController::OnPossess(APawn* InPawn)
@@ -36,3 +36,12 @@ void AMyAIController::OnPossess(APawn* InPawn)
 			BehaviorComp->StartTree(*AIChar->BehaviorTree);
 		}
 	}
+
+void AMyAIController::SetSeenTarget(APawn* InPawn)
+{
+	//Registers the Pawn that the AI has seen in the blackboard
+	if (BlackboardComp)
+	{
+		BlackboardComp->SetValueAsObject(BlackboardKey, InPawn);
+	}
+}
