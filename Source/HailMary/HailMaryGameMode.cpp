@@ -2,6 +2,7 @@
 
 #include "HailMaryGameMode.h"
 #include "HailMary/Characters/StudentCharacter/StudentCharacter.h"
+#include "Kismet/GameplayStatics.h"
 #include "UObject/ConstructorHelpers.h"
 
 AHailMaryGameMode::AHailMaryGameMode()
@@ -13,3 +14,10 @@ AHailMaryGameMode::AHailMaryGameMode()
 		DefaultPawnClass = PlayerPawnBPClass.Class;
 	}
 }
+
+void AHailMaryGameMode::BeginPlay()
+{
+	//Create splitscren second player
+	UGameplayStatics::CreatePlayer(GetWorld(), 1, true);
+}
+
