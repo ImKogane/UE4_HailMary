@@ -37,6 +37,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category="Movement")
 	float WalkSpeed;
 
+	UPROPERTY(VisibleAnywhere, Category="Movement")
+	float CrouchSpeed = 100;
+
 	UPROPERTY(EditDefaultsOnly, Category="Movement")
 	bool IsPlayerSprint;
 	
@@ -52,6 +55,13 @@ protected:
 
 	UFUNCTION()
 	void Walk();
+
+	/** Player crouch system */
+	UFUNCTION()
+	void CrouchPlayer();
+
+	UFUNCTION()
+	void UnCrouchPlayer();
 
 	/** 
 	 * Called via input to turn at a given rate. 
