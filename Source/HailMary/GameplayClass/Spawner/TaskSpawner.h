@@ -20,10 +20,13 @@ protected:
 	virtual void BeginPlay() override;
 
 	UPROPERTY(EditInstanceOnly, Category="Task details")
-	int TaskArea;
+	int SpawnerArea;
+	
 
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	FORCEINLINE int GetSpawnerArea() { return SpawnerArea; }
 
 };
