@@ -4,6 +4,7 @@
 #include "MyAIController.h"
 #include "Kismet/GameplayStatics.h"
 
+
 AMyAIController::AMyAIController()
 {
 	//Initialize BehaviorTreeComponent, BlackboardComponent and the corresponding key
@@ -40,6 +41,7 @@ void AMyAIController::OnPossess(APawn* InPawn)
 void AMyAIController::SetSeenTarget(APawn* InPawn)
 {
 	//Registers the Pawn that the AI has seen in the blackboard
+	AAICharacter* AIChar = Cast<AAICharacter>(InPawn);
 	if (BlackboardComp)
 	{
 		BlackboardComp->SetValueAsObject(BlackboardKey, InPawn);

@@ -3,6 +3,7 @@
 
 #include "AICharacter.h"
 #include "MyAIController.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "Perception/PawnSensingComponent.h"
 
 // Sets default values
@@ -48,6 +49,7 @@ void AAICharacter::OnSeePlayer(APawn* InPawn)
 	if (AIController)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Je te vois"));
+		GetCharacterMovement()->MaxWalkSpeed = 400;
 		AIController->SetSeenTarget(InPawn);
 	}
 }
