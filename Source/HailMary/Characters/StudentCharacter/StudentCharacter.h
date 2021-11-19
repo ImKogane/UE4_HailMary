@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "HailMary/GameplayClass/InteractionBase/InteractibleItem.h"
 #include "StudentCharacter.generated.h"
 
 UCLASS(config=Game)
@@ -42,6 +43,10 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, Category="Movement")
 	bool IsPlayerSprint;
+
+	UPROPERTY(EditAnywhere, Category="Player")
+	AInteractibleItem* ItemInInventory;
+
 	
 	/** Called for forwards/backward input */
 	void MoveForward(float Value);

@@ -25,3 +25,8 @@ void AInteractibleElement::Tick(float DeltaTime)
 
 }
 
+void AInteractibleElement::Interaction()
+{
+	
+}
+

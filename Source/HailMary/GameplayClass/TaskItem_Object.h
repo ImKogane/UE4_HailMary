@@ -13,5 +13,20 @@ UCLASS()
 class HAILMARY_API ATaskItem_Object : public AInteractibleItem
 {
 	GENERATED_BODY()
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Component", meta = (AllowPrivateAccess = "true"))
+	USceneComponent* BaseComponent;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Component", meta = (AllowPrivateAccess = "true"))
+	UStaticMeshComponent* ItemMesh;
+
+	protected:
+
+	UPROPERTY(EditDefaultsOnly, Category="Item details")
+	FString ItemName;
+
+	public:
+	ATaskItem_Object();
+
 	
 };

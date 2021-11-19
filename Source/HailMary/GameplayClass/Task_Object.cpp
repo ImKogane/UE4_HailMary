@@ -26,6 +26,9 @@ void ATask_Object::GenerateTask()
 		OtherNeedItem = AvailableItems[RandIndex];
 	
 	}
+
+	//Define task duration
+	TaskDuration = FMath::RandRange(TaskMinDuration, TaskMaxDuration);
 	
 	
 }

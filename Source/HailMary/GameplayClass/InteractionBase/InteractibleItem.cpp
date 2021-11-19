@@ -25,3 +25,13 @@ void AInteractibleItem::Tick(float DeltaTime)
 
 }
 
+void AInteractibleItem::Take()
+{
+	
+}
+
+void AInteractibleItem::Use()
+{
+	
+}
+

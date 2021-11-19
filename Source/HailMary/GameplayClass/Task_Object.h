@@ -20,14 +20,21 @@ class HAILMARY_API ATask_Object : public AInteractibleElement
 
 	virtual void BeginPlay() override;
 	
-	UPROPERTY(EditDefaultsOnly, Category="Task details")
+	UPROPERTY(EditDefaultsOnly, Category="Task settings")
 	TArray<FString> TaskList;
+	
+	UPROPERTY(EditDefaultsOnly, Category="Task settings")
+	int TaskMinDuration;
+
+	UPROPERTY(EditDefaultsOnly, Category="Task settings")
+	int TaskMaxDuration;
+	
 
 	UPROPERTY(VisibleInstanceOnly, Category="Task details")
 	FString Task;
 
-	UPROPERTY(EditDefaultsOnly, Category="Task details")
-	float TaskDuration;
+	UPROPERTY(VisibleAnywhere, Category="Task details")
+	int TaskDuration;
 
 	UPROPERTY(VisibleAnywhere, Category="Task details")
 	int TaskProgress;
