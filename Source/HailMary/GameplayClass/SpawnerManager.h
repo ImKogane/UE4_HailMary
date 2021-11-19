@@ -24,7 +24,10 @@ protected:
 	TArray<ATaskSpawner*> TaskSpawners;
 
 	UPROPERTY(EditDefaultsOnly)
-	int MaxTaskCount;
+	int AreaCount;
+
+	UPROPERTY(EditDefaultsOnly)
+	int TaskCountArea;
 
 	UFUNCTION()
 	void SpawnTasks();
