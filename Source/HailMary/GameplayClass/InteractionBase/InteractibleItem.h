@@ -4,40 +4,23 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "HailMary/GameplayClass/Task_Object.h"
-#include "TaskSpawner.generated.h"
+#include "InteractibleItem.generated.h"
 
 UCLASS()
-class HAILMARY_API ATaskSpawner : public AActor
+class HAILMARY_API AInteractibleItem : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	ATaskSpawner();
+	AInteractibleItem();
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	UPROPERTY(EditInstanceOnly, Category="Task details")
-	int SpawnerArea;
-
-	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<ATask_Object> TaskObject;
-	
-	
-
-	
-	
-
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
-	FORCEINLINE int GetSpawnerArea() { return SpawnerArea; }
-
-	UFUNCTION()
-	void SpawnTaskOnPoint();
 
 };

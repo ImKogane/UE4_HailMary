@@ -53,7 +53,7 @@ void ASpawnerManager::SpawnTasks()
 		{
 			RandIndex = FMath::RandRange(0, FindSpawnerList.Num()-1);
 
-			FindSpawnerList[RandIndex]->GenerateTask();
+			FindSpawnerList[RandIndex]->SpawnTaskOnPoint();
 			FindSpawnerList.Empty();
 		}
 		
