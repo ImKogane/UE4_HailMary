@@ -3,6 +3,8 @@
 
 #include "TaskSpawner.h"
 
+#include "Kismet/GameplayStatics.h"
+
 // Sets default values
 ATaskSpawner::ATaskSpawner()
 {
@@ -18,6 +20,8 @@ void ATaskSpawner::BeginPlay()
 	
 }
 
+
+
 // Called every frame
 void ATaskSpawner::Tick(float DeltaTime)
 {
@@ -25,3 +29,13 @@ void ATaskSpawner::Tick(float DeltaTime)
 
 }
 
+void ATaskSpawner::SpawnTaskOnPoint()
+{
+	FActorSpawnParameters Params;
+	Params.Owner = this;
+
+	FVector Loc = GetActorLocation();
+	FRotator Rot = GetActorRotation();
+	
+	ATask_Object* Task = GetWorld()->SpawnActor<ATask_Object>(TaskObject, Loc, Rot, Params);
+}

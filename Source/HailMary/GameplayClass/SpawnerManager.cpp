@@ -34,7 +34,30 @@ void ASpawnerManager::Tick(float DeltaTime)
  */
 void ASpawnerManager::SpawnTasks()
 {
-	//CHoose 4 random task (1 for each area)
+	int RandIndex = 0;
+	TArray<ATaskSpawner*> FindSpawnerList;
+	
+	for (int i = 1; i <= AreaCount; ++i)
+	{
+		
+		for (int j = 0; j <= TaskSpawners.Num()-1; ++j)
+		{
+			if(TaskSpawners[j]->GetSpawnerArea() == i)
+			{
+				FindSpawnerList.Add(TaskSpawners[j]);
+			}
+			
+		}
+
+		if(FindSpawnerList.Num() > 0)
+		{
+			RandIndex = FMath::RandRange(0, FindSpawnerList.Num()-1);
+
+			FindSpawnerList[RandIndex]->SpawnTaskOnPoint();
+			FindSpawnerList.Empty();
+		}
+		
+	}
 	
 }
 
