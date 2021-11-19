@@ -3,7 +3,9 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Components/SphereComponent.h"
 #include "GameFramework/Character.h"
+#include "HailMary/GameplayClass/InteractionBase/InteractibleElement.h"
 #include "HailMary/GameplayClass/InteractionBase/InteractibleItem.h"
 #include "StudentCharacter.generated.h"
 
@@ -19,6 +21,10 @@ class AStudentCharacter : public ACharacter
 	/** Follow camera */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class UCameraComponent* FollowCamera;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Component", meta = (AllowPrivateAccess = "true"))
+    USphereComponent* SphereCollision;
+    
 public:
 	AStudentCharacter();
 
@@ -68,6 +74,13 @@ protected:
 	UFUNCTION()
 	void UnCrouchPlayer();
 
+	UFUNCTION()
+	void Interact();
+
+	UFUNCTION()
+	void DoAction();
+
+
 	/** 
 	 * Called via input to turn at a given rate. 
 	 * @param Rate	This is a normalized rate, i.e. 1.0 means 100% of desired turn rate
@@ -85,10 +98,24 @@ protected:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	// End of APawn interface
 
+private :
+
+	UPROPERTY()
+	AInteractibleItem* NearItem;
+
+	UPROPERTY()
+	AInteractibleElement* NearElement;
+
+
 public:
 	/** Returns CameraBoom subobject **/
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
+	
+	FORCEINLINE void SetNearItem(AInteractibleItem* Item) { NearItem = Item; }
+	FORCEINLINE void SetNearElement(AInteractibleElement* Element) { NearElement = Element; }
+
+	
 };
 
