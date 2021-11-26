@@ -44,7 +44,7 @@ class HAILMARY_API AMyAIController : public AAIController
 	/*----------Constructeur----------*/
 	AMyAIController();
 
-	//AAICharacter* AIChar;
+	AAICharacter* AIChar;
  
 	FORCEINLINE UBlackboardComponent* GetBlackboardComp() const { return BlackboardComp; }
  
@@ -52,5 +52,6 @@ class HAILMARY_API AMyAIController : public AAIController
 	
 	/*Sets the sensed target in the blackboard*/
 	void SetSeenTarget(APawn* InPawn);
+	void SetNotSeenTarget();
 
 };
