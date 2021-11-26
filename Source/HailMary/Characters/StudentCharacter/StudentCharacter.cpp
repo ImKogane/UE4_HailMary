@@ -154,7 +154,20 @@ void AStudentCharacter::Interact()
 {
 	if(NearItem != nullptr)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Cyan, TEXT("Item interaction"));
+		if(ItemInInventory == nullptr)
+		{
+			//First item take
+			GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Cyan, TEXT("Item interaction"));
+			TakeItem();
+			
+		}
+		else
+		{
+			SwitchItem();
+			
+			
+		}
+		
 	}
 
 	if(NearElement != nullptr)
@@ -168,4 +181,22 @@ void AStudentCharacter::DoAction()
 	
 }
 
+void AStudentCharacter::SwitchItem()
+{
+	FVector tempLocation = NearItem->GetActorLocation();
+	AInteractibleItem* tempItem = ItemInInventory;
+
+	TakeItem();
+
+	tempItem->Drop(tempLocation);
+	NearItem = tempItem;
+	NearItem->SetIsTake(false);
+}
+
+void AStudentCharacter::TakeItem()
+{
+	ItemInInventory = NearItem;
+	NearItem->Take();
+	NearItem = nullptr;
+}
 

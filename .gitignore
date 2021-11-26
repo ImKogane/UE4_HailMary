@@ -4,6 +4,8 @@
 #rider user specific
 .idea/
 
+Content/StarterContent/
+
 # Compiled Object files
 *.slo
 *.lo
