@@ -34,6 +34,15 @@ void AAICharacter::BeginPlay()
 void AAICharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	
+	AMyAIController* AIController = Cast<AMyAIController>(GetController());
+	if(bAIVisible == true)
+	{
+		if((GetWorld()->TimeSeconds - LastSeenTime) > TimeOut)
+		{
+			AIController->SetNotSeenTarget();
+		}
+	}
 }
 
 // Called to bind functionality to input
@@ -50,6 +59,7 @@ void AAICharacter::OnSeePlayer(APawn* InPawn)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Je te vois"));
 		GetCharacterMovement()->MaxWalkSpeed = 400;
+		LastSeenTime = GetWorld()->GetTimeSeconds();
 		AIController->SetSeenTarget(InPawn);
 	}
 }

@@ -22,7 +22,7 @@ void AMyAIController::OnPossess(APawn* InPawn)
 		Super::OnPossess(InPawn);
  
 		//Get the possessed Character and check if it's my own AI Character
-		AAICharacter* AIChar = Cast<AAICharacter>(InPawn);
+		 AIChar = Cast<AAICharacter>(InPawn);
  
 		if (AIChar)
 		{
@@ -41,9 +41,20 @@ void AMyAIController::OnPossess(APawn* InPawn)
 void AMyAIController::SetSeenTarget(APawn* InPawn)
 {
 	//Registers the Pawn that the AI has seen in the blackboard
-	AAICharacter* AIChar = Cast<AAICharacter>(InPawn);
+	//AAICharacter* AIChar = Cast<AAICharacter>(InPawn);
 	if (BlackboardComp)
 	{
-		BlackboardComp->SetValueAsObject(BlackboardKey, InPawn);
+		AIChar->bAIVisible = true;
+		BlackboardComp->SetValueAsVector(BlackboardKey, InPawn->GetActorLocation());
+	}
+}
+
+void AMyAIController::SetNotSeenTarget()
+{
+	if(BehaviorComp)
+	{
+		AIChar->bAIVisible = false;
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Je te vois pas"));
+		BlackboardComp->ClearValue("Target");
 	}
 }
