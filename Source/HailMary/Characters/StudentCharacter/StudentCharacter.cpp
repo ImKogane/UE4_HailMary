@@ -32,6 +32,10 @@ AStudentCharacter::AStudentCharacter()
 	GetCharacterMovement()->JumpZVelocity = 600.f;
 	GetCharacterMovement()->AirControl = 0.2f;
 
+	SphereCollision = CreateDefaultSubobject<USphereComponent>(TEXT("Sphere collision"));
+	SphereCollision->SetSphereRadius(80);
+	SphereCollision->SetupAttachment(RootComponent);
+	
 	// Create a camera boom (pulls in towards the player if there is a collision)
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
 	CameraBoom->SetupAttachment(RootComponent);
@@ -42,6 +46,7 @@ AStudentCharacter::AStudentCharacter()
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName); // Attach the camera to the end of the boom and let the boom adjust to match the controller orientation
 	FollowCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
+	
 
 	GetCharacterMovement()->MaxWalkSpeed = 200;
 	GetCharacterMovement()->MaxWalkSpeedCrouched = CrouchSpeed;
@@ -71,9 +76,13 @@ void AStudentCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerI
 
 	PlayerInputComponent->BindAction("Crouch", IE_Pressed, this, &AStudentCharacter::CrouchPlayer);
 	PlayerInputComponent->BindAction("Crouch", IE_Released, this, &AStudentCharacter::UnCrouchPlayer);
+	
+	PlayerInputComponent->BindAction("Interaction", IE_Pressed, this, &AStudentCharacter::Interact);
+	PlayerInputComponent->BindAction("Action", IE_Pressed, this, &AStudentCharacter::DoAction);
 
 	
 }
+
 
 
 void AStudentCharacter::TurnAtRate(float Rate)
@@ -139,6 +148,24 @@ void AStudentCharacter::UnCrouchPlayer()
 {
 	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("Uncrouch"));
 	UnCrouch(true);
+}
+
+void AStudentCharacter::Interact()
+{
+	if(NearItem != nullptr)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Cyan, TEXT("Item interaction"));
+	}
+
+	if(NearElement != nullptr)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Blue, TEXT("Element interaction"));
+	}
+}
+
+void AStudentCharacter::DoAction()
+{
+	
 }
 
 

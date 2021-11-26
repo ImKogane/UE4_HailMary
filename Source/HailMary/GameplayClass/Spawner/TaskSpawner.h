@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "HailMary/GameplayClass/Task_Object.h"
 #include "TaskSpawner.generated.h"
 
 UCLASS()
@@ -21,6 +22,13 @@ protected:
 
 	UPROPERTY(EditInstanceOnly, Category="Task details")
 	int SpawnerArea;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<ATask_Object> TaskObject;
+	
+	
+
+	
 	
 
 public:	
@@ -28,5 +36,8 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	FORCEINLINE int GetSpawnerArea() { return SpawnerArea; }
+
+	UFUNCTION()
+	void SpawnTaskOnPoint();
 
 };
