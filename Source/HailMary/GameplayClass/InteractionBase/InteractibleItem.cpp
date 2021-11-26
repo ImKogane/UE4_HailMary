@@ -46,7 +46,7 @@ void AInteractibleItem::OnBoxOverlapBegin(UPrimitiveComponent* OverlappedCompone
 								UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
 								const FHitResult& SweepResult)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Cyan, TEXT("Item near"));
+	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Cyan, GetItemName());
 	AStudentCharacter* Player = Cast<AStudentCharacter>(OtherActor);
 	if (Player == nullptr)
 	{
@@ -54,7 +54,11 @@ void AInteractibleItem::OnBoxOverlapBegin(UPrimitiveComponent* OverlappedCompone
 		return;
 	}
 
-	Player->SetNearItem(this);
+	if(IsTake == false)
+	{
+		Player->SetNearItem(this);
+	}
+	
 }
 
 void AInteractibleItem::OnBoxOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
@@ -67,12 +71,22 @@ void AInteractibleItem::OnBoxOverlapEnd(UPrimitiveComponent* OverlappedComponent
 		return;
 	}
 
-	Player->SetNearItem(nullptr);
+	if(IsTake == false)
+	{
+		Player->SetNearItem(nullptr);
+	}
 }
 
 void AInteractibleItem::Take()
 {
-	
+	FVector Zero = FVector(0,0,0);
+	this->SetActorLocation(Zero);
+	IsTake = true;
+}
+
+void AInteractibleItem::Drop(FVector NewLocation)
+{
+	this->SetActorLocation(NewLocation);
 }
 
 void AInteractibleItem::Use()

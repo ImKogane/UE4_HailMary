@@ -106,6 +106,12 @@ private :
 	UPROPERTY()
 	AInteractibleElement* NearElement;
 
+	UFUNCTION()
+	void TakeItem();
+
+	UFUNCTION()
+	void SwitchItem();
+
 
 public:
 	/** Returns CameraBoom subobject **/

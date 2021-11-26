@@ -13,12 +13,7 @@ UCLASS()
 class HAILMARY_API ATaskItem_Object : public AInteractibleItem
 {
 	GENERATED_BODY()
-	
 
-	protected:
-
-	UPROPERTY(EditDefaultsOnly, Category="Item details")
-	FString ItemName;
 
 	public:
 	ATaskItem_Object();

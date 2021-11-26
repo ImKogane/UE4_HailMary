@@ -37,6 +37,12 @@ protected:
 	void OnBoxOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
 						int32 OtherBodyIndex);
 
+	UPROPERTY(EditDefaultsOnly, Category="Item details")
+	FString ItemName;
+
+	UPROPERTY(VisibleAnywhere, Category="Item details")
+	bool IsTake;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -45,7 +51,15 @@ public:
 	void Take();
 
 	UFUNCTION()
+	void Drop(FVector NewLocation);
+
+	UFUNCTION()
 	void Use();
+
+	
+
+	FORCEINLINE FString GetItemName() { return ItemName; }
+	FORCEINLINE void SetIsTake(bool bIsTake) { IsTake = bIsTake; }
 
 	
 
