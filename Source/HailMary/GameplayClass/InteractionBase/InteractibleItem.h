@@ -39,6 +39,9 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, Category="Item details")
 	FString ItemName;
+	
+	UPROPERTY(EditDefaultsOnly, Category="Item details")
+	UTexture* ItemArtwork;
 
 	UPROPERTY(VisibleAnywhere, Category="Item details")
 	bool IsTake;

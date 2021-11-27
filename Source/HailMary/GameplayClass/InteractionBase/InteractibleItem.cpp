@@ -46,7 +46,6 @@ void AInteractibleItem::OnBoxOverlapBegin(UPrimitiveComponent* OverlappedCompone
 								UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
 								const FHitResult& SweepResult)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Cyan, GetItemName());
 	AStudentCharacter* Player = Cast<AStudentCharacter>(OtherActor);
 	if (Player == nullptr)
 	{
