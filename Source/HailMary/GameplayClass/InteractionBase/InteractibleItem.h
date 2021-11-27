@@ -43,6 +43,9 @@ protected:
 	UPROPERTY(VisibleAnywhere, Category="Item details")
 	bool IsTake;
 
+	UPROPERTY(VisibleAnywhere, Category="Item details")
+	bool IsTaskItem;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -59,6 +62,8 @@ public:
 	
 
 	FORCEINLINE FString GetItemName() { return ItemName; }
+	FORCEINLINE bool GetIsTaskItem() { return IsTaskItem; }
+	
 	FORCEINLINE void SetIsTake(bool bIsTake) { IsTake = bIsTake; }
 
 	

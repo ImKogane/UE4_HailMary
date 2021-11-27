@@ -38,6 +38,6 @@ public:
 	FORCEINLINE int GetSpawnerArea() { return SpawnerArea; }
 
 	UFUNCTION()
-	void SpawnTaskOnPoint();
+	ATask_Object* SpawnTaskOnPoint();
 
 };

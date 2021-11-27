@@ -6,5 +6,5 @@
 
 ATaskItem_Object::ATaskItem_Object()
 {
-	
+	IsTaskItem = true;
 }
