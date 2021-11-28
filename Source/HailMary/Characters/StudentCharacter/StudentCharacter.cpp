@@ -8,6 +8,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "HailMary/GameplayClass/Task_Object.h"
 
 //////////////////////////////////////////////////////////////////////////
 // AHailMaryCharacter
@@ -157,15 +158,13 @@ void AStudentCharacter::Interact()
 		if(ItemInInventory == nullptr)
 		{
 			//First item take
-			GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Cyan, TEXT("Item interaction"));
-			TakeItem();
+			TakeItem();	
 			
 		}
+		//If player already have item in his inventory
 		else
 		{
 			SwitchItem();
-			
-			
 		}
 		
 	}

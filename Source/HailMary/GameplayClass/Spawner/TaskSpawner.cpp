@@ -29,7 +29,7 @@ void ATaskSpawner::Tick(float DeltaTime)
 
 }
 
-void ATaskSpawner::SpawnTaskOnPoint()
+ATask_Object* ATaskSpawner::SpawnTaskOnPoint()
 {
 	FActorSpawnParameters Params;
 	Params.Owner = this;
@@ -38,4 +38,7 @@ void ATaskSpawner::SpawnTaskOnPoint()
 	FRotator Rot = GetActorRotation();
 	
 	ATask_Object* Task = GetWorld()->SpawnActor<ATask_Object>(TaskObject, Loc, Rot, Params);
+
+	return Task;
+	
 }

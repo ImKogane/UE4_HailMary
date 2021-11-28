@@ -14,6 +14,8 @@ class HAILMARY_API ATaskItem_Object : public AInteractibleItem
 {
 	GENERATED_BODY()
 
+protected:
+
 
 	public:
 	ATaskItem_Object();
