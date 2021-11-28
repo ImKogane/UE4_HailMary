@@ -15,17 +15,10 @@ AItemManager::AItemManager()
 void AItemManager::BeginPlay()
 {
 	Super::BeginPlay();
-
-	SpawnItems();
+	
 	
 }
 
-// Called every frame
-void AItemManager::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-}
 
 
 /**

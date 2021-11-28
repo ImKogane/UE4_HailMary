@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "ItemManager.h"
 #include "GameFramework/Actor.h"
 #include "HailMary/GameplayClass/Spawner/TaskSpawner.h"
 #include "TaskManager.generated.h"
@@ -32,11 +33,16 @@ protected:
 	UPROPERTY(EditInstanceOnly, Category="Task spawn")
 	TArray<ATaskSpawner*> TaskSpawners;
 
+	UPROPERTY(VisibleAnywhere)
+	TArray<AInteractibleItem*> RemainingItems;
+
+	UPROPERTY(EditInstanceOnly, Category="Other")
+	AItemManager* ItemManager;
+
 	UFUNCTION()
 	void SpawnTasks();
-
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+	
+	UFUNCTION()
+	void DefineTaskItems(ATask_Object* Task);
 
 };

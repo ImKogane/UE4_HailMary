@@ -27,14 +27,14 @@ protected:
 	UPROPERTY(EditInstanceOnly, Category="Item spawn")
 	TArray<AItemSpawner*> ItemsSpawner;
 
-	UFUNCTION()
-	void SpawnItems();
 
 public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
 
 	AItemManager();
 
+	FORCEINLINE TArray<AInteractibleItem*> GetItems() { return Items; }
+
+	UFUNCTION()
+		void SpawnItems();
 
 };

@@ -15,17 +15,21 @@ ATaskManager::ATaskManager()
 void ATaskManager::BeginPlay()
 {
 	Super::BeginPlay();
+
 	
-	SpawnTasks();
 	
-}
-
-
-// Called every frame
-void ATaskManager::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
+	if(ItemManager != nullptr)
+	{
+		ItemManager->SpawnItems();
+		RemainingItems = ItemManager->GetItems();
+		SpawnTasks();	
+		
+	}
+	else
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Nope"));    
+	}
+	
 }
 
 
@@ -34,6 +38,7 @@ void ATaskManager::Tick(float DeltaTime)
  */
 void ATaskManager::SpawnTasks()
 {
+	
 	int RandIndex = 0;
 	ATask_Object* tempTask;
 	TArray<ATaskSpawner*> FindSpawnerList;
@@ -57,10 +62,37 @@ void ATaskManager::SpawnTasks()
 			
 			tempTask = FindSpawnerList[RandIndex]->SpawnTaskOnPoint();
 			Tasks.Add(tempTask);
-			FindSpawnerList.Empty();
+			
+			DefineTaskItems(tempTask);
+			
+			FindSpawnerList.Empty(); //Reset the area spawner list
 		}
 		
 	}
+	
+}
+
+void ATaskManager::DefineTaskItems(ATask_Object* Task)
+{
+	int RandIndex = 0;
+
+	if(RemainingItems.Num() > 1)
+	{
+		RandIndex = FMath::RandRange(0, RemainingItems.Num()-1);
+		Task->SetMainItem(RemainingItems[RandIndex]);
+		RemainingItems.RemoveAt(RandIndex);
+
+		RandIndex = FMath::RandRange(0, RemainingItems.Num()-1);
+		Task->SetOtherItem(RemainingItems[RandIndex]);
+		RemainingItems.RemoveAt(RandIndex);
+
+	}
+	else
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Debug"));    
+	}
+	
+
 	
 }
 

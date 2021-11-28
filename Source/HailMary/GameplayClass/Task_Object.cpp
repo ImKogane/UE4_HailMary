@@ -17,18 +17,6 @@ void ATask_Object::GenerateTask()
 	int RandIndex = FMath::RandRange(0, TaskList. Num()-1);
 	Task = TaskList[RandIndex];
 	
-	//Generate random task items
-	if(AvailableItems.Num() > 0)
-	{
-		RandIndex = FMath::RandRange(0, AvailableItems.Num()-1);
-		MainNeedItemName = AvailableItems[RandIndex].GetDefaultObject()->GetItemName();
-		AvailableItems.RemoveAt(RandIndex);
-	
-		RandIndex = FMath::RandRange(0, AvailableItems.Num()-1);
-		OtherNeedItemName = AvailableItems[RandIndex].GetDefaultObject()->GetItemName();
-		AvailableItems.RemoveAt(RandIndex);
-	
-	}
 
 	//Define task duration
 	TaskDuration = FMath::RandRange(TaskMinDuration, TaskMaxDuration);

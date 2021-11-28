@@ -43,18 +43,21 @@ class HAILMARY_API ATask_Object : public AInteractibleElement
 	TArray<TSubclassOf<ATaskItem_Object>> AvailableItems;
 
 	UPROPERTY(VisibleAnywhere, Category="Items")
-	FString MainNeedItemName;
+	AInteractibleItem* MainNeedItemName;
 	
 	UPROPERTY(VisibleAnywhere, Category="Items")
-	FString OtherNeedItemName;
+	AInteractibleItem* OtherNeedItemName;
 	
 	UFUNCTION()
 	void GenerateTask();
 
 
 public :
-	FORCEINLINE FString GetMainNeedItemName() { return MainNeedItemName; }
-	FORCEINLINE FString GetOtherNeedItemName() { return OtherNeedItemName; }
+	FORCEINLINE AInteractibleItem* GetMainNeedItemName() { return MainNeedItemName; }
+	FORCEINLINE AInteractibleItem* GetOtherNeedItemName() { return OtherNeedItemName; }
+
+	FORCEINLINE void SetMainItem(AInteractibleItem* Item) { MainNeedItemName = Item; }
+	FORCEINLINE void SetOtherItem(AInteractibleItem* Item) { OtherNeedItemName = Item; }
 
 	
 	
