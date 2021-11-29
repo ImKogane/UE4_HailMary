@@ -23,28 +23,19 @@ class HAILMARY_API ATask_Object : public AInteractibleElement
 	
 	UPROPERTY(EditDefaultsOnly, Category="Task settings")
 	TArray<FString> TaskList;
-	
-	UPROPERTY(EditDefaultsOnly, Category="Task settings")
-	int TaskMinDuration;
-
-	UPROPERTY(EditDefaultsOnly, Category="Task settings")
-	int TaskMaxDuration;
-	
 
 	UPROPERTY(VisibleInstanceOnly, Category="Task details")
 	FString Task;
 
 	UPROPERTY(VisibleAnywhere, Category="Task details")
-	int TaskDuration;
+	float TaskProgress;
 
-	UPROPERTY(VisibleAnywhere, Category="Task details")
-	int TaskProgress;
-
-	UPROPERTY(VisibleAnywhere, Category="Task details")
+	UPROPERTY(EditAnywhere, Category="Task details")
 	bool TaskUnlocked;
 
-	UPROPERTY(VisibleAnywhere, Category="Task details")
+	UPROPERTY(EditAnywhere, Category="Task details")
 	bool TaskCompleted;
+	
 
 	UPROPERTY(EditDefaultsOnly, Category="Items")
 	TArray<TSubclassOf<ATaskItem_Object>> AvailableItems;
@@ -56,6 +47,8 @@ class HAILMARY_API ATask_Object : public AInteractibleElement
 	AInteractibleItem* OtherNeedItemName;
 
 	TArray<AStudentCharacter*> NearPlayers;
+
+	
 	
 	UFUNCTION()
 	void GenerateTask();

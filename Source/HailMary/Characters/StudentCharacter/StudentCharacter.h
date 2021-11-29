@@ -56,6 +56,9 @@ protected:
 	UPROPERTY(VisibleAnywhere, Category="Player details")
 	bool IsDoAction;
 
+	UPROPERTY(EditDefaultsOnly, Category="Player details")
+	float MakeTaskSpeed;
+
 	
 	/** Called for forwards/backward input */
 	void MoveForward(float Value);
@@ -135,6 +138,7 @@ public:
 	
 	FORCEINLINE AInteractibleItem* GetItemInInventory() { return ItemInInventory; }
 	FORCEINLINE bool GetIsDoAction() { return IsDoAction; }
+	FORCEINLINE float GetMakeTaskSpeed() { return MakeTaskSpeed; }
 	
 	FORCEINLINE void SetNearItem(AInteractibleItem* Item) { NearItem = Item; }
 	FORCEINLINE void SetNearElement(AInteractibleElement* Element) { NearElement = Element; }

@@ -16,12 +16,6 @@ void ATask_Object::GenerateTask()
 {
 	int RandIndex = FMath::RandRange(0, TaskList. Num()-1);
 	Task = TaskList[RandIndex];
-	
-
-	//Define task duration
-	TaskDuration = FMath::RandRange(TaskMinDuration, TaskMaxDuration);
-	
-	
 }
 
 
@@ -54,7 +48,11 @@ void ATask_Object::OnBoxOverlapBegin(UPrimitiveComponent* OverlappedComponent, A
 		Player->ResetInventory();
 		UnlockTask();
 	}
-	
+
+	if(MainNeedItemName == nullptr && OtherNeedItemName == nullptr )
+	{
+		UnlockTask();
+	}
 }
 
 void ATask_Object::OnBoxOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
@@ -73,17 +71,18 @@ void ATask_Object::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 	
-	if(TaskUnlocked)
+	if(TaskUnlocked && !TaskCompleted)
 	{
 		for (AStudentCharacter* Player : NearPlayers)
 		{
 			if(Player->GetIsDoAction())
 			{
-				TaskProgress += 0.1;
+				TaskProgress += Player->GetMakeTaskSpeed();
 				FString IntAsString = FString::FromInt(TaskProgress);
 				GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Green, IntAsString);
 			}
 		}
+
 	}	
 }
 
@@ -93,11 +92,8 @@ void ATask_Object::Tick(float DeltaSeconds)
  */
 void ATask_Object::UnlockTask()
 {
-	if(MainNeedItemName == nullptr && OtherNeedItemName == nullptr )
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("Task unlock"));
-		TaskUnlocked = true;
-	}
+	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("Task unlock"));
+	TaskUnlocked = true;
 }
 
 /**
