@@ -197,7 +197,5 @@ void AStudentCharacter::TakeItem()
 	ItemInInventory = NearItem;
 	NearItem->Take();
 	NearItem = nullptr;
-
-	
 }
 

@@ -38,7 +38,6 @@ void AInteractibleElement::BeginPlay()
 void AInteractibleElement::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
 void AInteractibleElement::OnBoxOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,

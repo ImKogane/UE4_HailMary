@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "TaskItem_Object.h"
 #include "TaskItem_Object.h"
+#include "HailMary/Characters/StudentCharacter/StudentCharacter.h"
 #include "HailMary/GameplayClass/InteractionBase/InteractibleElement.h"
 #include "Task_Object.generated.h"
 
@@ -22,22 +23,18 @@ class HAILMARY_API ATask_Object : public AInteractibleElement
 	
 	UPROPERTY(EditDefaultsOnly, Category="Task settings")
 	TArray<FString> TaskList;
-	
-	UPROPERTY(EditDefaultsOnly, Category="Task settings")
-	int TaskMinDuration;
-
-	UPROPERTY(EditDefaultsOnly, Category="Task settings")
-	int TaskMaxDuration;
-	
 
 	UPROPERTY(VisibleInstanceOnly, Category="Task details")
 	FString Task;
 
 	UPROPERTY(VisibleAnywhere, Category="Task details")
-	int TaskDuration;
+	float TaskProgress;
 
-	UPROPERTY(VisibleAnywhere, Category="Task details")
-	int TaskProgress;
+	UPROPERTY(EditAnywhere, Category="Task details")
+	bool TaskUnlocked;
+
+	UPROPERTY(EditAnywhere, Category="Task details")
+	bool TaskCompleted;
 
 	UPROPERTY(EditDefaultsOnly, Category="Items")
 	TArray<TSubclassOf<ATaskItem_Object>> AvailableItems;
@@ -47,12 +44,31 @@ class HAILMARY_API ATask_Object : public AInteractibleElement
 	
 	UPROPERTY(VisibleAnywhere, Category="Items")
 	AInteractibleItem* OtherNeedItemName;
+
+	TArray<AStudentCharacter*> NearPlayers;
+
+	
 	
 	UFUNCTION()
 	void GenerateTask();
+	
+	UFUNCTION()
+	void UnlockTask();
+	
+	UFUNCTION()
+	void CompleteTask();
+	
+	virtual void OnBoxOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
+						int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) override;
+	
+	virtual void OnBoxOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
+						int32 OtherBodyIndex) override;
 
 
 public :
+
+	virtual void Tick(float DeltaSeconds) override;
+	
 	FORCEINLINE AInteractibleItem* GetMainNeedItemName() { return MainNeedItemName; }
 	FORCEINLINE AInteractibleItem* GetOtherNeedItemName() { return OtherNeedItemName; }
 
