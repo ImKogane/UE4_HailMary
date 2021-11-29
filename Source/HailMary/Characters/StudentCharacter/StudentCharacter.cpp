@@ -80,11 +80,16 @@ void AStudentCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerI
 	
 	PlayerInputComponent->BindAction("Interaction", IE_Pressed, this, &AStudentCharacter::Interact);
 	PlayerInputComponent->BindAction("Action", IE_Pressed, this, &AStudentCharacter::DoAction);
+	PlayerInputComponent->BindAction("Action", IE_Released, this, &AStudentCharacter::UndoAction);
 
 	
 }
 
-
+void AStudentCharacter::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+	
+}
 
 void AStudentCharacter::TurnAtRate(float Rate)
 {
@@ -177,7 +182,12 @@ void AStudentCharacter::Interact()
 
 void AStudentCharacter::DoAction()
 {
-	
+	IsDoAction = true;
+}
+
+void AStudentCharacter::UndoAction()
+{
+	IsDoAction = false;
 }
 
 void AStudentCharacter::SwitchItem()
@@ -191,6 +201,17 @@ void AStudentCharacter::SwitchItem()
 	NearItem = tempItem;
 	NearItem->SetIsTake(false);
 }
+
+void AStudentCharacter::ResetInventory()
+{
+	AInteractibleItem* tempItem;
+	tempItem = ItemInInventory;
+
+	ItemInInventory = nullptr;
+	tempItem->Destroy(true);
+}
+
+
 
 void AStudentCharacter::TakeItem()
 {

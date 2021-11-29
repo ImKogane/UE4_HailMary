@@ -24,33 +24,86 @@ void ATask_Object::GenerateTask()
 	
 }
 
-/*
- 
-void AInteractibleItem::OnBoxOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
-								UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
-								const FHitResult& SweepResult)
+
+
+void ATask_Object::OnBoxOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+                                     UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
+                                     const FHitResult& SweepResult)
 {
+	Super::OnBoxOverlapBegin(OverlappedComponent, OtherActor, OtherComp, OtherBodyIndex, bFromSweep, SweepResult);
+
 	AStudentCharacter* Player = Cast<AStudentCharacter>(OtherActor);
 	if (Player == nullptr)
 	{
-		//Overlap actor isn't the player
-		return;
+		return; //Overlap actor isn't the player
 	}
 
-	//Action
+	NearPlayers.Add(Player);
+	if(MainNeedItemName != nullptr && Player->GetItemInInventory() == MainNeedItemName)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Green, TEXT("Main item good"));
+		MainNeedItemName = nullptr;
+		Player->ResetInventory();
+		UnlockTask();
+	}
+
+	if(OtherNeedItemName != nullptr && Player->GetItemInInventory() == OtherNeedItemName)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Green, TEXT("Other item good"));
+		OtherNeedItemName = nullptr;
+		Player->ResetInventory();
+		UnlockTask();
+	}
 	
 }
 
-void AInteractibleItem::OnBoxOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
-								UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+void ATask_Object::OnBoxOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
+	Super::OnBoxOverlapEnd(OverlappedComponent, OtherActor, OtherComp, OtherBodyIndex);
+
 	AStudentCharacter* Player = Cast<AStudentCharacter>(OtherActor);
 	if (Player == nullptr)
 	{
-		//Overlap actor isn't the player
-		return;
+		return; //Overlap actor isn't the player
 	}
-
-	//Action
+	NearPlayers.Remove(Player);
 }
-*/
+
+void ATask_Object::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+	
+	if(TaskUnlocked)
+	{
+		for (AStudentCharacter* Player : NearPlayers)
+		{
+			if(Player->GetIsDoAction())
+			{
+				TaskProgress += 0.1;
+				FString IntAsString = FString::FromInt(TaskProgress);
+				GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Green, IntAsString);
+			}
+		}
+	}	
+}
+
+
+/**
+ * @brief Unlock the task if the 2 needed items are completed
+ */
+void ATask_Object::UnlockTask()
+{
+	if(MainNeedItemName == nullptr && OtherNeedItemName == nullptr )
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("Task unlock"));
+		TaskUnlocked = true;
+	}
+}
+
+/**
+ * @brief Complete the task if the task is unlocked and the progress reach 100 percent
+ */
+void ATask_Object::CompleteTask()
+{
+	
+}

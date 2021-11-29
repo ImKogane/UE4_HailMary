@@ -53,6 +53,9 @@ protected:
 	UPROPERTY(EditAnywhere, Category="Player")
 	AInteractibleItem* ItemInInventory;
 
+	UPROPERTY(VisibleAnywhere, Category="Player details")
+	bool IsDoAction;
+
 	
 	/** Called for forwards/backward input */
 	void MoveForward(float Value);
@@ -79,6 +82,9 @@ protected:
 
 	UFUNCTION()
 	void DoAction();
+
+	UFUNCTION()
+	void UndoAction();
 
 
 	/** 
@@ -112,15 +118,28 @@ private :
 	UFUNCTION()
 	void SwitchItem();
 
+	
+
 
 public:
+
+	virtual void Tick(float DeltaSeconds) override;
+	
+	UFUNCTION()
+	void ResetInventory();
+	
 	/** Returns CameraBoom subobject **/
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
 	
+	FORCEINLINE AInteractibleItem* GetItemInInventory() { return ItemInInventory; }
+	FORCEINLINE bool GetIsDoAction() { return IsDoAction; }
+	
 	FORCEINLINE void SetNearItem(AInteractibleItem* Item) { NearItem = Item; }
 	FORCEINLINE void SetNearElement(AInteractibleElement* Element) { NearElement = Element; }
+
+	
 
 	
 };

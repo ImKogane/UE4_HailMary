@@ -41,11 +41,13 @@ void AInteractibleElement::Tick(float DeltaTime)
 
 }
 
-void AInteractibleElement::OnBoxOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
-								UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
-								const FHitResult& SweepResult)
+void AInteractibleElement::Interaction()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Blue, TEXT("Element near"));
+
+}
+
+void AInteractibleElement::OnBoxOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
 	AStudentCharacter* Player = Cast<AStudentCharacter>(OtherActor);
 	if (Player == nullptr)
 	{
@@ -56,8 +58,7 @@ void AInteractibleElement::OnBoxOverlapBegin(UPrimitiveComponent* OverlappedComp
 	Player->SetNearElement(this);
 }
 
-void AInteractibleElement::OnBoxOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
-								UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+void AInteractibleElement::OnBoxOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
 	AStudentCharacter* Player = Cast<AStudentCharacter>(OtherActor);
 	if (Player == nullptr)
@@ -68,9 +69,3 @@ void AInteractibleElement::OnBoxOverlapEnd(UPrimitiveComponent* OverlappedCompon
 
 	Player->SetNearElement(nullptr);
 }
-
-void AInteractibleElement::Interaction()
-{
-	
-}
-
