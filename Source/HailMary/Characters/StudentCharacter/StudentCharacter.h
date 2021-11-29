@@ -142,9 +142,5 @@ public:
 	
 	FORCEINLINE void SetNearItem(AInteractibleItem* Item) { NearItem = Item; }
 	FORCEINLINE void SetNearElement(AInteractibleElement* Element) { NearElement = Element; }
-
-	
-
-	
 };
 

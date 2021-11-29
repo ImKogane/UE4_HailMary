@@ -57,7 +57,6 @@ void AInteractibleItem::OnBoxOverlapBegin(UPrimitiveComponent* OverlappedCompone
 	{
 		Player->SetNearItem(this);
 	}
-	
 }
 
 void AInteractibleItem::OnBoxOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,

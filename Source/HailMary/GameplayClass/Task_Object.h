@@ -35,7 +35,6 @@ class HAILMARY_API ATask_Object : public AInteractibleElement
 
 	UPROPERTY(EditAnywhere, Category="Task details")
 	bool TaskCompleted;
-	
 
 	UPROPERTY(EditDefaultsOnly, Category="Items")
 	TArray<TSubclassOf<ATaskItem_Object>> AvailableItems;

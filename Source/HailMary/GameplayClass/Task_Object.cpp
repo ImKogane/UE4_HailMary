@@ -101,5 +101,5 @@ void ATask_Object::UnlockTask()
  */
 void ATask_Object::CompleteTask()
 {
-	
+	TaskCompleted = true;
 }
