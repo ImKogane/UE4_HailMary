@@ -80,6 +80,7 @@ void AStudentCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerI
 	
 	PlayerInputComponent->BindAction("Interaction", IE_Pressed, this, &AStudentCharacter::Interact);
 	PlayerInputComponent->BindAction("Action", IE_Pressed, this, &AStudentCharacter::DoAction);
+	PlayerInputComponent->BindAction("Action", IE_Released, this, &AStudentCharacter::UndoAction);
 
 	
 }
@@ -177,7 +178,12 @@ void AStudentCharacter::Interact()
 
 void AStudentCharacter::DoAction()
 {
-	
+	IsDoAction = true;
+}
+
+void AStudentCharacter::UndoAction()
+{
+	IsDoAction = false;
 }
 
 void AStudentCharacter::SwitchItem()
@@ -190,6 +196,14 @@ void AStudentCharacter::SwitchItem()
 	tempItem->Drop(tempLocation);
 	NearItem = tempItem;
 	NearItem->SetIsTake(false);
+}
+
+void AStudentCharacter::ResetInventory()
+{
+	AInteractibleItem* TempItem;
+	TempItem = ItemInInventory;
+	ItemInInventory = nullptr;
+	TempItem->Destroy(true);
 }
 
 void AStudentCharacter::TakeItem()

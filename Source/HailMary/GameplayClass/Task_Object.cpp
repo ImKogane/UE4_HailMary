@@ -38,7 +38,6 @@ void ATask_Object::OnBoxOverlapBegin(UPrimitiveComponent* OverlappedComponent, A
 		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Green, TEXT("Main item good"));
 		MainNeedItemName = nullptr;
 		Player->ResetInventory();
-		UnlockTask();
 	}
 
 	if(OtherNeedItemName != nullptr && Player->GetItemInInventory() == OtherNeedItemName)
@@ -46,10 +45,9 @@ void ATask_Object::OnBoxOverlapBegin(UPrimitiveComponent* OverlappedComponent, A
 		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Green, TEXT("Other item good"));
 		OtherNeedItemName = nullptr;
 		Player->ResetInventory();
-		UnlockTask();
 	}
 
-	if(MainNeedItemName == nullptr && OtherNeedItemName == nullptr )
+	if(MainNeedItemName == nullptr && OtherNeedItemName == nullptr && !TaskUnlocked)
 	{
 		UnlockTask();
 	}

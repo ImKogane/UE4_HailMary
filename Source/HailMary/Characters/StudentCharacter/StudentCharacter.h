@@ -125,8 +125,6 @@ private :
 
 
 public:
-
-	virtual void Tick(float DeltaSeconds) override;
 	
 	UFUNCTION()
 	void ResetInventory();
