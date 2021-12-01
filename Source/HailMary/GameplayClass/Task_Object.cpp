@@ -73,13 +73,27 @@ void ATask_Object::Tick(float DeltaSeconds)
 	{
 		for (AStudentCharacter* Player : NearPlayers)
 		{
-			if(Player->GetIsDoAction())
+			if(Player->GetIsDoAction() && TaskProgress <= 100)
 			{
 				TaskProgress += Player->GetMakeTaskSpeed();
 				FString IntAsString = FString::FromInt(TaskProgress);
 				GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Green, IntAsString);
+
+				InteractionCount++;
+			}
+
+			if(TaskProgress > 100)
+			{
+				CompleteTask();
 			}
 		}
+
+		if(InteractionCount == 0)
+		{
+			TaskProgress = 0;
+		}
+		
+		InteractionCount = 0;
 
 	}	
 }

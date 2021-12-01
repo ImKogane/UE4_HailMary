@@ -45,7 +45,11 @@ class HAILMARY_API ATask_Object : public AInteractibleElement
 	UPROPERTY(VisibleAnywhere, Category="Items")
 	AInteractibleItem* OtherNeedItemName;
 
+	UPROPERTY(VisibleAnywhere)
 	TArray<AStudentCharacter*> NearPlayers;
+	
+	UPROPERTY(VisibleAnywhere)
+	int InteractionCount;
 
 	
 	
