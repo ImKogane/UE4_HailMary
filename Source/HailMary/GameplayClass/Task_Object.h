@@ -64,6 +64,8 @@ class HAILMARY_API ATask_Object : public AInteractibleElement
 	virtual void OnBoxOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
 						int32 OtherBodyIndex) override;
 
+	class UMainGameInstance* TheGameInstance;
+
 
 public :
 

@@ -15,7 +15,7 @@ class HAILMARY_API AExitDoor : public AInteractibleElement
 {
 	GENERATED_BODY()
 
-	protected:
+protected:
 
 	virtual void BeginPlay() override;
 	
@@ -26,7 +26,7 @@ class HAILMARY_API AExitDoor : public AInteractibleElement
 	UPROPERTY(VisibleAnywhere)
 	AStudentCharacter* NearPlayer;
 	
-
+	class UMainGameInstance* TheGameInstance;
 	
 	
 	UFUNCTION()

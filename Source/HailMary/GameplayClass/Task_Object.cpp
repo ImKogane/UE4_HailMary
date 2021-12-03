@@ -4,6 +4,7 @@
 #include "Task_Object.h"
 
 #include "HailMary/HailMaryGameMode.h"
+#include "HailMary/MainGameInstance.h"
 #include "Kismet/GameplayStatics.h"
 
 void ATask_Object::BeginPlay()
@@ -11,6 +12,8 @@ void ATask_Object::BeginPlay()
 	Super::BeginPlay();
 
 	GenerateTask();
+
+	TheGameInstance = Cast<UMainGameInstance>(GetGameInstance());
 }
 
 void ATask_Object::GenerateTask()
@@ -34,8 +37,9 @@ void ATask_Object::OnBoxOverlapBegin(UPrimitiveComponent* OverlappedComponent, A
 	{
 		return; //Overlap actor isn't the player
 	}
-
+	
 	NearPlayers.Add(Player);
+	
 	if(MainNeedItemName != nullptr && Player->GetItemInInventory() == MainNeedItemName)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Green, TEXT("Main item good"));
@@ -116,4 +120,6 @@ void ATask_Object::UnlockTask()
 void ATask_Object::CompleteTask()
 {
 	TaskCompleted = true;
+	TheGameInstance->AddTaskCount(1);
+	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("Task completed"));
 }

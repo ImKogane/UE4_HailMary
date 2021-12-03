@@ -4,11 +4,14 @@
 #include "ExitDoor.h"
 
 #include "HailMary/HailMaryGameMode.h"
+#include "HailMary/MainGameInstance.h"
 #include "Kismet/GameplayStatics.h"
 
 void AExitDoor::BeginPlay()
 {
 	Super::BeginPlay();
+
+	TheGameInstance = Cast<UMainGameInstance>(GetGameInstance());
 }
 
 
@@ -43,11 +46,11 @@ void AExitDoor::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 	
-	if(!IsOpen && NearPlayer != nullptr)
+	if(!IsOpen && NearPlayer != nullptr && TheGameInstance->GetTaskCount() >= 4)
 	{
 			if(NearPlayer->GetIsDoAction() && ElementProgress <= ElementMaxProgress)
 			{
-				ElementProgress += NearPlayer->GetOpenDoorSpeed();
+				ElementProgress += NearPlayer->GetMakeTaskSpeed();
 				
 				FString ProgressString = FString::FromInt(ElementProgress);
 				GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Green, ProgressString);
@@ -68,4 +71,5 @@ void AExitDoor::Tick(float DeltaSeconds)
 void AExitDoor::OpenDoor()
 {
 	IsOpen = true;
+	TheGameInstance->SetDoorIsOpen(true);
 }
