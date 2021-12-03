@@ -3,7 +3,8 @@
 
 #include "Task_Object.h"
 
-#include "HailMary/Characters/StudentCharacter/StudentCharacter.h"
+#include "HailMary/HailMaryGameMode.h"
+#include "Kismet/GameplayStatics.h"
 
 void ATask_Object::BeginPlay()
 {
@@ -16,6 +17,8 @@ void ATask_Object::GenerateTask()
 {
 	int RandIndex = FMath::RandRange(0, TaskList. Num()-1);
 	Task = TaskList[RandIndex];
+
+	ElementName = Task;
 }
 
 
@@ -73,27 +76,26 @@ void ATask_Object::Tick(float DeltaSeconds)
 	{
 		for (AStudentCharacter* Player : NearPlayers)
 		{
-			if(Player->GetIsDoAction() && TaskProgress <= 100)
+			if(Player->GetIsDoAction() && ElementProgress <= ElementMaxProgress)
 			{
-				TaskProgress += Player->GetMakeTaskSpeed();
-				FString IntAsString = FString::FromInt(TaskProgress);
-				GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Green, IntAsString);
+				ElementProgress += Player->GetMakeTaskSpeed();
+				FString ProgressString = FString::FromInt(ElementProgress);
+				GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Green, ProgressString);
 
-				InteractionCount++;
+				ElementInteractionCount++;
 			}
-
-			if(TaskProgress > 100)
+			else if(ElementProgress > ElementMaxProgress)
 			{
 				CompleteTask();
 			}
 		}
 
-		if(InteractionCount == 0)
+		if(ElementInteractionCount == 0)
 		{
-			TaskProgress = 0;
+			ElementProgress = 0;
 		}
 		
-		InteractionCount = 0;
+		ElementInteractionCount = 0;
 
 	}	
 }

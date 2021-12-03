@@ -37,6 +37,18 @@ protected:
 	virtual void OnBoxOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
 						int32 OtherBodyIndex);
 
+	UPROPERTY(EditDefaultsOnly, Category="Element details")
+	FString ElementName;
+	
+	UPROPERTY(EditDefaultsOnly, Category="Element details")
+	float ElementMaxProgress;
+
+	UPROPERTY(VisibleAnywhere, Category="Element stats")
+	float ElementProgress;
+	
+	UPROPERTY(VisibleAnywhere, Category="Element stats")
+	int ElementInteractionCount;
+
 public:
 	
 	// Called every frame

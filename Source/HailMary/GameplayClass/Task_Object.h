@@ -26,9 +26,7 @@ class HAILMARY_API ATask_Object : public AInteractibleElement
 
 	UPROPERTY(VisibleInstanceOnly, Category="Task details")
 	FString Task;
-
-	UPROPERTY(VisibleAnywhere, Category="Task details")
-	float TaskProgress;
+	
 
 	UPROPERTY(EditAnywhere, Category="Task details")
 	bool TaskUnlocked;
@@ -48,8 +46,6 @@ class HAILMARY_API ATask_Object : public AInteractibleElement
 	UPROPERTY(VisibleAnywhere)
 	TArray<AStudentCharacter*> NearPlayers;
 	
-	UPROPERTY(VisibleAnywhere)
-	int InteractionCount;
 
 	
 	

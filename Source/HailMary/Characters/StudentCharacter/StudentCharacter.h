@@ -39,15 +39,6 @@ public:
 protected:
 
 	UPROPERTY(EditDefaultsOnly, Category="Movement")
-	float SprintSpeed;
-	
-	UPROPERTY(EditDefaultsOnly, Category="Movement")
-	float WalkSpeed;
-
-	UPROPERTY(VisibleAnywhere, Category="Movement")
-	float CrouchSpeed = 100;
-
-	UPROPERTY(EditDefaultsOnly, Category="Movement")
 	bool IsPlayerSprint;
 
 	UPROPERTY(EditAnywhere, Category="Player")
@@ -56,8 +47,27 @@ protected:
 	UPROPERTY(VisibleAnywhere, Category="Player details")
 	bool IsDoAction;
 
-	UPROPERTY(EditDefaultsOnly, Category="Player details")
+	
+	///////////////////// PLAYER STATS /////////////////////
+#pragma region Player stats
+
+	UPROPERTY(EditDefaultsOnly, Category="Player stats")
+	float SprintSpeed;
+	
+	UPROPERTY(EditDefaultsOnly, Category="Player stats")
+	float WalkSpeed;
+
+	UPROPERTY(EditDefaultsOnly, Category="Player stats")
+	float CrouchSpeed = 100;
+	
+	UPROPERTY(EditDefaultsOnly, Category="Player stats")
 	float MakeTaskSpeed;
+	
+	UPROPERTY(EditDefaultsOnly, Category="Player stats")
+	float OpenDoorSpeed;
+
+	
+#pragma endregion 
 
 	
 	/** Called for forwards/backward input */
@@ -137,6 +147,7 @@ public:
 	FORCEINLINE AInteractibleItem* GetItemInInventory() { return ItemInInventory; }
 	FORCEINLINE bool GetIsDoAction() { return IsDoAction; }
 	FORCEINLINE float GetMakeTaskSpeed() { return MakeTaskSpeed; }
+	FORCEINLINE float GetOpenDoorSpeed() { return OpenDoorSpeed; }
 	
 	FORCEINLINE void SetNearItem(AInteractibleItem* Item) { NearItem = Item; }
 	FORCEINLINE void SetNearElement(AInteractibleElement* Element) { NearElement = Element; }

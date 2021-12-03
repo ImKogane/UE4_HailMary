@@ -85,7 +85,8 @@ void AStudentCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerI
 	
 }
 
-
+/////////////////////// PLAYER MOVEMENT ///////////////////////
+#pragma region Player movement
 
 void AStudentCharacter::TurnAtRate(float Rate)
 {
@@ -152,6 +153,40 @@ void AStudentCharacter::UnCrouchPlayer()
 	UnCrouch(true);
 }
 
+#pragma endregion
+
+/////////////////////// PLAYER INVENTORY ///////////////////////
+#pragma region Player inventory
+
+void AStudentCharacter::SwitchItem()
+{
+	FVector tempLocation = NearItem->GetActorLocation();
+	AInteractibleItem* tempItem = ItemInInventory;
+
+	TakeItem();
+
+	tempItem->Drop(tempLocation);
+	NearItem = tempItem;
+	NearItem->SetIsTake(false);
+}
+
+void AStudentCharacter::ResetInventory()
+{
+	AInteractibleItem* TempItem;
+	TempItem = ItemInInventory;
+	ItemInInventory = nullptr;
+	TempItem->Destroy(true);
+}
+
+void AStudentCharacter::TakeItem()
+{
+	ItemInInventory = NearItem;
+	NearItem->Take();
+	NearItem = nullptr;
+}
+
+#pragma endregion 
+
 void AStudentCharacter::Interact()
 {
 	if(NearItem != nullptr)
@@ -186,30 +221,5 @@ void AStudentCharacter::UndoAction()
 	IsDoAction = false;
 }
 
-void AStudentCharacter::SwitchItem()
-{
-	FVector tempLocation = NearItem->GetActorLocation();
-	AInteractibleItem* tempItem = ItemInInventory;
 
-	TakeItem();
-
-	tempItem->Drop(tempLocation);
-	NearItem = tempItem;
-	NearItem->SetIsTake(false);
-}
-
-void AStudentCharacter::ResetInventory()
-{
-	AInteractibleItem* TempItem;
-	TempItem = ItemInInventory;
-	ItemInInventory = nullptr;
-	TempItem->Destroy(true);
-}
-
-void AStudentCharacter::TakeItem()
-{
-	ItemInInventory = NearItem;
-	NearItem->Take();
-	NearItem = nullptr;
-}
 
