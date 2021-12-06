@@ -16,7 +16,6 @@ void AItemManager::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	
 }
 
 
@@ -26,20 +25,88 @@ void AItemManager::BeginPlay()
  */
 void AItemManager::SpawnItems()
 {
-	int RandIndex = 0;
-	AInteractibleItem* tempItem;
-
-	for (TSubclassOf<AInteractibleItem> item : ItemsToSpawn)
-	{
-		RandIndex = FMath::RandRange(0, ItemsSpawner.Num()-1);
-		tempItem = ItemsSpawner[RandIndex]->SpawnItemOnPoint(item);
-		
-		Items.Add(tempItem);
-		ItemsSpawner.RemoveAt(RandIndex);
-	}
+	SpawnTaskItems();
+	SpawnUsableItems();
 	
 	
 }
+
+
+/**
+ * @brief Spawn usable items on specific spawner all around the level
+ */
+void AItemManager::SpawnUsableItems()
+{
+	int RandIndex = 0;
+	int RandItemIndex = 0;
+	AInteractibleItem* tempItem;
+	int SpawnItemCount = 0;
+
+	for (int i = 1; i < MaxUsableItems; ++i)
+	{
+
+		RandItemIndex = FMath::RandRange(0, UsableItemsToSpawn.Num()-1);
+		
+		RandIndex = FMath::RandRange(0, UsableItemsSpawners.Num()-1); //Choose random index in available usable items spawners indexs
+		tempItem = UsableItemsSpawners[RandIndex]->SpawnItemOnPoint(UsableItemsToSpawn[RandItemIndex]); //Spawn item on the item spawner
+		
+		UsableItems.Add(tempItem);
+		UsableItemsSpawners.RemoveAt(RandIndex);
+	}
+	
+}
+
+void AItemManager::SpawnTaskItems()
+{
+	int RandIndex = 0;
+	int RandItemIndex = 0;
+	AInteractibleItem* tempItem;
+	TArray<ATask_ItemSpawner*> FindSpawnerList;
+	
+	for (int i = 1; i <= 4; ++i)
+	{
+		
+		for (int j = 0; j <= TaskItemsSpawners.Num()-1; ++j)
+		{
+			if(TaskItemsSpawners[j]->GetSpawnerArea() == i)
+			{
+				FindSpawnerList.Add(TaskItemsSpawners[j]);
+			}
+			
+		}
+
+
+		RandItemIndex = FMath::RandRange(0, UsableItemsToSpawn.Num()-1);
+
+
+		for (int k = 1; k <= 3; ++k)
+		{
+			if(FindSpawnerList.Num() > 0)
+			{
+				RandItemIndex = FMath::RandRange(0, TaskItemsToSpawn.Num()-1);
+				RandIndex = FMath::RandRange(0, FindSpawnerList.Num()-1);
+				
+				tempItem = FindSpawnerList[RandIndex]->SpawnItemOnPoint(TaskItemsToSpawn[RandItemIndex]);
+				TaskItems.Add(tempItem);
+
+				FString IntAsString = FString::FromInt(FindSpawnerList[RandIndex]->GetSpawnerArea());
+				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, IntAsString);
+				
+				//Clean values to next loop
+				TaskItemsToSpawn.RemoveAt(RandItemIndex);
+				FindSpawnerList.RemoveAt(RandIndex);
+
+				
+			}
+		}
+		
+		FindSpawnerList.Empty();
+		
+		
+		
+	}
+}
+
 
 
 

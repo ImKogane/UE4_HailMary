@@ -4,8 +4,12 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "HailMary/GameplayClass/TaskItem_Object.h"
+#include "HailMary/GameplayClass/UsableItem_Object.h"
 #include "HailMary/GameplayClass/InteractionBase/InteractibleItem.h"
 #include "HailMary/GameplayClass/Spawner/ItemSpawner.h"
+#include "HailMary/GameplayClass/Spawner/Task_ItemSpawner.h"
+#include "HailMary/GameplayClass/Spawner/Usable_ItemSpawner.h"
 #include "ItemManager.generated.h"
 
 UCLASS()
@@ -19,20 +23,41 @@ protected:
 	virtual void BeginPlay() override;
 	
 	UPROPERTY(VisibleAnywhere)
-	TArray<AInteractibleItem*> Items;
+	TArray<AInteractibleItem*> UsableItems;
+
+	UPROPERTY(VisibleAnywhere)
+	TArray<AInteractibleItem*> TaskItems;
 
 	UPROPERTY(EditDefaultsOnly, Category="Item spawn")
-	TArray<TSubclassOf<AInteractibleItem>> ItemsToSpawn;
+	int MaxUsableItems;
 	
-	UPROPERTY(EditInstanceOnly, Category="Item spawn")
-	TArray<AItemSpawner*> ItemsSpawner;
+	UPROPERTY(EditDefaultsOnly, Category="Item spawn")
+	TArray<TSubclassOf<AUsableItem_Object>> UsableItemsToSpawn;
 
+	UPROPERTY(EditDefaultsOnly, Category="Item spawn")
+	TArray<TSubclassOf<ATaskItem_Object>> TaskItemsToSpawn;
+	
+
+	UPROPERTY(EditInstanceOnly, Category="Manager details")
+	TArray<ATask_ItemSpawner*> TaskItemsSpawners;
+	
+	UPROPERTY(EditInstanceOnly, Category="Manager details")
+	TArray<AUsable_ItemSpawner*> UsableItemsSpawners;
+
+
+	//Functions
+	UFUNCTION()
+	void SpawnTaskItems();
+
+	UFUNCTION()
+	void SpawnUsableItems();
 
 public:	
 
 	AItemManager();
 
-	FORCEINLINE TArray<AInteractibleItem*> GetItems() { return Items; }
+	FORCEINLINE TArray<AInteractibleItem*> GetUsableItems() { return UsableItems; }
+	FORCEINLINE TArray<AInteractibleItem*> GetTaskItems() { return TaskItems; }
 
 	UFUNCTION()
 		void SpawnItems();

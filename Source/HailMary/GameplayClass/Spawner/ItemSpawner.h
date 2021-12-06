@@ -19,6 +19,9 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+	
+	UPROPERTY(VisibleAnywhere, Category = "Spawner details")
+	bool TaskItemSpawner;
 
 public:	
 	// Called every frame
@@ -26,5 +29,7 @@ public:
 
 	UFUNCTION()
 	AInteractibleItem* SpawnItemOnPoint(TSubclassOf<AInteractibleItem> ItemToSpawn);
+
+	FORCEINLINE bool GetIsTaskItemSpawner(){ return TaskItemSpawner;}
 
 };

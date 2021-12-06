@@ -21,7 +21,7 @@ void ATaskManager::BeginPlay()
 	if(ItemManager != nullptr)
 	{
 		ItemManager->SpawnItems();
-		RemainingItems = ItemManager->GetItems();
+		RemainingItems = ItemManager->GetTaskItems();
 		SpawnTasks();	
 		
 	}
