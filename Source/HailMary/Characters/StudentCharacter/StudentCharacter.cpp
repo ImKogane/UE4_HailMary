@@ -207,6 +207,9 @@ void AStudentCharacter::Interact()
 	}
 }
 
+/**
+ * @brief 
+ */
 void AStudentCharacter::DoAction()
 {
 	IsDoAction = true;
