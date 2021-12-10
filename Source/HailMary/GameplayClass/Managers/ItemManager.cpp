@@ -95,9 +95,6 @@ void AItemManager::SpawnTaskItems()
 				}
 				
 				TaskItems.Add(tempItem);
-
-				FString IntAsString = FString::FromInt(FindSpawnerList[RandIndex]->GetSpawnerArea());
-				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, IntAsString);
 				
 				//Clean values to next loop
 				TaskItemsToSpawn.RemoveAt(RandItemIndex);
