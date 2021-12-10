@@ -32,7 +32,7 @@ protected:
 	void Clock();
 
 	UFUNCTION()
-	void TimerConversion();
+	void ShowTimer();
 
 public:	
 	// Called every frame

@@ -15,7 +15,7 @@ APlayCycle::APlayCycle()
 void APlayCycle::BeginPlay()
 {
 	Super::BeginPlay();
-	LoopTime = 10;
+	LoopTime = 300;
 	GetWorldTimerManager().SetTimer(GameTimer, this, &APlayCycle::Clock, 1.0f, true);
 }
 
@@ -24,6 +24,7 @@ void APlayCycle::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	Loop();
+	ShowTimer();
 }
 
 void APlayCycle::Loop()
@@ -46,10 +47,11 @@ void APlayCycle::Clock()
 	}
 }
 
-void APlayCycle::TimerConversion()
+void APlayCycle::ShowTimer()
 {
-	int TimeSeconds = LoopTime;
+	int TimeSeconds = LoopTime % 60;
 	int TimeMinuts = LoopTime / 60;
-	FString Time;
+	FString Timer = FString::FromInt(TimeMinuts) + ":" + FString::FromInt(TimeSeconds);
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, Timer);
 }
 
