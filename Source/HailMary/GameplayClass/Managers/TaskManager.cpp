@@ -61,6 +61,7 @@ void ATaskManager::SpawnTasks()
 
 			
 			tempTask = FindSpawnerList[RandIndex]->SpawnTaskOnPoint();
+			tempTask->SetTaskArea(FindSpawnerList[RandIndex]->GetSpawnerArea());
 			Tasks.Add(tempTask);
 			
 			DefineTaskItems(tempTask);
@@ -72,27 +73,65 @@ void ATaskManager::SpawnTasks()
 	
 }
 
+
+
+/**
+ * @brief Defines required items for a selected task
+ * @param Task Task to define required items
+ */
 void ATaskManager::DefineTaskItems(ATask_Object* Task)
 {
 	int RandIndex = 0;
+	AInteractibleItem* tempItem;
+	TArray<AInteractibleItem*> ItemInArea;
 
 	if(RemainingItems.Num() > 1)
 	{
-		RandIndex = FMath::RandRange(0, RemainingItems.Num()-1);
-		Task->SetMainItem(RemainingItems[RandIndex]);
-		RemainingItems.RemoveAt(RandIndex);
 
-		RandIndex = FMath::RandRange(0, RemainingItems.Num()-1);
-		Task->SetOtherItem(RemainingItems[RandIndex]);
-		RemainingItems.RemoveAt(RandIndex);
+		//Set main task item
+		ItemInArea = FindItemInArea(Task->GetTaskArea());
+		RandIndex = FMath::RandRange(0, ItemInArea.Num()-1);
+		tempItem = ItemInArea[RandIndex];
+		Task->SetMainItem(tempItem);
+		RemainingItems.Remove(tempItem);
+
+		//Set other task item
+		ItemInArea = FindItemInArea(Task->GetTaskArea());
+		RandIndex = FMath::RandRange(0, ItemInArea.Num()-1);
+		tempItem = ItemInArea[RandIndex];
+		Task->SetOtherItem(tempItem);
+		RemainingItems.Remove(tempItem);
+
 
 	}
-	else
+	
+
+	
+}
+
+
+/**
+ * @brief Find all remaining items in selected area
+ * @param area Selected area index
+ * @return All item in the selected area
+ */
+TArray<AInteractibleItem*> ATaskManager::FindItemInArea(int area)
+{
+	TArray<AInteractibleItem*> ItemInArea;
+
+	for (AInteractibleItem* item : RemainingItems)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Debug"));    
+		
+		ATaskItem_Object* tempItem = Cast<ATaskItem_Object>(item);
+		if (tempItem != nullptr)
+		{
+			if(tempItem->GetTaskItemArea() <= area)
+			{
+				ItemInArea.Add(item);
+			}
+		}
 	}
-	
 
-	
+	return ItemInArea;
 }
 

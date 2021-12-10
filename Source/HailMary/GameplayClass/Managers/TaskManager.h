@@ -36,11 +36,16 @@ protected:
 	UPROPERTY(VisibleAnywhere)
 	TArray<AInteractibleItem*> RemainingItems;
 
+	TArray<AInteractibleItem*> AreaItems;
+
 	UPROPERTY(EditInstanceOnly, Category="Other")
 	AItemManager* ItemManager;
 
 	UFUNCTION()
 	void SpawnTasks();
+
+	UFUNCTION()
+	TArray<AInteractibleItem*> FindItemInArea(int area);
 	
 	UFUNCTION()
 	void DefineTaskItems(ATask_Object* Task);

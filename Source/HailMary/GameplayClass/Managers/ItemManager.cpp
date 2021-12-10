@@ -87,6 +87,13 @@ void AItemManager::SpawnTaskItems()
 				RandIndex = FMath::RandRange(0, FindSpawnerList.Num()-1);
 				
 				tempItem = FindSpawnerList[RandIndex]->SpawnItemOnPoint(TaskItemsToSpawn[RandItemIndex]);
+
+				ATaskItem_Object* taskItem = Cast<ATaskItem_Object>(tempItem);
+				if (taskItem != nullptr)
+				{
+					taskItem->SetTaskItemArea(FindSpawnerList[RandIndex]->GetSpawnerArea());
+				}
+				
 				TaskItems.Add(tempItem);
 
 				FString IntAsString = FString::FromInt(FindSpawnerList[RandIndex]->GetSpawnerArea());
