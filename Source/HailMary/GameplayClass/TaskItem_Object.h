@@ -15,10 +15,14 @@ class HAILMARY_API ATaskItem_Object : public AInteractibleItem
 	GENERATED_BODY()
 
 protected:
+	UPROPERTY(VisibleAnywhere, Category = "Items details")
+	int TaskItemArea;
 
-
-	public:
+public:
 	ATaskItem_Object();
+
+	FORCEINLINE void SetTaskItemArea(int area){TaskItemArea = area;}
+	FORCEINLINE int GetTaskItemArea(){return TaskItemArea;}
 
 	
 };

@@ -26,6 +26,9 @@ class HAILMARY_API ATask_Object : public AInteractibleElement
 
 	UPROPERTY(VisibleInstanceOnly, Category="Task details")
 	FString Task;
+
+	UPROPERTY(VisibleAnywhere, Category="Task details")
+	int TaskArea;
 	
 
 	UPROPERTY(EditAnywhere, Category="Task details")
@@ -76,6 +79,9 @@ public :
 
 	FORCEINLINE void SetMainItem(AInteractibleItem* Item) { MainNeedItemName = Item; }
 	FORCEINLINE void SetOtherItem(AInteractibleItem* Item) { OtherNeedItemName = Item; }
+	
+	FORCEINLINE void SetTaskArea(int area) { TaskArea = area; }
+	FORCEINLINE int GetTaskArea() { return TaskArea; }
 
 	
 	
