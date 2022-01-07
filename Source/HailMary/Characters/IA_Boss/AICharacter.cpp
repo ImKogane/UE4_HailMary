@@ -57,6 +57,7 @@ void AAICharacter::OnSeePlayer(APawn* InPawn)
 	//Set the seen target on the blackboard
 	if (AIController)
 	{
+		AIController->StopMovement();
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Je te vois"));
 		GetCharacterMovement()->MaxWalkSpeed = 400;
 		LastSeenTime = GetWorld()->GetTimeSeconds();

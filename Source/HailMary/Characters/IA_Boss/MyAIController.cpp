@@ -45,7 +45,7 @@ void AMyAIController::SetSeenTarget(APawn* InPawn)
 	if (BlackboardComp)
 	{
 		AIChar->bAIVisible = true;
-		BlackboardComp->SetValueAsVector(BlackboardKey, InPawn->GetActorLocation());
+		BlackboardComp->SetValueAsObject(BlackboardKey, InPawn);
 	}
 }
 

@@ -29,7 +29,7 @@ public:
 
 	bool bAIVisible = false;
 	float LastSeenTime;
-	float TimeOut = 3.0f;
+	float TimeOut = 10.0f;
 	
 protected:
 	// Called when the game starts or when spawned
