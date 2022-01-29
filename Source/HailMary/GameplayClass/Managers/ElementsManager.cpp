@@ -22,7 +22,6 @@ void AElementsManager::BeginPlay()
 	
 }
 
-
 /**
  * @brief Spawn back door on Elements Spawners
  */
@@ -42,7 +41,7 @@ void AElementsManager::SpawnBackDoor()
 			FRotator Rot = BD_Spawnpoints[RandIndex]->GetActorRotation();
 			ABackDoor* Door = GetWorld()->SpawnActor<ABackDoor>(BPBackDoor, Loc, Rot, Params);
 			
-			BD_Spawnpoints.RemoveAt(RandIndex);
+			BD_Spawnpoints.RemoveAt((RandIndex));
 
 		}
 	}
