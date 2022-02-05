@@ -4,7 +4,7 @@
 #include "Perk_BaseComponent.generated.h"
 
 
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+UCLASS( Blueprintable, ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class HAILMARY_API UPerk_BaseComponent : public UActorComponent
 {
 	GENERATED_BODY()
@@ -15,6 +15,8 @@ public:
 		UPerk_BaseComponent();
 		// Called every frame
 		virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+		UFUNCTION()
+		virtual void UsePerk();
 	#pragma endregion 
 
 protected:
