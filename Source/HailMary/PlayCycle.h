@@ -19,10 +19,14 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Gameplay")
-	int LoopTime;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Gameplay")
+	int InitialLoopTime;
+	
+	UPROPERTY(VisibleAnywhere, Category = "Gameplay")
+	int LoopTime;
+
+	UPROPERTY(VisibleAnywhere, Category = "Gameplay")
 	FTimerHandle GameTimer;
 
 	UFUNCTION()
@@ -37,5 +41,11 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	UFUNCTION()
+	void ResetTimer();
+	
+	UFUNCTION()
+	void StopTimer();
 
 };
