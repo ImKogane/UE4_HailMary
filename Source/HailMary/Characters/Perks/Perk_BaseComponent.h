@@ -3,6 +3,12 @@
 #include "Components/ActorComponent.h"
 #include "Perk_BaseComponent.generated.h"
 
+UENUM()
+enum PerkType
+{
+	Passive     UMETA(DisplayName = "Passive"),
+	Active      UMETA(DisplayName = "Active"),
+};
 
 UCLASS( Blueprintable, ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class HAILMARY_API UPerk_BaseComponent : public UActorComponent
@@ -20,6 +26,17 @@ public:
 	#pragma endregion 
 
 protected:
+	#pragma region ProtectedVariable
+		UPROPERTY(EditDefaultsOnly, Category="Perk Description")
+		int _nbID;
+		UPROPERTY(EditDefaultsOnly, Category="Perk Description")
+		FString _strName;
+		UPROPERTY(EditDefaultsOnly, Category="Perk Description")
+		TEnumAsByte<PerkType> _perkType;
+		UPROPERTY(EditDefaultsOnly, Category="Perk Description")
+		FString _strEffect;
+	#pragma endregion 
+	
 	#pragma region ProtectedFunctions
 		// Called when the game starts
 		virtual void BeginPlay() override;

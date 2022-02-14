@@ -29,3 +29,7 @@ void UPerk_BaseComponent::TickComponent(float DeltaTime, ELevelTick TickType, FA
 	// ...
 }
 
+void UPerk_BaseComponent::UsePerk()
+{
+}
+
