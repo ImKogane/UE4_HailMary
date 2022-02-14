@@ -18,13 +18,14 @@ void AElementsManager::BeginPlay()
 {
 	Super::BeginPlay();
 
-	SpawnBackDoor();
+	//SpawnBackDoor();
 	
 }
 
-/**
- * @brief Spawn back door on Elements Spawners
- */
+/*
+/
+// @brief Spawn back door on Elements Spawners
+ 
 void AElementsManager::SpawnBackDoor()
 {
 	if(BD_Spawnpoints.Num() > BD_Count && BD_Count > 0)
@@ -46,6 +47,8 @@ void AElementsManager::SpawnBackDoor()
 		}
 	}
 }
+
+*/
 
 // Called every frame
 void AElementsManager::Tick(float DeltaTime)
