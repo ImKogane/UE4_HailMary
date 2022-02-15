@@ -28,6 +28,13 @@ void APlayCycle::Tick(float DeltaTime)
 	
 }
 
+FString APlayCycle::GetTimer()
+{
+	int TimeSeconds = LoopTime % 60;
+	int TimeMinuts = LoopTime / 60;
+	FString Timer = FString::FromInt(TimeMinuts) + ":" + FString::FromInt(TimeSeconds);
+	return  Timer;
+}
 
 
 void APlayCycle::Loop()
@@ -53,10 +60,7 @@ void APlayCycle::Clock()
 
 void APlayCycle::ShowTimer()
 {
-	int TimeSeconds = LoopTime % 60;
-	int TimeMinuts = LoopTime / 60;
-	FString Timer = FString::FromInt(TimeMinuts) + ":" + FString::FromInt(TimeSeconds);
-	GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, Timer);
+	GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, GetTimer());
 }
 
 void APlayCycle::ResetTimer()
