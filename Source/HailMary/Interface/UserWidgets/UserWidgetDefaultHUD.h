@@ -10,9 +10,7 @@
 	class UMainGameInstance;
 #pragma endregion 
 
-/**
- * 
- */
+
 UCLASS()
 class HAILMARY_API UUserWidgetDefaultHUD : public UUserWidget
 {

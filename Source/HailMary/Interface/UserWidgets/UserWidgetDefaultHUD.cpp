@@ -36,11 +36,11 @@ void UUserWidgetDefaultHUD::UpdateWidget()
 
 	if(m_player2)
 	{
-		FString txtItemPlayer2= "Empty";
+		FString txtItemPlayer2= "_ _ _";
 		if(IsValid(m_player2->GetItemInInventory()))
 		{
 			txtItemPlayer2 = m_player2->GetItemInInventory()->GetItemName();
 		}
-		textItemPlayer1->SetText(FText::FromString(txtItemPlayer2));
+		textItemPlayer2->SetText(FText::FromString(txtItemPlayer2));
 	}
 }

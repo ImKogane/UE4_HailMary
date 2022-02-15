@@ -14,7 +14,7 @@ UCLASS()
 class HAILMARY_API AGameHUD : public AHUD
 {
 	GENERATED_BODY()
-
+	
 	protected:
 		UPROPERTY(EditAnywhere)
 		TSubclassOf<UUserWidgetDefaultHUD> _bpWidgetDefaultHUD;
