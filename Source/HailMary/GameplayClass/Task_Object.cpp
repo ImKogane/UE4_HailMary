@@ -121,5 +121,6 @@ void ATask_Object::CompleteTask()
 {
 	TaskCompleted = true;
 	TheGameInstance->AddTaskCount(1);
+	TheGameInstance->GetPlayCycle()->ResetTimer();
 	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("Task completed"));
 }

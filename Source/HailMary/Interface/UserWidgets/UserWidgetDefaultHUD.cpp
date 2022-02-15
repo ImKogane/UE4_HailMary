@@ -14,8 +14,11 @@ void UUserWidgetDefaultHUD::GetReferences()
 
 void UUserWidgetDefaultHUD::UpdateWidget()
 {
-	FString txtTimer = TEXT("Time left : ") + gameInstance->GetPlayCycle()->GetTimer();;
-	textTimer->SetText(FText::FromString(txtTimer));
+	if(gameInstance->GetPlayCycle() != nullptr)
+	{
+		FString txtTimer = TEXT("Time left : ") + gameInstance->GetPlayCycle()->GetTimer();
+		textTimer->SetText(FText::FromString(txtTimer));
+	}
 	
 	FString txtTaskCount = TEXT("Taches réaliser : ") + FString::FromInt(gameInstance->GetTaskCount());
 	textTaskCount->SetText(FText::FromString(txtTaskCount));

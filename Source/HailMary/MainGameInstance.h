@@ -20,6 +20,8 @@ public:
 	FORCEINLINE int GetTaskCount(){return TaskCount;}
 	FORCEINLINE void SetDoorIsOpen(bool State){DoorIsOpen = State;}
 	FORCEINLINE void AddTaskCount(int NewTaskCount){ TaskCount += NewTaskCount; }
+
+	FORCEINLINE void SetPlayCycle(APlayCycle* newPlayCycle){ playCycle = newPlayCycle; }
 	
 protected:
 	UPROPERTY(VisibleAnywhere)
