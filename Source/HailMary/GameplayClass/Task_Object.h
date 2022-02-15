@@ -24,10 +24,10 @@ class HAILMARY_API ATask_Object : public AInteractibleElement
 	UPROPERTY(EditDefaultsOnly, Category="Task settings")
 	TArray<FString> TaskList;
 
-	UPROPERTY(VisibleInstanceOnly, Category="Task details")
+	UPROPERTY(EditInstanceOnly, Category="Task details")
 	FString Task;
 
-	UPROPERTY(VisibleAnywhere, Category="Task details")
+	UPROPERTY(EditInstanceOnly, Category="Task details")
 	int TaskArea;
 	
 
@@ -40,10 +40,10 @@ class HAILMARY_API ATask_Object : public AInteractibleElement
 	UPROPERTY(EditDefaultsOnly, Category="Items")
 	TArray<TSubclassOf<ATaskItem_Object>> AvailableItems;
 
-	UPROPERTY(VisibleAnywhere, Category="Items")
+	UPROPERTY(EditInstanceOnly, Category="Items")
 	AInteractibleItem* MainNeedItemName;
 	
-	UPROPERTY(VisibleAnywhere, Category="Items")
+	UPROPERTY(EditInstanceOnly, Category="Items")
 	AInteractibleItem* OtherNeedItemName;
 
 	UPROPERTY(VisibleAnywhere)

@@ -20,9 +20,9 @@ void ATaskManager::BeginPlay()
 	
 	if(ItemManager != nullptr)
 	{
-		ItemManager->SpawnItems();
-		RemainingItems = ItemManager->GetTaskItems();
-		SpawnTasks();	
+		//ItemManager->SpawnItems();
+		//RemainingItems = ItemManager->GetTaskItems();
+		//SpawnTasks();	
 		
 	}
 	else
