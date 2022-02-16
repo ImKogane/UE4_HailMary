@@ -2,9 +2,9 @@
 
 
 #include "BTTargetPointSelection.h"
-#include "BotTargetPoint.h"
-#include "MyAIController.h"
+#include "HailMary/Characters/IA_Boss/BotTargetPoint.h"
 #include "BehaviorTree/BlackboardComponent.h"
+#include "HailMary/Characters/IA_Boss/MyAIController.h"
 
 EBTNodeResult::Type UBTTargetPointSelection::ExecuteTask(UBehaviorTreeComponent & OwnerComp, uint8 * NodeMemory)
 {

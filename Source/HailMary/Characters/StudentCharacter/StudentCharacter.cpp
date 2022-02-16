@@ -235,10 +235,7 @@ void AStudentCharacter::OnBeginOverlap(UPrimitiveComponent* OverlappedComp, AAct
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Collision"));
 		GetMesh()->SetSimulatePhysics(false);
 		GetMesh()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-		if(Character->GetMesh() != nullptr)
-		{
-			AttachToComponent(Character->GetMesh(),FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("Socket_test"));
-		}
+		AttachToComponent(Character->GetMesh(),FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("Socket_test"));
 	}
 }
 
