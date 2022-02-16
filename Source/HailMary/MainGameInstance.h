@@ -32,5 +32,9 @@ protected:
 	APlayCycle* playCycle;
 	
 	void Init() override;
-	void ResetInstance();
+
+public:
+	
+	UFUNCTION() void ResetInstance();
+	
 };

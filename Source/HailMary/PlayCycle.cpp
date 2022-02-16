@@ -23,6 +23,7 @@ void APlayCycle::BeginPlay()
 	
 	TheGameInstance = Cast<UMainGameInstance>(GetGameInstance());
 	TheGameInstance->SetPlayCycle(this);
+	TheGameInstance->ResetInstance();
 }
 
 // Called every frame
