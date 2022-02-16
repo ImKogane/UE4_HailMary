@@ -58,7 +58,7 @@ void AAICharacter::OnSeePlayer(APawn* InPawn)
 	if (AIController)
 	{
 		AIController->StopMovement();
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Je te vois"));
+		//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Je te vois"));
 		GetCharacterMovement()->MaxWalkSpeed = 400;
 		LastSeenTime = GetWorld()->GetTimeSeconds();
 		AIController->SetSeenTarget(InPawn);

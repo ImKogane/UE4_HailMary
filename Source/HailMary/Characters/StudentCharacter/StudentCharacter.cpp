@@ -8,6 +8,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "HailMary/Characters/IA_Boss/AICharacter.h"
 #include "HailMary/GameplayClass/Task_Object.h"
 
 //////////////////////////////////////////////////////////////////////////
@@ -44,7 +45,9 @@ AStudentCharacter::AStudentCharacter()
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName); // Attach the camera to the end of the boom and let the boom adjust to match the controller orientation
 	FollowCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
 	
-
+	Collider = CreateDefaultSubobject<USphereComponent>(FName("Collider"));
+	Collider->SetupAttachment(GetMesh());
+	
 	GetCharacterMovement()->MaxWalkSpeed = 200;
 	GetCharacterMovement()->MaxWalkSpeedCrouched = CrouchSpeed;
 
@@ -80,7 +83,11 @@ void AStudentCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerI
 
 	
 }
-
+void AStudentCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+	Collider->OnComponentBeginOverlap.AddDynamic(this, &AStudentCharacter::OnBeginOverlap);
+}
 /////////////////////// PLAYER MOVEMENT ///////////////////////
 #pragma region Player movement
 
@@ -220,5 +227,19 @@ void AStudentCharacter::UndoAction()
 	IsDoAction = false;
 }
 
+void AStudentCharacter::OnBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	AAICharacter* Character = Cast<AAICharacter>(OtherActor);
+	if (Character != nullptr)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Collision"));
+		GetMesh()->SetSimulatePhysics(false);
+		GetMesh()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		if(Character->GetMesh() != nullptr)
+		{
+			AttachToComponent(Character->GetMesh(),FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("Socket_test"));
+		}
+	}
+}
 
 

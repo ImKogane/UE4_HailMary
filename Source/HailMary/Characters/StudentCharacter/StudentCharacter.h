@@ -3,6 +3,7 @@
 #include "CoreMinimal.h"
 #include "Components/SphereComponent.h"
 #include "GameFramework/Character.h"
+#include "HailMary/Characters/IA_Boss/AICharacter.h"
 #include "HailMary/Characters/Perks/Perk_BaseComponent.h"
 #include "HailMary/GameplayClass/InteractionBase/InteractibleElement.h"
 #include "HailMary/GameplayClass/InteractionBase/InteractibleItem.h"
@@ -25,10 +26,16 @@ public:
 		/** Follow camera */
 		UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 		class UCameraComponent* FollowCamera;
+	    /** Collider player */
+	    UPROPERTY(EditAnywhere)
+	    USphereComponent* Collider;
 	#pragma endregion
 	
 	#pragma region PublicFunctions
 		AStudentCharacter();
+	UFUNCTION()
+	void OnBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	
 		/** Base turn rate, in deg/sec. Other scaling may affect final turn rate. */
 		UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
 		float BaseTurnRate;
@@ -101,6 +108,8 @@ protected:
 		void DoAction();
 		UFUNCTION()
 		void UndoAction();
+	
+	    virtual void BeginPlay() override;
 		/** 
 		* Called via input to turn at a given rate. 
 		* @param Rate	This is a normalized rate, i.e. 1.0 means 100% of desired turn rate
