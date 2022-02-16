@@ -30,6 +30,8 @@ class HAILMARY_API ATask_Object : public AInteractibleElement
 	UPROPERTY(EditInstanceOnly, Category="Task details")
 	int TaskArea;
 	
+	UPROPERTY(EditInstanceOnly, Category="Task details")
+	class AAreaDoor* TaskDoor;
 
 	UPROPERTY(EditAnywhere, Category="Task details")
 	bool TaskUnlocked;
@@ -45,6 +47,9 @@ class HAILMARY_API ATask_Object : public AInteractibleElement
 	
 	UPROPERTY(EditInstanceOnly, Category="Items")
 	AInteractibleItem* OtherNeedItemName;
+
+	UPROPERTY(EditInstanceOnly, Category="Items")
+	class AAreaDoor* AreaDoor;
 
 	UPROPERTY(VisibleAnywhere)
 	TArray<AStudentCharacter*> NearPlayers;
