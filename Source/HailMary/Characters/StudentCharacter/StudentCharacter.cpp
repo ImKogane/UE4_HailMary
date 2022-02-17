@@ -199,14 +199,6 @@ UPerk_BaseComponent* AStudentCharacter::GetFirstPerk()
 	{
 		 return  _arrPerks[0];
 	}
-	// if( ArrPassivePerk.Num() > 0 )
-	// {
-	// 	return Cast<UPerk_BaseComponent>(ArrPassivePerk[0]);
-	// }
-	// if ( ArrActivePerks.Num() > 0 )
-	// {
-	// 	return Cast<UPerk_BaseComponent>(ArrActivePerks[0]);
-	// }
 	return nullptr;
 }
 
@@ -216,33 +208,6 @@ UPerk_BaseComponent* AStudentCharacter::GetSecondPerk()
 	{
 		return  _arrPerks[1];
 	}
-	
-	// UPerk_BaseComponent* SecondPerk = nullptr;
-	//
-	// if( ArrPassivePerk.Num() > 1 )
-	// {
-	// 	SecondPerk =  Cast<UPerk_BaseComponent>(ArrPassivePerk[1]);
-	// 	return SecondPerk;
-	// }
-	//
-	// if ( ArrActivePerks.Num() > 0 )
-	// {
-	// 	SecondPerk = Cast<UPerk_BaseComponent>(ArrActivePerks[0]);
-	// 	if( SecondPerk == GetFirstPerk() )
-	// 	{
-	// 		SecondPerk = nullptr ;
-	// 	}
-	// 	else
-	// 	{
-	// 		if( ArrActivePerks.Num() > 1 )
-	// 		{
-	// 			SecondPerk = Cast<UPerk_BaseComponent>(ArrActivePerks[1]);
-	// 		}
-	// 	}
-	// }
-	//
-	// return SecondPerk;
-
 	return  nullptr;
 }
 
