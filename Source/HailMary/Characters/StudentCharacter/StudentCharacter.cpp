@@ -7,6 +7,7 @@
 #include "Components/InputComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
+#include "GameFramework/GameSession.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "HailMary/GameplayClass/Task_Object.h"
 #include "HailMary/Interface/HUD/GameHUD.h"
@@ -58,6 +59,8 @@ void AStudentCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	InstanciatePerks();
+	SetPlayerId();
+	
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -102,6 +105,31 @@ void AStudentCharacter::LookUpAtRate(float Rate)
 {
 	// calculate delta for this frame from the rate information
 	AddControllerPitchInput(Rate * BaseLookUpRate * GetWorld()->GetDeltaSeconds());
+}
+
+void AStudentCharacter::SetPlayerId()
+{
+	// TArray<AActor*> arrStudentCharacter;
+	// UGameplayStatics::GetAllActorsOfClass(GetWorld(),AStudentCharacter::StaticClass(), arrStudentCharacter);
+	// int l_nbHighestPlayerID = 0;
+	// for (AActor* currentActor : arrStudentCharacter)
+	// {
+	// 	AStudentCharacter* currentStudentCharacter = Cast<AStudentCharacter>(currentActor);
+	// 	if( currentStudentCharacter->m_nbPlayerId > l_nbHighestPlayerID )
+	// 	{
+	// 		l_nbHighestPlayerID = currentStudentCharacter->m_nbPlayerId;
+	// 	}
+	// }
+	// m_nbPlayerId = l_nbHighestPlayerID + 1;
+
+	if(UGameplayStatics::GetPlayerControllerID(Cast<APlayerController>(Controller)) == 0 )
+	{
+		m_nbPlayerId = 1;
+	}
+	else
+	{
+		m_nbPlayerId = 2;
+	}
 }
 
 void AStudentCharacter::InstanciatePerks()
@@ -203,15 +231,31 @@ void AStudentCharacter::SetNearItem(AInteractibleItem* Item)
 	AGameHUD * hud = Cast<AGameHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
 	if( IsValid(hud))
 	{
-		if( NearItem != nullptr)
+		if( m_nbPlayerId == 1 ) //player1
 		{
-			FString strTextToDisplay = "Press E to interact with " + NearItem->GetItemName();
-			hud->GetDefaultWidget()->SetTextInteractPlayer1(strTextToDisplay);
-			hud->GetDefaultWidget()->ShowInteractPlayer1();
+			if( NearItem != nullptr)
+			{
+				FString strTextToDisplay = "Press E to interact with " + NearItem->GetItemName();
+				hud->GetDefaultWidget()->SetTextInteractPlayer1(strTextToDisplay);
+				hud->GetDefaultWidget()->ShowInteractPlayer1();
+			}
+			else
+			{
+				hud->GetDefaultWidget()->HideInteractPlayer1();
+			}
 		}
-		else
+		else //player 2 
 		{
-			hud->GetDefaultWidget()->HideInteractPlayer1();
+			if( NearItem != nullptr)
+			{
+				FString strTextToDisplay = "Press E to interact with " + NearItem->GetItemName();
+				hud->GetDefaultWidget()->SetTextInteractPlayer2(strTextToDisplay);
+				hud->GetDefaultWidget()->ShowInteractPlayer2();
+			}
+			else
+			{
+				hud->GetDefaultWidget()->HideInteractPlayer2();
+			}
 		}
 	}
 }

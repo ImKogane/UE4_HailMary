@@ -57,6 +57,8 @@ public:
 
 protected:
 	#pragma  region RuntimeVariables
+		UPROPERTY(VisibleAnywhere, Category="Player")
+		int m_nbPlayerId = 0;
 		UPROPERTY(EditDefaultsOnly, Category="Movement")
 		bool IsPlayerSprint;
 		UPROPERTY(EditAnywhere, Category="Player")
@@ -89,6 +91,7 @@ protected:
 	#pragma endregion
 	
 	#pragma region ProtectedFunctions
+		void SetPlayerId();
 		void InstanciatePerks();
 		/** Called for forwards/backward input */
 		void MoveForward(float Value);
