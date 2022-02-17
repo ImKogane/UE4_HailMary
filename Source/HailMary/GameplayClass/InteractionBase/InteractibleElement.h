@@ -7,6 +7,10 @@
 #include "GameFramework/Actor.h"
 #include "InteractibleElement.generated.h"
 
+#pragma region ForwardDeclaration
+	class AGameHUD;
+#pragma endregion
+
 UCLASS()
 class HAILMARY_API AInteractibleElement : public AActor
 {
@@ -36,6 +40,21 @@ public:
 	#pragma endregion 
 	
 protected:
+	#pragma region ProtectedVariables
+		UPROPERTY()
+		AGameHUD * _gameHud;
+		UPROPERTY(EditDefaultsOnly, Category="Element details")
+		FString ElementName;
+		UPROPERTY(EditDefaultsOnly, Category="Element details")
+		FString _strDisplayText;
+		UPROPERTY(EditDefaultsOnly, Category="Element details")
+		float ElementMaxProgress;
+		UPROPERTY(VisibleAnywhere, Category="Element stats")
+		float ElementProgress;
+		UPROPERTY(VisibleAnywhere, Category="Element stats")
+		int ElementInteractionCount;
+	#pragma endregion
+	
 	#pragma region ProtectedFunctions
 		// Called when the game starts or when spawned
 		virtual void BeginPlay() override;
@@ -47,16 +66,5 @@ protected:
 							int32 OtherBodyIndex);
 	#pragma endregion 
 
-	#pragma region ProtectedVariables
-		UPROPERTY(EditDefaultsOnly, Category="Element details")
-		FString ElementName;
-		UPROPERTY(EditDefaultsOnly, Category="Element details")
-		FString _strDisplayText;
-		UPROPERTY(EditDefaultsOnly, Category="Element details")
-		float ElementMaxProgress;
-		UPROPERTY(VisibleAnywhere, Category="Element stats")
-		float ElementProgress;
-		UPROPERTY(VisibleAnywhere, Category="Element stats")
-		int ElementInteractionCount;
-	#pragma endregion 
+
 };

@@ -51,7 +51,11 @@ public:
 		FORCEINLINE float GetMakeTaskSpeed() { return MakeTaskSpeed; }
 		FORCEINLINE float GetOpenDoorSpeed() { return OpenDoorSpeed; }
 		void SetNearItem(AInteractibleItem* Item);
+		UFUNCTION()
+		FORCEINLINE AInteractibleItem* GetNearInteractibleItem(){return NearItem;}
 		void SetNearElement(AInteractibleElement* Element);
+		UFUNCTION()
+		FORCEINLINE AInteractibleElement* GetNearInteractibleElement(){return NearElement;}
 		UPerk_BaseComponent* GetFirstPerk();
 		UPerk_BaseComponent* GetSecondPerk();
 	#pragma endregion 
@@ -68,6 +72,10 @@ protected:
 		AInteractibleItem* ItemInInventory;
 		UPROPERTY(VisibleAnywhere, Category="Player details")
 		bool IsDoAction;
+		UPROPERTY()
+		AInteractibleItem* NearItem;
+		UPROPERTY()
+		AInteractibleElement* NearElement;
 	#pragma endregion 
 	
 	///////////////////// PLAYER STATS /////////////////////
@@ -134,10 +142,6 @@ protected:
 
 private :
 	#pragma region PrivateFunctions
-		UPROPERTY()
-		AInteractibleItem* NearItem;
-		UPROPERTY()
-		AInteractibleElement* NearElement;
 		UFUNCTION()
 		void TakeItem();
 		UFUNCTION()

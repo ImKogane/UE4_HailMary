@@ -73,6 +73,12 @@ class HAILMARY_API UUserWidgetDefaultHUD : public UUserWidget
 			UFUNCTION()
 			void UpdateItems();
 			UFUNCTION()
+			void UpdateDisplayText();
+			UFUNCTION()
+			void UpdateDisplayTextItem(int nbPlayerId);
+			UFUNCTION()
+			void UpdateDisplayTextElement(int nbPlayerId);
+			UFUNCTION()
 			void ShowInteractPlayer1();
 			UFUNCTION()
 			void ShowInteractPlayer2();

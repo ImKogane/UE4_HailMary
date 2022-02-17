@@ -10,10 +10,9 @@
 void ATask_Object::BeginPlay()
 {
 	Super::BeginPlay();
-
 	GenerateTask();
-
 	TheGameInstance = Cast<UMainGameInstance>(GetGameInstance());
+	_strDisplayText = _strDisplayTextLocked;
 }
 
 void ATask_Object::GenerateTask()
@@ -112,6 +111,8 @@ void ATask_Object::UnlockTask()
 {
 	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("Task unlock"));
 	TaskUnlocked = true;
+	_strDisplayText = _strDisplayTextUnlocked;
+	_gameHud->GetDefaultWidget()->UpdateDisplayText();
 }
 
 /**
@@ -122,4 +123,5 @@ void ATask_Object::CompleteTask()
 	TaskCompleted = true;
 	TheGameInstance->AddTaskCount(1);
 	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("Task completed"));
+	_strDisplayText = _strDisplayTextCompleted;
 }

@@ -111,6 +111,93 @@ void UUserWidgetDefaultHUD::UpdateItems()
 	}
 }
 
+void UUserWidgetDefaultHUD::UpdateDisplayText()
+{
+	//player 1 > player 2
+		//item > Element
+
+	if(m_player1)
+	{
+		if( IsValid(m_player1->GetNearInteractibleItem()))
+		{
+			UpdateDisplayTextItem(1);
+			ShowInteractPlayer1();
+		}
+		else if ( IsValid(m_player1->GetNearInteractibleElement()))
+		{
+			UpdateDisplayTextElement(1);
+			ShowInteractPlayer1();
+		}
+		else
+		{
+			//Hide
+			HideInteractPlayer1();
+		}
+	}
+
+	if(m_player2)
+	{
+		if( IsValid(m_player2->GetNearInteractibleItem()))
+		{
+			UpdateDisplayTextItem(2);
+			ShowInteractPlayer2();
+		}
+		else if ( IsValid(m_player2->GetNearInteractibleElement()))
+		{
+			UpdateDisplayTextElement(2);
+			ShowInteractPlayer2();
+		}
+		else
+		{
+			//Hide
+			HideInteractPlayer2();
+		}
+	}
+	
+}
+
+void UUserWidgetDefaultHUD::UpdateDisplayTextItem(int nbPlayerId)
+{
+	if(nbPlayerId == 1 && m_player1)
+	{
+		if(IsValid(m_player1->GetNearInteractibleItem()))
+		{
+			FString txtDisplayElement = "Press E to interact with " + m_player1->GetNearInteractibleItem()->GetItemName();
+			SetTextInteractPlayer1(txtDisplayElement);
+		}
+	}
+	
+	if(nbPlayerId == 2 && m_player2)
+	{
+		if(IsValid(m_player2->GetNearInteractibleItem()))
+		{
+			FString txtDisplayElement = "Press E to interact with " + m_player2->GetNearInteractibleItem()->GetItemName();
+			SetTextInteractPlayer2(txtDisplayElement);
+		}
+	}
+}
+
+void UUserWidgetDefaultHUD::UpdateDisplayTextElement(int nbPlayerId)
+{
+	if(nbPlayerId == 1 && m_player1)
+	{
+		if(IsValid(m_player1->GetNearInteractibleElement()))
+		{
+			FString txtDisplayElement  = m_player1->GetNearInteractibleElement()->GetDisplayText();
+			SetTextInteractPlayer1(txtDisplayElement);
+		}
+	}
+	
+	if(nbPlayerId == 2 && m_player2)
+	{
+		if(IsValid(m_player2->GetNearInteractibleElement()))
+		{
+			FString txtDisplayElement = m_player2->GetNearInteractibleElement()->GetDisplayText();
+			SetTextInteractPlayer2(txtDisplayElement);
+		}
+	}
+}
+
 void UUserWidgetDefaultHUD::ShowInteractPlayer1()
 {
 	widgetInteractPlayer1->SetVisibility(ESlateVisibility::Visible);

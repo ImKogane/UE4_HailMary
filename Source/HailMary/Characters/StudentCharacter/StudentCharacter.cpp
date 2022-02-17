@@ -226,70 +226,18 @@ void AStudentCharacter::ResetInventory()
 void AStudentCharacter::SetNearItem(AInteractibleItem* Item)
 {
 	NearItem = Item;
-
-	if( IsValid(_gameHud))
+	if(_gameHud)
 	{
-		if( m_nbPlayerId == 1 ) //player1
-		{
-			if( NearItem != nullptr)
-			{
-				FString strTextToDisplay = "Press E to interact with " + NearItem->GetItemName();
-				_gameHud->GetDefaultWidget()->SetTextInteractPlayer1(strTextToDisplay);
-				_gameHud->GetDefaultWidget()->ShowInteractPlayer1();
-			}
-			else
-			{
-				_gameHud->GetDefaultWidget()->HideInteractPlayer1();
-			}
-		}
-		else //player 2 
-		{
-			if( NearItem != nullptr)
-			{
-				FString strTextToDisplay = "Press E to interact with " + NearItem->GetItemName();
-				_gameHud->GetDefaultWidget()->SetTextInteractPlayer2(strTextToDisplay);
-				_gameHud->GetDefaultWidget()->ShowInteractPlayer2();
-			}
-			else
-			{
-				_gameHud->GetDefaultWidget()->HideInteractPlayer2();
-			}
-		}
+		_gameHud->GetDefaultWidget()->UpdateDisplayText();
 	}
 }
 
 void AStudentCharacter::SetNearElement(AInteractibleElement* Element)
 {
 	NearElement = Element;
-
-	if( IsValid(_gameHud))
+	if(_gameHud)
 	{
-		if( m_nbPlayerId == 1 ) //player1
-		{
-			if( NearElement != nullptr)
-			{
-				FString strTextToDisplay = NearElement->GetDisplayText();
-				_gameHud->GetDefaultWidget()->SetTextInteractPlayer1(strTextToDisplay);
-				_gameHud->GetDefaultWidget()->ShowInteractPlayer1();
-			}
-			else
-			{
-				_gameHud->GetDefaultWidget()->HideInteractPlayer1();
-			}
-		}
-		else //player 2 
-		{
-			if( NearElement != nullptr)
-			{
-				FString strTextToDisplay = NearElement->GetDisplayText();
-				_gameHud->GetDefaultWidget()->SetTextInteractPlayer2(strTextToDisplay);
-				_gameHud->GetDefaultWidget()->ShowInteractPlayer2();
-			}
-			else
-			{
-				_gameHud->GetDefaultWidget()->HideInteractPlayer2();
-			}
-		}
+		_gameHud->GetDefaultWidget()->UpdateDisplayText();
 	}
 }
 
