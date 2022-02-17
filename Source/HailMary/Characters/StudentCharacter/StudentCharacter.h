@@ -29,6 +29,7 @@ public:
 	
 	#pragma region PublicFunctions
 		AStudentCharacter();
+		virtual void BeginPlay() override;
 		/** Base turn rate, in deg/sec. Other scaling may affect final turn rate. */
 		UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
 		float BaseTurnRate;
@@ -37,6 +38,9 @@ public:
 		float BaseLookUpRate;
 		UFUNCTION()
 		void ResetInventory();
+	#pragma endregion PublicFunctions
+
+	#pragma region Accessor
 		/** Returns CameraBoom subobject **/
 		FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 		/** Returns FollowCamera subobject **/
@@ -47,7 +51,9 @@ public:
 		FORCEINLINE float GetOpenDoorSpeed() { return OpenDoorSpeed; }
 		FORCEINLINE void SetNearItem(AInteractibleItem* Item) { NearItem = Item; }
 		FORCEINLINE void SetNearElement(AInteractibleElement* Element) { NearElement = Element; }
-	#pragma endregion PublicFunctions
+		UPerk_BaseComponent* GetFirstPerk();
+		UPerk_BaseComponent* GetSecondPerk();
+	#pragma endregion 
 
 protected:
 	#pragma  region RuntimeVariables
@@ -75,12 +81,15 @@ protected:
 
 	#pragma region Perks
 		UPROPERTY(EditDefaultsOnly, Category="Player Perks")
-		TSubclassOf<UPerk_BaseComponent> PassivePerk;
+		TArray<TSubclassOf<UPerk_BaseComponent>> ArrPassivePerkBp;
 		UPROPERTY(EditDefaultsOnly, Category="Player Perks")
-		TArray<TSubclassOf<UPerk_BaseComponent>> ArrActivePerks;
+		TArray<TSubclassOf<UPerk_BaseComponent>> ArrActivePerksBp;
+		UPROPERTY(VisibleAnywhere, Category="Player Perks")
+		TArray<UPerk_BaseComponent*> _arrPerks;
 	#pragma endregion
 	
 	#pragma region ProtectedFunctions
+		void InstanciatePerks();
 		/** Called for forwards/backward input */
 		void MoveForward(float Value);
 		/** Called for side to side input */

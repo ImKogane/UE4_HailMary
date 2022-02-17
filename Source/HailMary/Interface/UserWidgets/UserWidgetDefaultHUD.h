@@ -38,6 +38,10 @@ class HAILMARY_API UUserWidgetDefaultHUD : public UUserWidget
 			class UTextBlock* textItemPlayer1;
 			UPROPERTY(BlueprintReadOnly, meta=(BindWidget))
 			class UImage* imgItemPlayer1;
+			UPROPERTY(BlueprintReadOnly, meta=(BindWidget))
+			class UImage* imgPerk1Player1;
+			UPROPERTY(BlueprintReadOnly, meta=(BindWidget))
+			class UImage* imgPerk2Player1;
 		#pragma endregion
 	
 		#pragma region Player2
@@ -47,6 +51,10 @@ class HAILMARY_API UUserWidgetDefaultHUD : public UUserWidget
 			class UTextBlock* textItemPlayer2;
 			UPROPERTY(BlueprintReadOnly, meta=(BindWidget))
 			class UImage* imgItemPlayer2;
+			UPROPERTY(BlueprintReadOnly, meta=(BindWidget))
+			class UImage* imgPerk1Player2;
+			UPROPERTY(BlueprintReadOnly, meta=(BindWidget))
+			class UImage* imgPerk2Player2;
 		#pragma endregion 
 
 		#pragma region PublicFunctions
@@ -54,5 +62,9 @@ class HAILMARY_API UUserWidgetDefaultHUD : public UUserWidget
 			void GetReferences();
 			UFUNCTION()
 			void UpdateWidget();
+			UFUNCTION()
+			void UpdatePerks();
+			UFUNCTION()
+			void UpdateItems();
 		#pragma endregion 
 };

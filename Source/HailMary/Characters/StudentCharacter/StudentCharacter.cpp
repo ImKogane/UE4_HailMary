@@ -52,6 +52,12 @@ AStudentCharacter::AStudentCharacter()
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
 }
 
+void AStudentCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+	InstanciatePerks();
+}
+
 //////////////////////////////////////////////////////////////////////////
 // Input
 
@@ -94,6 +100,19 @@ void AStudentCharacter::LookUpAtRate(float Rate)
 {
 	// calculate delta for this frame from the rate information
 	AddControllerPitchInput(Rate * BaseLookUpRate * GetWorld()->GetDeltaSeconds());
+}
+
+void AStudentCharacter::InstanciatePerks()
+{
+	for (TSubclassOf<UPerk_BaseComponent> currentPassivePerk : ArrPassivePerkBp)
+	{
+		_arrPerks.Add(NewObject<UPerk_BaseComponent>(this, currentPassivePerk));
+	}
+
+	for (TSubclassOf<UPerk_BaseComponent> currentActivePerk : ArrActivePerksBp)
+	{
+		_arrPerks.Add(NewObject<UPerk_BaseComponent>(this ,currentActivePerk));
+	}
 }
 
 void AStudentCharacter::MoveForward(float Value)
@@ -172,6 +191,59 @@ void AStudentCharacter::ResetInventory()
 	TempItem = ItemInInventory;
 	ItemInInventory = nullptr;
 	TempItem->Destroy(true);
+}
+
+UPerk_BaseComponent* AStudentCharacter::GetFirstPerk()
+{
+	if( _arrPerks.Num() > 0)
+	{
+		 return  _arrPerks[0];
+	}
+	// if( ArrPassivePerk.Num() > 0 )
+	// {
+	// 	return Cast<UPerk_BaseComponent>(ArrPassivePerk[0]);
+	// }
+	// if ( ArrActivePerks.Num() > 0 )
+	// {
+	// 	return Cast<UPerk_BaseComponent>(ArrActivePerks[0]);
+	// }
+	return nullptr;
+}
+
+UPerk_BaseComponent* AStudentCharacter::GetSecondPerk()
+{
+	if( _arrPerks.Num() > 1)
+	{
+		return  _arrPerks[1];
+	}
+	
+	// UPerk_BaseComponent* SecondPerk = nullptr;
+	//
+	// if( ArrPassivePerk.Num() > 1 )
+	// {
+	// 	SecondPerk =  Cast<UPerk_BaseComponent>(ArrPassivePerk[1]);
+	// 	return SecondPerk;
+	// }
+	//
+	// if ( ArrActivePerks.Num() > 0 )
+	// {
+	// 	SecondPerk = Cast<UPerk_BaseComponent>(ArrActivePerks[0]);
+	// 	if( SecondPerk == GetFirstPerk() )
+	// 	{
+	// 		SecondPerk = nullptr ;
+	// 	}
+	// 	else
+	// 	{
+	// 		if( ArrActivePerks.Num() > 1 )
+	// 		{
+	// 			SecondPerk = Cast<UPerk_BaseComponent>(ArrActivePerks[1]);
+	// 		}
+	// 	}
+	// }
+	//
+	// return SecondPerk;
+
+	return  nullptr;
 }
 
 void AStudentCharacter::TakeItem()

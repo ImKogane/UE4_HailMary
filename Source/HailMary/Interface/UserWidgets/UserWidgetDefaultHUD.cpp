@@ -23,7 +23,52 @@ void UUserWidgetDefaultHUD::UpdateWidget()
 	
 	FString txtTaskCount = TEXT("Taches réaliser : ") + FString::FromInt(gameInstance->GetTaskCount());
 	textTaskCount->SetText(FText::FromString(txtTaskCount));
+	
+	UpdateItems();
+	UpdatePerks();
+}
 
+void UUserWidgetDefaultHUD::UpdatePerks()
+{
+	if(m_player1)
+	{
+		//First Perk Icon
+		UTexture2D* FirstPerkTexture = nullptr;
+		if(IsValid(m_player1->GetFirstPerk()))
+		{
+			FirstPerkTexture = m_player1->GetFirstPerk()->GetTextureIcon();
+		}
+		imgPerk1Player1->SetBrushFromTexture(FirstPerkTexture, false);
+		//Second Perk Icon
+		UTexture2D* SecondPerkTexture = nullptr;
+		if(IsValid(m_player1->GetSecondPerk()))
+		{
+			SecondPerkTexture = m_player1->GetSecondPerk()->GetTextureIcon();
+		}
+		imgPerk2Player1->SetBrushFromTexture(SecondPerkTexture, false);
+	}
+
+	if(m_player2)
+	{
+		//First Perk Icon
+		UTexture2D* FirstPerkTexture = nullptr;
+		if(IsValid(m_player2->GetFirstPerk()))
+		{
+			FirstPerkTexture = m_player2->GetFirstPerk()->GetTextureIcon();
+		}
+		imgPerk1Player2->SetBrushFromTexture(FirstPerkTexture, false);
+		//Second Perk Icon
+		UTexture2D* SecondPerkTexture = nullptr;
+		if(IsValid(m_player2->GetSecondPerk()))
+		{
+			SecondPerkTexture = m_player2->GetSecondPerk()->GetTextureIcon();
+		}
+		imgPerk2Player2->SetBrushFromTexture(SecondPerkTexture, false);
+	}
+}
+
+void UUserWidgetDefaultHUD::UpdateItems()
+{
 	if(m_player1)
 	{
 		//Item Txt
