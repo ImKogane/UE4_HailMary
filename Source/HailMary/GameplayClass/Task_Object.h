@@ -20,7 +20,6 @@ protected:
 	#pragma region ProtectedVariables
 		UPROPERTY(EditDefaultsOnly, Category="Task settings")
 		TArray<FString> TaskList;
-		
 		UPROPERTY(VisibleInstanceOnly, Category="Task details")
 		FString Task;
 		UPROPERTY(VisibleAnywhere, Category="Task details")
@@ -35,7 +34,10 @@ protected:
 		FString _strDisplayTextUnlocked;
 		UPROPERTY(EditDefaultsOnly, Category="Task details")
 		FString _strDisplayTextCompleted;
-	
+		UPROPERTY(EditInstanceOnly, Category="Task details")
+		class AAreaDoor* TaskDoor;
+		UPROPERTY(EditInstanceOnly, Category="Items")
+		class AAreaDoor* AreaDoor;
 		UPROPERTY(EditDefaultsOnly, Category="Items")
 		TArray<TSubclassOf<ATaskItem_Object>> AvailableItems;
 		UPROPERTY(VisibleAnywhere, Category="Items")
@@ -61,10 +63,6 @@ protected:
 		virtual void OnBoxOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
 							int32 OtherBodyIndex) override;
 	#pragma endregion 
-	UPROPERTY(EditInstanceOnly, Category="Task details")
-	class AAreaDoor* TaskDoor;
-	UPROPERTY(EditInstanceOnly, Category="Items")
-	class AAreaDoor* AreaDoor;
 
 public :
 	#pragma region PublicFunctions
