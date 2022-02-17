@@ -6,6 +6,7 @@
 #include "HailMary/Characters/Perks/Perk_BaseComponent.h"
 #include "HailMary/GameplayClass/InteractionBase/InteractibleElement.h"
 #include "HailMary/GameplayClass/InteractionBase/InteractibleItem.h"
+#include "HailMary/Interface/HUD/GameHUD.h"
 #include "StudentCharacter.generated.h"
 
 #pragma region ForwardDeclarations
@@ -57,6 +58,8 @@ public:
 
 protected:
 	#pragma  region RuntimeVariables
+		UPROPERTY()
+		AGameHUD * _gameHud;
 		UPROPERTY(VisibleAnywhere, Category="Player")
 		int m_nbPlayerId = 0;
 		UPROPERTY(EditDefaultsOnly, Category="Movement")

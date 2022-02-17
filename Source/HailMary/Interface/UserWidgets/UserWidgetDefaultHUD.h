@@ -4,11 +4,12 @@
 #include "CoreMinimal.h"
 #include "UserWidgetInteractDisplay.h"
 #include "Blueprint/UserWidget.h"
-#include "HailMary/Characters/StudentCharacter/StudentCharacter.h"
+// #include "HailMary/Characters/StudentCharacter/StudentCharacter.h"
 #include "UserWidgetDefaultHUD.generated.h"
 
 #pragma region ForwardDeclaration
 	class UMainGameInstance;
+	class AStudentCharacter;
 #pragma endregion 
 
 

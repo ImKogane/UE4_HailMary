@@ -60,7 +60,8 @@ void AStudentCharacter::BeginPlay()
 	Super::BeginPlay();
 	InstanciatePerks();
 	SetPlayerId();
-	
+	//Get References
+	_gameHud = Cast<AGameHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -88,8 +89,6 @@ void AStudentCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerI
 	PlayerInputComponent->BindAction("Interaction", IE_Pressed, this, &AStudentCharacter::Interact);
 	PlayerInputComponent->BindAction("Action", IE_Pressed, this, &AStudentCharacter::DoAction);
 	PlayerInputComponent->BindAction("Action", IE_Released, this, &AStudentCharacter::UndoAction);
-
-	
 }
 
 /////////////////////// PLAYER MOVEMENT ///////////////////////
@@ -227,21 +226,20 @@ void AStudentCharacter::ResetInventory()
 void AStudentCharacter::SetNearItem(AInteractibleItem* Item)
 {
 	NearItem = Item;
-	
-	AGameHUD * hud = Cast<AGameHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
-	if( IsValid(hud))
+
+	if( IsValid(_gameHud))
 	{
 		if( m_nbPlayerId == 1 ) //player1
 		{
 			if( NearItem != nullptr)
 			{
 				FString strTextToDisplay = "Press E to interact with " + NearItem->GetItemName();
-				hud->GetDefaultWidget()->SetTextInteractPlayer1(strTextToDisplay);
-				hud->GetDefaultWidget()->ShowInteractPlayer1();
+				_gameHud->GetDefaultWidget()->SetTextInteractPlayer1(strTextToDisplay);
+				_gameHud->GetDefaultWidget()->ShowInteractPlayer1();
 			}
 			else
 			{
-				hud->GetDefaultWidget()->HideInteractPlayer1();
+				_gameHud->GetDefaultWidget()->HideInteractPlayer1();
 			}
 		}
 		else //player 2 
@@ -249,12 +247,12 @@ void AStudentCharacter::SetNearItem(AInteractibleItem* Item)
 			if( NearItem != nullptr)
 			{
 				FString strTextToDisplay = "Press E to interact with " + NearItem->GetItemName();
-				hud->GetDefaultWidget()->SetTextInteractPlayer2(strTextToDisplay);
-				hud->GetDefaultWidget()->ShowInteractPlayer2();
+				_gameHud->GetDefaultWidget()->SetTextInteractPlayer2(strTextToDisplay);
+				_gameHud->GetDefaultWidget()->ShowInteractPlayer2();
 			}
 			else
 			{
-				hud->GetDefaultWidget()->HideInteractPlayer2();
+				_gameHud->GetDefaultWidget()->HideInteractPlayer2();
 			}
 		}
 	}
@@ -264,15 +262,35 @@ void AStudentCharacter::SetNearElement(AInteractibleElement* Element)
 {
 	NearElement = Element;
 
-	// AGameHUD * hud = Cast<AGameHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
-	// if( NearElement != nullptr)
-	// {
-	// 	hud->GetDefaultWidget()->ShowInteractPlayer1();
-	// }
-	// else
-	// {
-	// 	hud->GetDefaultWidget()->HideInteractPlayer1();
-	// }
+	if( IsValid(_gameHud))
+	{
+		if( m_nbPlayerId == 1 ) //player1
+		{
+			if( NearElement != nullptr)
+			{
+				FString strTextToDisplay = NearElement->GetDisplayText();
+				_gameHud->GetDefaultWidget()->SetTextInteractPlayer1(strTextToDisplay);
+				_gameHud->GetDefaultWidget()->ShowInteractPlayer1();
+			}
+			else
+			{
+				_gameHud->GetDefaultWidget()->HideInteractPlayer1();
+			}
+		}
+		else //player 2 
+		{
+			if( NearElement != nullptr)
+			{
+				FString strTextToDisplay = NearElement->GetDisplayText();
+				_gameHud->GetDefaultWidget()->SetTextInteractPlayer2(strTextToDisplay);
+				_gameHud->GetDefaultWidget()->ShowInteractPlayer2();
+			}
+			else
+			{
+				_gameHud->GetDefaultWidget()->HideInteractPlayer2();
+			}
+		}
+	}
 }
 
 UPerk_BaseComponent* AStudentCharacter::GetFirstPerk()
