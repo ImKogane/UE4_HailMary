@@ -24,6 +24,8 @@ class HAILMARY_API UUserWidgetDefaultHUD : public UUserWidget
 			UMainGameInstance* gameInstance;
 			UPROPERTY()
 			UTexture2D* textureItemEmpty;
+			UPROPERTY()
+			bool bPostStartDone = false;
 		#pragma endregion
 
 		#pragma region MiddleBlock
@@ -35,7 +37,7 @@ class HAILMARY_API UUserWidgetDefaultHUD : public UUserWidget
 
 		#pragma region Player1
 			UPROPERTY()
-			AStudentCharacter* m_player1;
+			AStudentCharacter* m_player1 = nullptr;
 			UPROPERTY(BlueprintReadOnly, meta=(BindWidget))
 			class UTextBlock* textItemPlayer1;
 			UPROPERTY(BlueprintReadOnly, meta=(BindWidget))
@@ -50,7 +52,7 @@ class HAILMARY_API UUserWidgetDefaultHUD : public UUserWidget
 	
 		#pragma region Player2
 			UPROPERTY()
-			AStudentCharacter* m_player2;
+			AStudentCharacter* m_player2 = nullptr;
 			UPROPERTY(BlueprintReadOnly, meta=(BindWidget))
 			class UTextBlock* textItemPlayer2;
 			UPROPERTY(BlueprintReadOnly, meta=(BindWidget))
@@ -65,9 +67,17 @@ class HAILMARY_API UUserWidgetDefaultHUD : public UUserWidget
 
 		#pragma region PublicFunctions
 			UFUNCTION()
+			void PostStart();
+			UFUNCTION()
+			void CheckPostStart();
+			UFUNCTION()
 			void GetReferences();
 			UFUNCTION()
 			void UpdateWidget();
+			UFUNCTION()
+			void UpdateTimer();
+			UFUNCTION()
+			void UpdateTasks();
 			UFUNCTION()
 			void UpdatePerks();
 			UFUNCTION()

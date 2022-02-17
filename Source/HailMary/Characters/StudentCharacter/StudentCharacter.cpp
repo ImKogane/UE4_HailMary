@@ -58,10 +58,10 @@ AStudentCharacter::AStudentCharacter()
 void AStudentCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	InstanciatePerks();
-	SetPlayerId();
 	//Get References
 	_gameHud = Cast<AGameHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
+	SetPlayerId();
+	InstanciatePerks();
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -108,19 +108,6 @@ void AStudentCharacter::LookUpAtRate(float Rate)
 
 void AStudentCharacter::SetPlayerId()
 {
-	// TArray<AActor*> arrStudentCharacter;
-	// UGameplayStatics::GetAllActorsOfClass(GetWorld(),AStudentCharacter::StaticClass(), arrStudentCharacter);
-	// int l_nbHighestPlayerID = 0;
-	// for (AActor* currentActor : arrStudentCharacter)
-	// {
-	// 	AStudentCharacter* currentStudentCharacter = Cast<AStudentCharacter>(currentActor);
-	// 	if( currentStudentCharacter->m_nbPlayerId > l_nbHighestPlayerID )
-	// 	{
-	// 		l_nbHighestPlayerID = currentStudentCharacter->m_nbPlayerId;
-	// 	}
-	// }
-	// m_nbPlayerId = l_nbHighestPlayerID + 1;
-
 	if(UGameplayStatics::GetPlayerControllerID(Cast<APlayerController>(Controller)) == 0 )
 	{
 		m_nbPlayerId = 1;
@@ -133,6 +120,8 @@ void AStudentCharacter::SetPlayerId()
 
 void AStudentCharacter::InstanciatePerks()
 {
+	UWorld* world = GetWorld();
+	
 	for (TSubclassOf<UPerk_BaseComponent> currentPassivePerk : ArrPassivePerkBp)
 	{
 		_arrPerks.Add(NewObject<UPerk_BaseComponent>(this, currentPassivePerk));
@@ -264,6 +253,10 @@ void AStudentCharacter::TakeItem()
 	ItemInInventory = NearItem;
 	NearItem->Take();
 	NearItem = nullptr;
+	if(_gameHud)
+	{
+		_gameHud->GetDefaultWidget()->UpdateItems();
+	}
 }
 
 #pragma endregion 

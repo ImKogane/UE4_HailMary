@@ -112,7 +112,10 @@ void ATask_Object::UnlockTask()
 	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("Task unlock"));
 	TaskUnlocked = true;
 	_strDisplayText = _strDisplayTextUnlocked;
-	_gameHud->GetDefaultWidget()->UpdateDisplayText();
+	if(_gameHud )
+	{
+		_gameHud->GetDefaultWidget()->UpdateDisplayText();
+	}
 }
 
 /**
@@ -124,4 +127,9 @@ void ATask_Object::CompleteTask()
 	TheGameInstance->AddTaskCount(1);
 	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("Task completed"));
 	_strDisplayText = _strDisplayTextCompleted;
+	if(_gameHud )
+	{
+		_gameHud->GetDefaultWidget()->UpdateDisplayText();
+		_gameHud->GetDefaultWidget()->UpdateTasks();
+	}
 }

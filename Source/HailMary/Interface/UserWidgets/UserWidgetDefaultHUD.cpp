@@ -3,11 +3,13 @@
 
 #include "UserWidgetDefaultHUD.h"
 
+#include "ToolBuilderUtil.h"
 #include "Components/Image.h"
 #include "Components/TextBlock.h"
 #include "HailMary/MainGameInstance.h"
 #include "Kismet/GameplayStatics.h"
 #include "HailMary/Characters/StudentCharacter/StudentCharacter.h"
+
 
 void UUserWidgetDefaultHUD::GetReferences()
 {
@@ -20,31 +22,57 @@ void UUserWidgetDefaultHUD::GetReferences()
 	HideInteractPlayer2();
 }
 
+void UUserWidgetDefaultHUD::PostStart()
+{
+	bPostStartDone = true;
+	UpdatePerks(); // To Do once BOTH player have been Instantiated
+	UpdateTasks(); // Same then previous && When a task got completed
+}
+
+void UUserWidgetDefaultHUD::CheckPostStart()
+{
+	if( !bPostStartDone)
+	{
+		TArray<AActor*> arrPlayer;
+		UGameplayStatics::GetAllActorsOfClass(GetWorld(),AStudentCharacter::StaticClass(), arrPlayer);
+		if(arrPlayer.Num() >= 2 )
+		{
+			PostStart();
+		}
+	}
+}
+
 void UUserWidgetDefaultHUD::UpdateWidget()
+{
+	CheckPostStart();
+	UpdateTimer();
+}
+
+void UUserWidgetDefaultHUD::UpdateTimer()
 {
 	FString txtTimer = TEXT("Time left : ") + gameInstance->GetPlayCycle()->GetTimer();;
 	textTimer->SetText(FText::FromString(txtTimer));
-	
+}
+
+void UUserWidgetDefaultHUD::UpdateTasks()
+{
 	FString txtTaskCount = TEXT("Task Done : ") + FString::FromInt(gameInstance->GetTaskCount());
 	textTaskCount->SetText(FText::FromString(txtTaskCount));
-	
-	UpdateItems();
-	UpdatePerks();
 }
 
 void UUserWidgetDefaultHUD::UpdatePerks()
 {
-	if(m_player1)
+	if(IsValid(m_player1))
 	{
 		//First Perk Icon
-		UTexture2D* FirstPerkTexture = nullptr;
+		UTexture2D* FirstPerkTexture = textureItemEmpty;
 		if(IsValid(m_player1->GetFirstPerk()))
 		{
 			FirstPerkTexture = m_player1->GetFirstPerk()->GetTextureIcon();
 		}
 		imgPerk1Player1->SetBrushFromTexture(FirstPerkTexture, false);
 		//Second Perk Icon
-		UTexture2D* SecondPerkTexture = nullptr;
+		UTexture2D* SecondPerkTexture = textureItemEmpty;
 		if(IsValid(m_player1->GetSecondPerk()))
 		{
 			SecondPerkTexture = m_player1->GetSecondPerk()->GetTextureIcon();
@@ -52,17 +80,17 @@ void UUserWidgetDefaultHUD::UpdatePerks()
 		imgPerk2Player1->SetBrushFromTexture(SecondPerkTexture, false);
 	}
 
-	if(m_player2)
+	if(IsValid(m_player2))
 	{
 		//First Perk Icon
-		UTexture2D* FirstPerkTexture = nullptr;
+		UTexture2D* FirstPerkTexture = textureItemEmpty;
 		if(IsValid(m_player2->GetFirstPerk()))
 		{
 			FirstPerkTexture = m_player2->GetFirstPerk()->GetTextureIcon();
 		}
 		imgPerk1Player2->SetBrushFromTexture(FirstPerkTexture, false);
 		//Second Perk Icon
-		UTexture2D* SecondPerkTexture = nullptr;
+		UTexture2D* SecondPerkTexture = textureItemEmpty;
 		if(IsValid(m_player2->GetSecondPerk()))
 		{
 			SecondPerkTexture = m_player2->GetSecondPerk()->GetTextureIcon();
