@@ -2,6 +2,7 @@
 
 #pragma once
 #include "CoreMinimal.h"
+#include "UserWidgetInteractDisplay.h"
 #include "Blueprint/UserWidget.h"
 #include "HailMary/Characters/StudentCharacter/StudentCharacter.h"
 #include "UserWidgetDefaultHUD.generated.h"
@@ -42,6 +43,8 @@ class HAILMARY_API UUserWidgetDefaultHUD : public UUserWidget
 			class UImage* imgPerk1Player1;
 			UPROPERTY(BlueprintReadOnly, meta=(BindWidget))
 			class UImage* imgPerk2Player1;
+			UPROPERTY(BlueprintReadOnly, meta=(BindWidget))
+			UUserWidgetInteractDisplay* widgetInteractPlayer1;
 		#pragma endregion
 	
 		#pragma region Player2
@@ -55,6 +58,8 @@ class HAILMARY_API UUserWidgetDefaultHUD : public UUserWidget
 			class UImage* imgPerk1Player2;
 			UPROPERTY(BlueprintReadOnly, meta=(BindWidget))
 			class UImage* imgPerk2Player2;
+			UPROPERTY(BlueprintReadOnly, meta=(BindWidget))
+			UUserWidgetInteractDisplay* widgetInteractPlayer2;
 		#pragma endregion 
 
 		#pragma region PublicFunctions
@@ -66,5 +71,17 @@ class HAILMARY_API UUserWidgetDefaultHUD : public UUserWidget
 			void UpdatePerks();
 			UFUNCTION()
 			void UpdateItems();
+			UFUNCTION()
+			void ShowInteractPlayer1();
+			UFUNCTION()
+			void ShowInteractPlayer2();
+			UFUNCTION()
+    		void HideInteractPlayer1();
+    		UFUNCTION()
+    		void HideInteractPlayer2();
+			UFUNCTION()
+			void SetTextInteractPlayer1(FString newText);
+			UFUNCTION()
+			void SetTextInteractPlayer2(FString newText);
 		#pragma endregion 
 };

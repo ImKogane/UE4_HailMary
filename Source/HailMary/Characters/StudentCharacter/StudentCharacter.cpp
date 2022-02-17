@@ -9,6 +9,8 @@
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "HailMary/GameplayClass/Task_Object.h"
+#include "HailMary/Interface/HUD/GameHUD.h"
+#include "Kismet/GameplayStatics.h"
 
 //////////////////////////////////////////////////////////////////////////
 // AHailMaryCharacter
@@ -181,7 +183,8 @@ void AStudentCharacter::SwitchItem()
 	TakeItem();
 
 	tempItem->Drop(tempLocation);
-	NearItem = tempItem;
+	//NearItem = tempItem;
+	SetNearItem(tempItem);
 	NearItem->SetIsTake(false);
 }
 
@@ -191,6 +194,41 @@ void AStudentCharacter::ResetInventory()
 	TempItem = ItemInInventory;
 	ItemInInventory = nullptr;
 	TempItem->Destroy(true);
+}
+
+void AStudentCharacter::SetNearItem(AInteractibleItem* Item)
+{
+	NearItem = Item;
+	
+	AGameHUD * hud = Cast<AGameHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
+	if( IsValid(hud))
+	{
+		if( NearItem != nullptr)
+		{
+			FString strTextToDisplay = "Press E to interact with " + NearItem->GetItemName();
+			hud->GetDefaultWidget()->SetTextInteractPlayer1(strTextToDisplay);
+			hud->GetDefaultWidget()->ShowInteractPlayer1();
+		}
+		else
+		{
+			hud->GetDefaultWidget()->HideInteractPlayer1();
+		}
+	}
+}
+
+void AStudentCharacter::SetNearElement(AInteractibleElement* Element)
+{
+	NearElement = Element;
+
+	// AGameHUD * hud = Cast<AGameHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
+	// if( NearElement != nullptr)
+	// {
+	// 	hud->GetDefaultWidget()->ShowInteractPlayer1();
+	// }
+	// else
+	// {
+	// 	hud->GetDefaultWidget()->HideInteractPlayer1();
+	// }
 }
 
 UPerk_BaseComponent* AStudentCharacter::GetFirstPerk()

@@ -49,8 +49,8 @@ public:
 		FORCEINLINE bool GetIsDoAction() { return IsDoAction; }
 		FORCEINLINE float GetMakeTaskSpeed() { return MakeTaskSpeed; }
 		FORCEINLINE float GetOpenDoorSpeed() { return OpenDoorSpeed; }
-		FORCEINLINE void SetNearItem(AInteractibleItem* Item) { NearItem = Item; }
-		FORCEINLINE void SetNearElement(AInteractibleElement* Element) { NearElement = Element; }
+		void SetNearItem(AInteractibleItem* Item);
+		void SetNearElement(AInteractibleElement* Element);
 		UPerk_BaseComponent* GetFirstPerk();
 		UPerk_BaseComponent* GetSecondPerk();
 	#pragma endregion 

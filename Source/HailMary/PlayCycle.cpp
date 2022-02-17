@@ -50,7 +50,7 @@ void APlayCycle::Clock()
 	if (LoopTime > 0)
 	{
 		LoopTime--;
-		ShowTimer();
+//		ShowTimer();
 	}
 	else
 	{

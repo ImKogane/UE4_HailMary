@@ -14,6 +14,9 @@ void UUserWidgetDefaultHUD::GetReferences()
 
 	m_player1 = Cast<AStudentCharacter>(UGameplayStatics::GetPlayerController(GetWorld(), 0)->GetCharacter());
 	m_player2 = Cast<AStudentCharacter>(UGameplayStatics::GetPlayerController(GetWorld(), 1)->GetCharacter());
+
+	HideInteractPlayer1();
+	HideInteractPlayer2();
 }
 
 void UUserWidgetDefaultHUD::UpdateWidget()
@@ -105,4 +108,36 @@ void UUserWidgetDefaultHUD::UpdateItems()
 		}
 		imgItemPlayer2->SetBrushFromTexture(texture, false);
 	}
+}
+
+void UUserWidgetDefaultHUD::ShowInteractPlayer1()
+{
+	widgetInteractPlayer1->SetVisibility(ESlateVisibility::Visible);
+}
+
+void UUserWidgetDefaultHUD::ShowInteractPlayer2()
+{
+	widgetInteractPlayer2->SetVisibility(ESlateVisibility::Visible);
+}
+
+void UUserWidgetDefaultHUD::HideInteractPlayer1()
+{
+	widgetInteractPlayer1->SetVisibility(ESlateVisibility::Hidden);
+}
+
+void UUserWidgetDefaultHUD::HideInteractPlayer2()
+{
+	widgetInteractPlayer2->SetVisibility(ESlateVisibility::Hidden);
+}
+
+void UUserWidgetDefaultHUD::SetTextInteractPlayer1(FString newText)
+{
+	FText NewText = FText::FromString(newText);
+	widgetInteractPlayer1->textInteract->SetText(NewText) ;
+}
+
+void UUserWidgetDefaultHUD::SetTextInteractPlayer2(FString newText)
+{
+	FText NewText = FText::FromString(newText);
+	widgetInteractPlayer2->textInteract->SetText(NewText) ;
 }
