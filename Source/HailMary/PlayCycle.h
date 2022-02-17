@@ -38,6 +38,8 @@ protected:
 	UFUNCTION()
 	void ShowTimer();
 
+	class UMainGameInstance* TheGameInstance;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

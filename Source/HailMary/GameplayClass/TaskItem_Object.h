@@ -15,7 +15,7 @@ class HAILMARY_API ATaskItem_Object : public AInteractibleItem
 	GENERATED_BODY()
 
 protected:
-	UPROPERTY(VisibleAnywhere, Category = "Items details")
+	UPROPERTY(EditAnywhere, Category = "Items details")
 	int TaskItemArea;
 
 public:

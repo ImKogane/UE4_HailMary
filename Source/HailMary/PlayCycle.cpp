@@ -2,6 +2,8 @@
 
 
 #include "PlayCycle.h"
+
+#include "MainGameInstance.h"
 #include "Kismet/GameplayStatics.h"
 
 // Sets default values
@@ -18,6 +20,10 @@ void APlayCycle::BeginPlay()
 
 	LoopTime = InitialLoopTime;
 	GetWorldTimerManager().SetTimer(GameTimer, this, &APlayCycle::Clock, 1.0f, true);
+	
+	TheGameInstance = Cast<UMainGameInstance>(GetGameInstance());
+	TheGameInstance->SetPlayCycle(this);
+	TheGameInstance->ResetInstance();
 }
 
 // Called every frame
@@ -41,7 +47,9 @@ void APlayCycle::Loop()
 {	
 	if (LoopTime <= 0)
 	{
+		ResetTimer();
 		UGameplayStatics::OpenLevel(GetWorld(), FName(*GetWorld()->GetName()), false);
+		
 	}
 }
 
@@ -60,7 +68,7 @@ void APlayCycle::Clock()
 
 void APlayCycle::ShowTimer()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, GetTimer());
+	//GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, GetTimer());
 }
 
 void APlayCycle::ResetTimer()

@@ -61,6 +61,10 @@ protected:
 		virtual void OnBoxOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
 							int32 OtherBodyIndex) override;
 	#pragma endregion 
+	UPROPERTY(EditInstanceOnly, Category="Task details")
+	class AAreaDoor* TaskDoor;
+	UPROPERTY(EditInstanceOnly, Category="Items")
+	class AAreaDoor* AreaDoor;
 
 public :
 	#pragma region PublicFunctions

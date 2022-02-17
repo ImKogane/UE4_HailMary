@@ -25,8 +25,8 @@ void AItemManager::BeginPlay()
  */
 void AItemManager::SpawnItems()
 {
-	SpawnTaskItems();
-	SpawnUsableItems();
+	//SpawnTaskItems();
+	//SpawnUsableItems();
 	
 	
 }
