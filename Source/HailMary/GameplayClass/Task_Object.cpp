@@ -3,6 +3,7 @@
 
 #include "Task_Object.h"
 
+#include "AreaDoor.h"
 #include "HailMary/HailMaryGameMode.h"
 #include "HailMary/MainGameInstance.h"
 #include "Kismet/GameplayStatics.h"
@@ -10,10 +11,9 @@
 void ATask_Object::BeginPlay()
 {
 	Super::BeginPlay();
-
 	GenerateTask();
-
 	TheGameInstance = Cast<UMainGameInstance>(GetGameInstance());
+	_strDisplayText = _strDisplayTextLocked;
 }
 
 void ATask_Object::GenerateTask()
@@ -112,6 +112,11 @@ void ATask_Object::UnlockTask()
 {
 	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("Task unlock"));
 	TaskUnlocked = true;
+	_strDisplayText = _strDisplayTextUnlocked;
+	if(_gameHud )
+	{
+		_gameHud->GetDefaultWidget()->UpdateDisplayText();
+	}
 }
 
 /**
@@ -121,5 +126,13 @@ void ATask_Object::CompleteTask()
 {
 	TaskCompleted = true;
 	TheGameInstance->AddTaskCount(1);
+	TheGameInstance->GetPlayCycle()->ResetTimer();
+	if(TaskDoor != nullptr) TaskDoor->OpenDoor();
 	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("Task completed"));
+	_strDisplayText = _strDisplayTextCompleted;
+	if(_gameHud )
+	{
+		_gameHud->GetDefaultWidget()->UpdateDisplayText();
+		_gameHud->GetDefaultWidget()->UpdateTasks();
+	}
 }

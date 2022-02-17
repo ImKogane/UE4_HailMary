@@ -41,7 +41,7 @@ protected:
 	FString ItemName;
 	
 	UPROPERTY(EditDefaultsOnly, Category="Item details")
-	UTexture* ItemArtwork;
+	UTexture2D* ItemArtwork;
 
 	UPROPERTY(VisibleAnywhere, Category="Item details")
 	bool IsTake;
@@ -66,6 +66,7 @@ public:
 
 	FORCEINLINE FString GetItemName() { return ItemName; }
 	FORCEINLINE bool GetIsTaskItem() { return IsTaskItem; }
+	FORCEINLINE UTexture2D* GetItemArtwork() { return ItemArtwork; }
 	
 	FORCEINLINE void SetIsTake(bool bIsTake) { IsTake = bIsTake; }
 

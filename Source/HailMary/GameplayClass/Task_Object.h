@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "TaskItem_Object.h"
-#include "TaskItem_Object.h"
 #include "HailMary/Characters/StudentCharacter/StudentCharacter.h"
 #include "HailMary/GameplayClass/InteractionBase/InteractibleElement.h"
 #include "Task_Object.generated.h"
@@ -17,72 +16,67 @@ class HAILMARY_API ATask_Object : public AInteractibleElement
 {
 	GENERATED_BODY()
 
-	protected:
+protected:
+	#pragma region ProtectedVariables
+		UPROPERTY(EditDefaultsOnly, Category="Task settings")
+		TArray<FString> TaskList;
+		UPROPERTY(VisibleInstanceOnly, Category="Task details")
+		FString Task;
+		UPROPERTY(VisibleAnywhere, Category="Task details")
+		int TaskArea;
+		UPROPERTY(EditAnywhere, Category="Task details")
+		bool TaskUnlocked;
+		UPROPERTY(EditAnywhere, Category="Task details")
+		bool TaskCompleted;
+		UPROPERTY(EditDefaultsOnly, Category="Task details")
+		FString _strDisplayTextLocked;
+		UPROPERTY(EditDefaultsOnly, Category="Task details")
+		FString _strDisplayTextUnlocked;
+		UPROPERTY(EditDefaultsOnly, Category="Task details")
+		FString _strDisplayTextCompleted;
+		UPROPERTY(EditInstanceOnly, Category="Task details")
+		class AAreaDoor* TaskDoor;
+		UPROPERTY(EditInstanceOnly, Category="Items")
+		class AAreaDoor* AreaDoor;
+		UPROPERTY(EditDefaultsOnly, Category="Items")
+		TArray<TSubclassOf<ATaskItem_Object>> AvailableItems;
+		UPROPERTY(VisibleAnywhere, Category="Items")
+		AInteractibleItem* MainNeedItemName;
+		UPROPERTY(VisibleAnywhere, Category="Items")
+		AInteractibleItem* OtherNeedItemName;
+		UPROPERTY(VisibleAnywhere)
+		TArray<AStudentCharacter*> NearPlayers;
+		class UMainGameInstance* TheGameInstance;
+	#pragma endregion 
 
-	virtual void BeginPlay() override;
-	
-	UPROPERTY(EditDefaultsOnly, Category="Task settings")
-	TArray<FString> TaskList;
-
-	UPROPERTY(EditInstanceOnly, Category="Task details")
-	FString Task;
-
-	UPROPERTY(EditInstanceOnly, Category="Task details")
-	int TaskArea;
-	
-
-	UPROPERTY(EditAnywhere, Category="Task details")
-	bool TaskUnlocked;
-
-	UPROPERTY(EditAnywhere, Category="Task details")
-	bool TaskCompleted;
-
-	UPROPERTY(EditDefaultsOnly, Category="Items")
-	TArray<TSubclassOf<ATaskItem_Object>> AvailableItems;
-
-	UPROPERTY(EditInstanceOnly, Category="Items")
-	AInteractibleItem* MainNeedItemName;
-	
-	UPROPERTY(EditInstanceOnly, Category="Items")
-	AInteractibleItem* OtherNeedItemName;
-
-	UPROPERTY(VisibleAnywhere)
-	TArray<AStudentCharacter*> NearPlayers;
-	
-
-	
-	
-	UFUNCTION()
-	void GenerateTask();
-	
-	UFUNCTION()
-	void UnlockTask();
-	
-	UFUNCTION()
-	void CompleteTask();
-	
-	virtual void OnBoxOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
-						int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) override;
-	
-	virtual void OnBoxOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
-						int32 OtherBodyIndex) override;
-
-	class UMainGameInstance* TheGameInstance;
-
+	#pragma region ProtectedFunctions
+		virtual void BeginPlay() override;
+		UFUNCTION()
+		void GenerateTask();
+		UFUNCTION()
+		void UnlockTask();
+		UFUNCTION()
+		void CompleteTask();
+		virtual void OnBoxOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
+							int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) override;
+		
+		virtual void OnBoxOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
+							int32 OtherBodyIndex) override;
+	#pragma endregion 
 
 public :
-
-	virtual void Tick(float DeltaSeconds) override;
+	#pragma region PublicFunctions
+		virtual void Tick(float DeltaSeconds) override;
+	#pragma endregion 
 	
-	FORCEINLINE AInteractibleItem* GetMainNeedItemName() { return MainNeedItemName; }
-	FORCEINLINE AInteractibleItem* GetOtherNeedItemName() { return OtherNeedItemName; }
-
-	FORCEINLINE void SetMainItem(AInteractibleItem* Item) { MainNeedItemName = Item; }
-	FORCEINLINE void SetOtherItem(AInteractibleItem* Item) { OtherNeedItemName = Item; }
-	
-	FORCEINLINE void SetTaskArea(int area) { TaskArea = area; }
-	FORCEINLINE int GetTaskArea() { return TaskArea; }
-
-	
-	
+	#pragma region Accessors
+		FORCEINLINE AInteractibleItem* GetMainNeedItemName() { return MainNeedItemName; }
+		FORCEINLINE AInteractibleItem* GetOtherNeedItemName() { return OtherNeedItemName; }
+		FORCEINLINE void SetMainItem(AInteractibleItem* Item) { MainNeedItemName = Item; }
+		FORCEINLINE void SetOtherItem(AInteractibleItem* Item) { OtherNeedItemName = Item; }
+		FORCEINLINE void SetTaskArea(int area) { TaskArea = area; }
+		FORCEINLINE int GetTaskArea() { return TaskArea; }
+		FORCEINLINE bool IsTaskUnlocked() { return TaskUnlocked; }
+		FORCEINLINE bool IsTaskCompleted() { return TaskCompleted; }
+	#pragma endregion 
 };

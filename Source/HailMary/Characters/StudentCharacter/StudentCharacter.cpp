@@ -7,9 +7,12 @@
 #include "Components/InputComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
+#include "GameFramework/GameSession.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "HailMary/Characters/IA_Boss/AICharacter.h"
 #include "HailMary/GameplayClass/Task_Object.h"
+#include "HailMary/Interface/HUD/GameHUD.h"
+#include "Kismet/GameplayStatics.h"
 
 //////////////////////////////////////////////////////////////////////////
 // AHailMaryCharacter
@@ -55,6 +58,15 @@ AStudentCharacter::AStudentCharacter()
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
 }
 
+void AStudentCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+	//Get References
+	_gameHud = Cast<AGameHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
+	SetPlayerId();
+	InstanciatePerks();
+}
+
 //////////////////////////////////////////////////////////////////////////
 // Input
 
@@ -80,8 +92,6 @@ void AStudentCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerI
 	PlayerInputComponent->BindAction("Interaction", IE_Pressed, this, &AStudentCharacter::Interact);
 	PlayerInputComponent->BindAction("Action", IE_Pressed, this, &AStudentCharacter::DoAction);
 	PlayerInputComponent->BindAction("Action", IE_Released, this, &AStudentCharacter::UndoAction);
-
-	
 }
 void AStudentCharacter::BeginPlay()
 {
@@ -101,6 +111,33 @@ void AStudentCharacter::LookUpAtRate(float Rate)
 {
 	// calculate delta for this frame from the rate information
 	AddControllerPitchInput(Rate * BaseLookUpRate * GetWorld()->GetDeltaSeconds());
+}
+
+void AStudentCharacter::SetPlayerId()
+{
+	if(UGameplayStatics::GetPlayerControllerID(Cast<APlayerController>(Controller)) == 0 )
+	{
+		m_nbPlayerId = 1;
+	}
+	else
+	{
+		m_nbPlayerId = 2;
+	}
+}
+
+void AStudentCharacter::InstanciatePerks()
+{
+	UWorld* world = GetWorld();
+	
+	for (TSubclassOf<UPerk_BaseComponent> currentPassivePerk : ArrPassivePerkBp)
+	{
+		_arrPerks.Add(NewObject<UPerk_BaseComponent>(this, currentPassivePerk));
+	}
+
+	for (TSubclassOf<UPerk_BaseComponent> currentActivePerk : ArrActivePerksBp)
+	{
+		_arrPerks.Add(NewObject<UPerk_BaseComponent>(this ,currentActivePerk));
+	}
 }
 
 void AStudentCharacter::MoveForward(float Value)
@@ -169,7 +206,8 @@ void AStudentCharacter::SwitchItem()
 	TakeItem();
 
 	tempItem->Drop(tempLocation);
-	NearItem = tempItem;
+	//NearItem = tempItem;
+	SetNearItem(tempItem);
 	NearItem->SetIsTake(false);
 }
 
@@ -181,11 +219,51 @@ void AStudentCharacter::ResetInventory()
 	TempItem->Destroy(true);
 }
 
+void AStudentCharacter::SetNearItem(AInteractibleItem* Item)
+{
+	NearItem = Item;
+	if(_gameHud)
+	{
+		_gameHud->GetDefaultWidget()->UpdateDisplayText();
+	}
+}
+
+void AStudentCharacter::SetNearElement(AInteractibleElement* Element)
+{
+	NearElement = Element;
+	if(_gameHud)
+	{
+		_gameHud->GetDefaultWidget()->UpdateDisplayText();
+	}
+}
+
+UPerk_BaseComponent* AStudentCharacter::GetFirstPerk()
+{
+	if( _arrPerks.Num() > 0)
+	{
+		 return  _arrPerks[0];
+	}
+	return nullptr;
+}
+
+UPerk_BaseComponent* AStudentCharacter::GetSecondPerk()
+{
+	if( _arrPerks.Num() > 1)
+	{
+		return  _arrPerks[1];
+	}
+	return  nullptr;
+}
+
 void AStudentCharacter::TakeItem()
 {
 	ItemInInventory = NearItem;
 	NearItem->Take();
 	NearItem = nullptr;
+	if(_gameHud)
+	{
+		_gameHud->GetDefaultWidget()->UpdateItems();
+	}
 }
 
 #pragma endregion 

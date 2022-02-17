@@ -15,6 +15,9 @@ class HAILMARY_API AGameHUD : public AHUD
 {
 	GENERATED_BODY()
 
+	public:
+		FORCEINLINE UUserWidgetDefaultHUD* GetDefaultWidget(){return _widgetDefaultHUD;}
+	
 	protected:
 		UPROPERTY(EditAnywhere)
 		TSubclassOf<UUserWidgetDefaultHUD> _bpWidgetDefaultHUD;

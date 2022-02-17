@@ -4,6 +4,7 @@
 #include "InteractibleElement.h"
 
 #include "HailMary/Characters/StudentCharacter/StudentCharacter.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 AInteractibleElement::AInteractibleElement()
@@ -28,10 +29,11 @@ AInteractibleElement::AInteractibleElement()
 void AInteractibleElement::BeginPlay()
 {
 	Super::BeginPlay();
-
+	//Bind event
 	CollisionBox->OnComponentBeginOverlap.AddDynamic(this, &AInteractibleElement::OnBoxOverlapBegin);
 	CollisionBox->OnComponentEndOverlap.AddDynamic(this, &AInteractibleElement::OnBoxOverlapEnd);
-	
+	//Get References
+	_gameHud = Cast<AGameHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
 }
 
 // Called every frame

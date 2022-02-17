@@ -3,15 +3,27 @@
 
 #include "GameHUD.h"
 
+#include "Kismet/GameplayStatics.h"
+
+
 void AGameHUD::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	if( IsValid(_bpWidgetDefaultHUD))
+	//Singleton
+	AActor* inst = UGameplayStatics::GetActorOfClass(GetWorld(),AGameHUD::StaticClass());
+	if( IsValid(inst) && inst!= this)
 	{
-		_widgetDefaultHUD = CreateWidget<UUserWidgetDefaultHUD>(GetWorld(), _bpWidgetDefaultHUD);
-		_widgetDefaultHUD->AddToViewport();
-		_widgetDefaultHUD->GetReferences();
+		this->Destroy();
+	}
+	else
+	{
+		if( IsValid(_bpWidgetDefaultHUD))
+		{
+			_widgetDefaultHUD = CreateWidget<UUserWidgetDefaultHUD>(GetWorld(), _bpWidgetDefaultHUD);
+			_widgetDefaultHUD->AddToViewport();
+			_widgetDefaultHUD->GetReferences();
+		}
 	}
 }
 
