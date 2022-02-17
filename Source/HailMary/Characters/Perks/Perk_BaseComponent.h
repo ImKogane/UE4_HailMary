@@ -23,6 +23,10 @@ public:
 		virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 		UFUNCTION()
 		virtual void UsePerk();
+	#pragma endregion
+
+	#pragma region GetterSetter
+		FORCEINLINE UTexture2D* GetTextureIcon(){return _textureIcon;}
 	#pragma endregion 
 
 protected:
@@ -35,6 +39,8 @@ protected:
 		TEnumAsByte<PerkType> _perkType;
 		UPROPERTY(EditDefaultsOnly, Category="Perk Description")
 		FString _strEffect;
+		UPROPERTY(EditDefaultsOnly, Category="Perk Description")
+		UTexture2D* _textureIcon;
 	#pragma endregion 
 	
 	#pragma region ProtectedFunctions

@@ -3,6 +3,7 @@
 
 #include "UserWidgetDefaultHUD.h"
 
+#include "Components/Image.h"
 #include "Components/TextBlock.h"
 #include "HailMary/MainGameInstance.h"
 #include "Kismet/GameplayStatics.h"
@@ -25,22 +26,38 @@ void UUserWidgetDefaultHUD::UpdateWidget()
 
 	if(m_player1)
 	{
+		//Item Txt
 		FString txtItemPlayer1= "Empty";
 		if(IsValid(m_player1->GetItemInInventory()))
 		{
 			txtItemPlayer1 = m_player1->GetItemInInventory()->GetItemName();
 		}
 		textItemPlayer1->SetText(FText::FromString(txtItemPlayer1));
+		//Item Icon
+		UTexture2D* texture = textureItemEmpty;
+		if(IsValid(m_player1->GetItemInInventory()))
+		{
+			texture = m_player1->GetItemInInventory()->GetItemArtwork();
+		}
+		imgItemPlayer1->SetBrushFromTexture(texture, false);
 	}
 
 
 	if(m_player2)
 	{
-		FString txtItemPlayer2= "_ _ _";
+		//Item Txt
+		FString txtItemPlayer2= "Empty";
 		if(IsValid(m_player2->GetItemInInventory()))
 		{
 			txtItemPlayer2 = m_player2->GetItemInInventory()->GetItemName();
 		}
 		textItemPlayer2->SetText(FText::FromString(txtItemPlayer2));
+		//Item Icon
+		UTexture2D* texture = textureItemEmpty;
+		if(IsValid(m_player2->GetItemInInventory()))
+		{
+			texture = m_player2->GetItemInInventory()->GetItemArtwork();
+		}
+		imgItemPlayer2->SetBrushFromTexture(texture, false);
 	}
 }

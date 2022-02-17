@@ -20,6 +20,8 @@ class HAILMARY_API UUserWidgetDefaultHUD : public UUserWidget
 		#pragma region RuntimeVariables
 			UPROPERTY()
 			UMainGameInstance* gameInstance;
+			UPROPERTY()
+			UTexture2D* textureItemEmpty;
 		#pragma endregion
 
 		#pragma region MiddleBlock
@@ -34,6 +36,8 @@ class HAILMARY_API UUserWidgetDefaultHUD : public UUserWidget
 			AStudentCharacter* m_player1;
 			UPROPERTY(BlueprintReadOnly, meta=(BindWidget))
 			class UTextBlock* textItemPlayer1;
+			UPROPERTY(BlueprintReadOnly, meta=(BindWidget))
+			class UImage* imgItemPlayer1;
 		#pragma endregion
 	
 		#pragma region Player2
@@ -41,6 +45,8 @@ class HAILMARY_API UUserWidgetDefaultHUD : public UUserWidget
 			AStudentCharacter* m_player2;
 			UPROPERTY(BlueprintReadOnly, meta=(BindWidget))
 			class UTextBlock* textItemPlayer2;
+			UPROPERTY(BlueprintReadOnly, meta=(BindWidget))
+			class UImage* imgItemPlayer2;
 		#pragma endregion 
 
 		#pragma region PublicFunctions
