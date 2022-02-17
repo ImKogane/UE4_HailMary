@@ -63,6 +63,7 @@ void AStudentCharacter::BeginPlay()
 	Super::BeginPlay();
 	//Get References
 	_gameHud = Cast<AGameHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
+	Collider->OnComponentBeginOverlap.AddDynamic(this, &AStudentCharacter::OnBeginOverlap);
 	SetPlayerId();
 	InstanciatePerks();
 }
@@ -93,11 +94,7 @@ void AStudentCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerI
 	PlayerInputComponent->BindAction("Action", IE_Pressed, this, &AStudentCharacter::DoAction);
 	PlayerInputComponent->BindAction("Action", IE_Released, this, &AStudentCharacter::UndoAction);
 }
-void AStudentCharacter::BeginPlay()
-{
-	Super::BeginPlay();
-	Collider->OnComponentBeginOverlap.AddDynamic(this, &AStudentCharacter::OnBeginOverlap);
-}
+
 /////////////////////// PLAYER MOVEMENT ///////////////////////
 #pragma region Player movement
 

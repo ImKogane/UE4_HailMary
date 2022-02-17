@@ -30,10 +30,11 @@ public:
 	
 	#pragma region PublicFunctions
 		AStudentCharacter();
+	    
 		virtual void BeginPlay() override;
 		/** Base turn rate, in deg/sec. Other scaling may affect final turn rate. */
 		UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
-		float BaseTurnRate;
+		float BaseTurnRate; 
 		/** Base look up/down rate, in deg/sec. Other scaling may affect final rate. */
 		UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
 		float BaseLookUpRate;
@@ -76,6 +77,8 @@ protected:
 		AInteractibleItem* NearItem;
 		UPROPERTY()
 		AInteractibleElement* NearElement;
+	    UPROPERTY(EditAnywhere)
+	    USphereComponent* Collider;
 	#pragma endregion 
 	
 	///////////////////// PLAYER STATS /////////////////////
@@ -124,7 +127,10 @@ protected:
 		void DoAction();
 		UFUNCTION()
 		void UndoAction();
-		/** 
+	    UFUNCTION()
+	    void OnBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp,
+	                    int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	/** 
 		* Called via input to turn at a given rate. 
 		* @param Rate	This is a normalized rate, i.e. 1.0 means 100% of desired turn rate
 		*/
