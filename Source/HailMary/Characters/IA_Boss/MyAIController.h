@@ -33,6 +33,9 @@ class HAILMARY_API AMyAIController : public AAIController
 
 	UPROPERTY(EditDefaultsOnly, Category = AI)
 	FName BlackboardKey ;
+
+	UPROPERTY(EditDefaultsOnly, Category = AI)
+	FName PickKey ;
 	
 	TArray<AActor*> BotTargetPoints;
 
@@ -53,5 +56,5 @@ class HAILMARY_API AMyAIController : public AAIController
 	/*Sets the sensed target in the blackboard*/
 	void SetSeenTarget(APawn* InPawn);
 	void SetNotSeenTarget();
-
+    void SetPick();
 };

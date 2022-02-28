@@ -31,6 +31,8 @@ public:
 	UPROPERTY(VisibleAnywhere)
 	bool bHolding = false;
 	
+	/*UPROPERTY(VisibleAnywhere)
+	class AMyAIController* AIController;*/
 	// Sets default values for this character's properties
 	AAICharacter();
 	

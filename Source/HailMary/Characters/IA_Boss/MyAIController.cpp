@@ -15,6 +15,7 @@ AMyAIController::AMyAIController()
  
 	LocationToGoKey = "LocationToGo";
 	BlackboardKey = "Target";
+	PickKey = "bCanPick";
 }
 
 void AMyAIController::OnPossess(APawn* InPawn)
@@ -56,5 +57,13 @@ void AMyAIController::SetNotSeenTarget()
 		AIChar->bAIVisible = false;
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Je te vois pas"));
 		BlackboardComp->ClearValue("Target");
+	}
+}
+
+void AMyAIController::SetPick()
+{
+	if(BehaviorComp)
+	{
+		BlackboardComp->SetValueAsBool(PickKey, true);
 	}
 }

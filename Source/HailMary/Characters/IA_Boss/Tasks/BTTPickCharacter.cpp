@@ -14,7 +14,11 @@ EBTNodeResult::Type UBTTPickCharacter::ExecuteTask(UBehaviorTreeComponent & Owne
 		if(AICon->AIChar)
 		{
 			AICon->AIChar->Pick();
-			AICon->GetBlackboardComp()->ClearValue("Target");
+			/*if(AICon->AIChar->bHolding)
+			{
+				//AICon->GetBlackboardComp()->SetValueAsBool("bCanPick", false);
+				AICon->GetBlackboardComp()->ClearValue("Target");
+			}*/
 			return EBTNodeResult::Succeeded;
 		}
 	}
