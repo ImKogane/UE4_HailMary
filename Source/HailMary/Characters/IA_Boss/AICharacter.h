@@ -24,8 +24,6 @@ public:
 	/*The Component which is used for the "seeing" sense of the AI*/
 	UPROPERTY(VisibleAnywhere,Category="AI")
 	class UPawnSensingComponent* PawnSensingComp;
-
-	UPROPERTY(EditDefaultsOnly, Category="Sounds")
 	
 	UPROPERTY(VisibleAnywhere)
 	AStudentCharacter* Character;
