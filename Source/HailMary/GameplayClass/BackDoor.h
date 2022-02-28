@@ -20,6 +20,9 @@ protected:
 	UPROPERTY(VisibleAnywhere)
 	class AStudentCharacter* NearPlayer;
 	
+	UPROPERTY(VisibleAnywhere)
+	class AStudentCharacter* PlayerInside;
+	
 	
 	UFUNCTION()
 	void OpenDoor();
@@ -31,7 +34,9 @@ protected:
 						int32 OtherBodyIndex) override;
 
 public :
-
 		virtual void Tick(float DeltaSeconds) override;
+
+		bool GetPlayerIsInside();
+	
 	
 };
