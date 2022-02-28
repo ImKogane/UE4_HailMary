@@ -7,6 +7,7 @@
 #include "InteractionBase/InteractibleElement.h"
 #include "HidingSpot.generated.h"
 
+class UMainGameInstance;
 /**
  * 
  */
@@ -31,6 +32,10 @@ class HAILMARY_API AHidingSpot : public AInteractibleElement
 			bool _bContainPlayer = false;
 			UPROPERTY(EditAnywhere)
 			USceneComponent* _sceneComponentTeleportPosition;
+			UPROPERTY(VisibleAnywhere)
+			TArray<AHidingSpot*> _arrHidingSpots;
+			UPROPERTY()
+			UMainGameInstance* gameInstance;
 		#pragma endregion 
 	
 		#pragma region ProtectedFunctions
