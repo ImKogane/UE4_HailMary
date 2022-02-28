@@ -64,3 +64,16 @@ void AAICharacter::OnSeePlayer(APawn* InPawn)
 		AIController->SetSeenTarget(InPawn);
 	}
 }
+
+void AAICharacter::Pick()
+{
+	if(!bHolding)
+	{
+		if(Character != nullptr)
+		{
+			Character->PickItem(this);
+			GetCharacterMovement()->MaxWalkSpeed = 250;
+			bHolding = true;
+		}
+	}
+}

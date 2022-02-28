@@ -40,6 +40,8 @@ public:
 		float BaseLookUpRate;
 		UFUNCTION()
 		void ResetInventory();
+	    UFUNCTION()
+	    void PickItem(AActor* Holder);
 	#pragma endregion PublicFunctions
 
 	#pragma region Accessor

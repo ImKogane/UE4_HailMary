@@ -304,13 +304,34 @@ void AStudentCharacter::UndoAction()
 
 void AStudentCharacter::OnBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	AAICharacter* Character = Cast<AAICharacter>(OtherActor);
+	/*AAICharacter* Character = Cast<AAICharacter>(OtherActor);
 	if (Character != nullptr)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Collision"));
-		GetMesh()->SetSimulatePhysics(false);
-		GetMesh()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-		AttachToComponent(Character->GetMesh(),FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("Socket_test"));
+		//GetMesh()->SetSimulatePhysics(false);
+		//GetMesh()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		//AttachToComponent(Character->GetMesh(),FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("Socket_test"));
+	}*/
+	if(OtherActor->IsA(AAICharacter::StaticClass()))
+	{
+		if( Cast<AAICharacter>(OtherActor)->Character == nullptr)
+		{
+			Cast<AAICharacter>(OtherActor)->Character = this;
+		}
+	}
+}
+
+void AStudentCharacter::PickItem(AActor* Holder)
+{
+	GetMesh()->SetSimulatePhysics(false);
+	GetMesh()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	if(Holder->IsA(AAICharacter::StaticClass()))
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Collision"));
+		AAICharacter* ItemHolder = Cast<AAICharacter>(Holder);
+		AttachToComponent(ItemHolder->GetMesh(),FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("Socket_test"));
+		ItemHolder->Character = this;
+		ItemHolder->bHolding = true;
 	}
 }
 

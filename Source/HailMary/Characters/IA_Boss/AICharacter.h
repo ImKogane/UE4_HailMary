@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "HailMary/Characters/StudentCharacter/StudentCharacter.h"
 #include "AICharacter.generated.h"
 
 UCLASS()
@@ -24,9 +25,17 @@ public:
 	UPROPERTY(VisibleAnywhere,Category="AI")
 	class UPawnSensingComponent* PawnSensingComp;
 	
+	UPROPERTY(VisibleAnywhere)
+	AStudentCharacter* Character;
+
+	UPROPERTY(VisibleAnywhere)
+	bool bHolding = false;
+	
 	// Sets default values for this character's properties
 	AAICharacter();
-
+	
+	void Pick();
+	
 	bool bAIVisible = false;
 	float LastSeenTime;
 	float TimeOut = 10.0f;
