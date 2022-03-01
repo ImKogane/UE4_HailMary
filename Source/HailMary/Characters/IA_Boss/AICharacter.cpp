@@ -4,6 +4,8 @@
 #include "AICharacter.h"
 #include "MyAIController.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "HailMary/GameplayClass/ExitDoor.h"
+#include "Kismet/GameplayStatics.h"
 #include "Perception/PawnSensingComponent.h"
 
 // Sets default values
@@ -22,14 +24,37 @@ AAICharacter::AAICharacter()
 void AAICharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	//Get references
 	 AIController = Cast<AMyAIController>(GetController());
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(),AExitDoor::StaticClass(), m_arrDoors);
 	
 	//Register the function that is going to fire when the character sees a Pawn
 	if (PawnSensingComp)
 	{
 		PawnSensingComp->OnSeePawn.AddDynamic(this, &AAICharacter::OnSeePlayer);
 	}
+
+	
+}
+
+AActor* AAICharacter::GetNearestDoor()
+{
+	if(m_arrDoors.Num()>0 )
+	{
+		float fNearestDoorDist = -1;
+		for (AActor*  currentDoor : m_arrDoors)
+		{
+			float fDistance = FVector::Dist(this->GetActorLocation(),currentDoor->GetActorLocation());
+			if(fDistance < fNearestDoorDist || fNearestDoorDist == -1) // si la nouvelle distance est plus courte
+			{
+				NearestDoor = currentDoor;
+				fNearestDoorDist = fDistance;
+			}
+		}
+		return NearestDoor;
+	}
+	return nullptr;
 }
 
 // Called every frame

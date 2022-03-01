@@ -59,7 +59,9 @@ public:
 		void SetNearElement(AInteractibleElement* Element);
 		UFUNCTION()
 		FORCEINLINE AInteractibleElement* GetNearInteractibleElement(){return NearElement;}
+		UFUNCTION()
 		UPerk_BaseComponent* GetFirstPerk();
+		UFUNCTION()	
 		UPerk_BaseComponent* GetSecondPerk();
 	#pragma endregion 
 
@@ -107,11 +109,15 @@ protected:
 	#pragma endregion
 	
 	#pragma region ProtectedFunctions
+	    UFUNCTION()
 		void SetPlayerId();
+	    UFUNCTION()
 		void InstanciatePerks();
 		/** Called for forwards/backward input */
+	    UFUNCTION()
 		void MoveForward(float Value);
 		/** Called for side to side input */
+	    UFUNCTION()
 		void MoveRight(float Value);
 		/** Player sprint system */
 		UFUNCTION()

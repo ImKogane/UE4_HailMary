@@ -12,32 +12,21 @@ class HAILMARY_API AAICharacter : public ACharacter
 {
 	GENERATED_BODY()
 	
-	UFUNCTION()
-	void OnSeePlayer(APawn* Pawn);
-	
 public:
-
 	/*The Behavior Tree of the Character */
 	UPROPERTY(EditAnywhere, Category =AI)
 	class UBehaviorTree* BehaviorTree;
-
 	/*The Component which is used for the "seeing" sense of the AI*/
 	UPROPERTY(VisibleAnywhere,Category="AI")
 	class UPawnSensingComponent* PawnSensingComp;
-	
 	UPROPERTY(VisibleAnywhere)
 	AStudentCharacter* Character;
-	
-	
 	UPROPERTY(VisibleAnywhere)
 	class AMyAIController* AIController;
-	
-	// Sets default values for this character's properties
-	AAICharacter();
-	
-	UFUNCTION()
-	void Pick();
-	
+	UPROPERTY(VisibleAnywhere, Category="Door")
+	TArray<AActor*> m_arrDoors;
+	UPROPERTY(VisibleAnywhere, Category="Door")
+	AActor* NearestDoor;
 	UPROPERTY()
 	bool bAIVisible = false;
 	UPROPERTY()
@@ -45,14 +34,20 @@ public:
 	UPROPERTY()
 	float TimeOut = 10.0f;
 	
+	// Sets default values for this character's properties
+	AAICharacter();
+	UFUNCTION()
+	void Pick();
+	UFUNCTION()
+	void OnSeePlayer(APawn* Pawn);
+	UFUNCTION()
+	AActor* GetNearestDoor();
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
+	// Called to bind functionality to input
+	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
-public:
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 };

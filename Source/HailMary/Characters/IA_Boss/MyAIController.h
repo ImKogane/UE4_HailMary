@@ -31,8 +31,11 @@ class HAILMARY_API AMyAIController : public AAIController
 			/*----------Constructeur----------*/
 			AMyAIController();
 			/*Sets the sensed target in the blackboard*/
+			UFUNCTION()
 			void SetSeenTarget(APawn* InPawn);
+			UFUNCTION()
 			void SetNotSeenTarget();
+			UFUNCTION()
 			void SetIsHoldingPlayer(bool bValue);
 		#pragma endregion 
 
