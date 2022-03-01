@@ -14,8 +14,8 @@ AMyAIController::AMyAIController()
 	BlackboardComp = CreateDefaultSubobject<UBlackboardComponent>(TEXT("BlackboardComp"));
  
 	LocationToGoKey = "LocationToGo";
-	BlackboardKey = "Target";
-	PickKey = "bCanPick";
+	TargetKey = "Target";
+	bIsHoldingPlayer = "bIsHoldingPlayer";
 }
 
 void AMyAIController::OnPossess(APawn* InPawn)
@@ -36,6 +36,9 @@ void AMyAIController::OnPossess(APawn* InPawn)
 			UGameplayStatics::GetAllActorsOfClass(GetWorld(), ABotTargetPoint::StaticClass(), BotTargetPoints);
 			//Start the behavior tree which corresponds to the specific character
 			BehaviorComp->StartTree(*AIChar->BehaviorTree);
+
+			//Init the defaults values of the Ai
+			SetIsHoldingPlayer(false);
 		}
 	}
 
@@ -46,7 +49,7 @@ void AMyAIController::SetSeenTarget(APawn* InPawn)
 	if (BlackboardComp)
 	{
 		AIChar->bAIVisible = true;
-		BlackboardComp->SetValueAsObject(BlackboardKey, InPawn);
+		BlackboardComp->SetValueAsObject(TargetKey, InPawn);
 	}
 }
 
@@ -60,10 +63,10 @@ void AMyAIController::SetNotSeenTarget()
 	}
 }
 
-void AMyAIController::SetPick()
+void AMyAIController::SetIsHoldingPlayer(bool bValue)
 {
 	if(BehaviorComp)
 	{
-		BlackboardComp->SetValueAsBool(PickKey, true);
+		BlackboardComp->SetValueAsBool(bIsHoldingPlayer, bValue);
 	}
 }

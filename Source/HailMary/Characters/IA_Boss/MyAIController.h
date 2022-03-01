@@ -18,43 +18,51 @@ UCLASS()
 class HAILMARY_API AMyAIController : public AAIController
 {
 	GENERATED_BODY()
-
-	/*Behavior tree comp ref*/
-	UBehaviorTreeComponent* BehaviorComp;
-
-	/*----------Blackboard----------*/
-	/*Blackboard comp ref*/
-	UBlackboardComponent* BlackboardComp;
-	/*----------Blackboard----------*/
 	
-	/*Blackboard key*/
-	UPROPERTY(EditDefaultsOnly, Category = AI)
-	FName LocationToGoKey;
 
-	UPROPERTY(EditDefaultsOnly, Category = AI)
-	FName BlackboardKey ;
-
-	UPROPERTY(EditDefaultsOnly, Category = AI)
-	FName PickKey ;
-	
-	TArray<AActor*> BotTargetPoints;
-
-	/*Executes right when the controller possess a Pawn*/
-	virtual void OnPossess(APawn* InPawn) override;
 
 	public:
+		#pragma region PublicBVariable
+	        UPROPERTY()
+			AAICharacter* AIChar;
+		#pragma endregion 
 	
-	/*----------Constructeur----------*/
-	AMyAIController();
+		#pragma region PublicFunctions
+			/*----------Constructeur----------*/
+			AMyAIController();
+			/*Sets the sensed target in the blackboard*/
+			void SetSeenTarget(APawn* InPawn);
+			void SetNotSeenTarget();
+			void SetIsHoldingPlayer(bool bValue);
+		#pragma endregion 
 
-	AAICharacter* AIChar;
- 
-	FORCEINLINE UBlackboardComponent* GetBlackboardComp() const { return BlackboardComp; }
- 
-	FORCEINLINE TArray<AActor*> GetAvailableTargetPoints() { return BotTargetPoints; }
-	
-	/*Sets the sensed target in the blackboard*/
-	void SetSeenTarget(APawn* InPawn);
-	void SetNotSeenTarget();
-    void SetPick();
+		#pragma region Accessors
+			FORCEINLINE UBlackboardComponent* GetBlackboardComp() const { return BlackboardComp; }
+			FORCEINLINE TArray<AActor*> GetAvailableTargetPoints() { return BotTargetPoints; }
+		#pragma endregion
+
+	protected :
+		#pragma region ProtectedVariables
+			/*Executes right when the controller possess a Pawn*/
+			virtual void OnPossess(APawn* InPawn) override;
+		#pragma endregion
+
+		#pragma region PrivateFunctions
+			/*Blackboard key*/
+			UPROPERTY(EditDefaultsOnly, Category = AI)
+			FName LocationToGoKey;
+			UPROPERTY(EditDefaultsOnly, Category = AI)
+			FName TargetKey ;
+			UPROPERTY(EditDefaultsOnly, Category = AI)
+			FName bIsHoldingPlayer;
+	        UPROPERTY()
+			TArray<AActor*> BotTargetPoints;
+			/*----------Blackboard----------*/
+			/*Blackboard comp ref*/
+	        UPROPERTY()
+			UBlackboardComponent* BlackboardComp;
+			/*Behavior tree comp ref*/
+	        UPROPERTY()
+			UBehaviorTreeComponent* BehaviorComp;
+		#pragma endregion 
 };

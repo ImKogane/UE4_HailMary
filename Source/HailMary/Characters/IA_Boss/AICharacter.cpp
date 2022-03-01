@@ -23,6 +23,8 @@ void AAICharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	 AIController = Cast<AMyAIController>(GetController());
+	
 	//Register the function that is going to fire when the character sees a Pawn
 	if (PawnSensingComp)
 	{
@@ -35,7 +37,7 @@ void AAICharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	
-	AMyAIController* AIController = Cast<AMyAIController>(GetController());
+	// AMyAIController* AIController = Cast<AMyAIController>(GetController());
 	if(bAIVisible == true)
 	{
 		if((GetWorld()->TimeSeconds - LastSeenTime) > TimeOut)
@@ -53,7 +55,7 @@ void AAICharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 
 void AAICharacter::OnSeePlayer(APawn* InPawn)
 {
-	AMyAIController* AIController = Cast<AMyAIController>(GetController());
+	//AMyAIController* AIController = Cast<AMyAIController>(GetController());
 	//Set the seen target on the blackboard
 	if (AIController)
 	{
@@ -67,13 +69,13 @@ void AAICharacter::OnSeePlayer(APawn* InPawn)
 
 void AAICharacter::Pick()
 {
-	if(!bHolding)
-	{
-		if(Character != nullptr)
-		{
-			Character->PickItem(this);
-			GetCharacterMovement()->MaxWalkSpeed = 250;
-			bHolding = true;
-		}
-	}
+	 if(IsValid(AIController))
+	 {
+	 	if(IsValid(Character))
+	 	{
+	 		Character->GrabPlayer(this);
+	 		GetCharacterMovement()->MaxWalkSpeed = 250;
+	 		AIController->SetIsHoldingPlayer(true);
+	 	}
+	 }
 }

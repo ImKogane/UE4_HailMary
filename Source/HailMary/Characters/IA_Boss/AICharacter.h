@@ -27,19 +27,22 @@ public:
 	
 	UPROPERTY(VisibleAnywhere)
 	AStudentCharacter* Character;
-
-	UPROPERTY(VisibleAnywhere)
-	bool bHolding = false;
 	
-	/*UPROPERTY(VisibleAnywhere)
-	class AMyAIController* AIController;*/
+	
+	UPROPERTY(VisibleAnywhere)
+	class AMyAIController* AIController;
+	
 	// Sets default values for this character's properties
 	AAICharacter();
 	
+	UFUNCTION()
 	void Pick();
 	
+	UPROPERTY()
 	bool bAIVisible = false;
+	UPROPERTY()
 	float LastSeenTime;
+	UPROPERTY()
 	float TimeOut = 10.0f;
 	
 protected:

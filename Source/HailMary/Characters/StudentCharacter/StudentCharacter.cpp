@@ -321,7 +321,7 @@ void AStudentCharacter::OnBeginOverlap(UPrimitiveComponent* OverlappedComp, AAct
 	}
 }
 
-void AStudentCharacter::PickItem(AActor* Holder)
+void AStudentCharacter::GrabPlayer(AActor* Holder)
 {
 	GetMesh()->SetSimulatePhysics(false);
 	GetMesh()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
@@ -331,7 +331,7 @@ void AStudentCharacter::PickItem(AActor* Holder)
 		AAICharacter* ItemHolder = Cast<AAICharacter>(Holder);
 		AttachToComponent(ItemHolder->GetMesh(),FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("Socket_test"));
 		ItemHolder->Character = this;
-		ItemHolder->bHolding = true;
+		//ItemHolder->bHolding = true;
 	}
 }
 
