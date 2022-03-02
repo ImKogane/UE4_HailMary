@@ -317,6 +317,8 @@ void AStudentCharacter::GrabPlayer(AActor* Holder)
 {
 	GetMesh()->SetSimulatePhysics(false);
 	GetMesh()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	GetCapsuleComponent()->SetSimulatePhysics(false);
+	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	if(Holder->IsA(AAICharacter::StaticClass()))
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Collision"));
@@ -327,4 +329,10 @@ void AStudentCharacter::GrabPlayer(AActor* Holder)
 	}
 }
 
+void AStudentCharacter::DropPlayer()
+{
+	GetMesh()->SetSimulatePhysics(true);
+	GetMesh()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+	DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
+}
 

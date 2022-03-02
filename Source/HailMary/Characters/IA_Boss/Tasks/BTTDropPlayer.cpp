@@ -13,8 +13,8 @@ EBTNodeResult::Type UBTTDropPlayer::ExecuteTask(UBehaviorTreeComponent & OwnerCo
 	{
 		if(AICon->AIChar)
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Yellow, TEXT("UBTTPickCharacter::ExecuteTask"));  
-			AICon->AIChar->Pick();
+			GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Yellow, TEXT("UBTTDropPlayer::ExecuteTask"));  
+			AICon->AIChar->Drop();
 			return EBTNodeResult::Succeeded;
 		}
 	}

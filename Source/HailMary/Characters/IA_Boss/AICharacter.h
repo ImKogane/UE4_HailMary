@@ -39,6 +39,8 @@ public:
 	UFUNCTION()
 	void Pick();
 	UFUNCTION()
+	void Drop();
+	UFUNCTION()
 	void OnSeePlayer(APawn* Pawn);
 	UFUNCTION()
 	AActor* GetNearestDoor();

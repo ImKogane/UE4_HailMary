@@ -42,6 +42,8 @@ public:
 		void ResetInventory();
 	    UFUNCTION()
 	    void GrabPlayer(AActor* Holder);
+		UFUNCTION()
+		void DropPlayer();
 	#pragma endregion PublicFunctions
 
 	#pragma region Accessor

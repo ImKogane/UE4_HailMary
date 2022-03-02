@@ -99,8 +99,21 @@ void AAICharacter::Pick()
 	 	if(IsValid(Character))
 	 	{
 	 		Character->GrabPlayer(this);
-	 		GetCharacterMovement()->MaxWalkSpeed = 250;
+	 		//GetCharacterMovement()->MaxWalkSpeed = 250;
 	 		AIController->SetIsHoldingPlayer(true);
 	 	}
 	 }
+}
+
+void AAICharacter::Drop()
+{
+	if(IsValid(AIController))
+	{
+		if(IsValid(Character))
+		{
+			Character->DropPlayer();
+			//GetCharacterMovement()->MaxWalkSpeed = 250;
+			AIController->SetIsHoldingPlayer(false);
+		}
+	}
 }
