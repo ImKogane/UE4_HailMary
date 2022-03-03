@@ -10,7 +10,7 @@
 #include "GameFramework/GameSession.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "HailMary/Characters/IA_Boss/AICharacter.h"
-#include "HailMary/GameplayClass/Task_Object.h"
+#include "HailMary/GameplayClass/Elements/Task_Object.h"
 #include "HailMary/Interface/HUD/GameHUD.h"
 #include "Kismet/GameplayStatics.h"
 

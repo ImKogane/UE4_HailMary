@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "HailMary/GameplayClass/Task_Object.h"
 #include "TaskSpawner.generated.h"
 
 UCLASS()
@@ -24,7 +23,7 @@ protected:
 	int SpawnerArea;
 
 	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<ATask_Object> TaskObject;
+	TSubclassOf<class ATask_Object> TaskObject;
 	
 	
 

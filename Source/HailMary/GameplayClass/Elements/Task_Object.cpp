@@ -5,6 +5,7 @@
 
 #include "AreaDoor.h"
 #include "HailMary/HailMaryGameMode.h"
+#include "HailMary/GameplayClass/TaskItem_Object.h"
 #include "HailMary/MainGameInstance.h"
 #include "Kismet/GameplayStatics.h"
 

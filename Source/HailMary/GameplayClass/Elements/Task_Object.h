@@ -3,7 +3,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "TaskItem_Object.h"
 #include "HailMary/Characters/StudentCharacter/StudentCharacter.h"
 #include "HailMary/GameplayClass/InteractionBase/InteractibleElement.h"
 #include "Task_Object.generated.h"
@@ -39,7 +38,7 @@ protected:
 		UPROPERTY(EditInstanceOnly, Category="Items")
 		class AAreaDoor* AreaDoor;
 		UPROPERTY(EditDefaultsOnly, Category="Items")
-		TArray<TSubclassOf<ATaskItem_Object>> AvailableItems;
+		TArray<TSubclassOf<class ATaskItem_Object>> AvailableItems;
 		UPROPERTY(VisibleAnywhere, Category="Items")
 		AInteractibleItem* MainNeedItemName;
 		UPROPERTY(VisibleAnywhere, Category="Items")

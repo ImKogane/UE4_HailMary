@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "InteractionBase/InteractibleElement.h"
+#include "HailMary/GameplayClass/InteractionBase/InteractibleElement.h"
 #include "BackDoor.generated.h"
 
 /**
