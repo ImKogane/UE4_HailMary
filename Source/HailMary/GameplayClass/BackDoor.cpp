@@ -2,6 +2,7 @@
 
 
 #include "BackDoor.h"
+#include "HailMary/Characters/IA_Boss/AICharacter.h"
 #include "HailMary/Characters/StudentCharacter/StudentCharacter.h"
 
 void ABackDoor::OnBoxOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
