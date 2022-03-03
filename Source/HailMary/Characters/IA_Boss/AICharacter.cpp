@@ -113,6 +113,16 @@ void AAICharacter::Drop()
 		{
 			Character->DropPlayer();
 			//GetCharacterMovement()->MaxWalkSpeed = 250;
+
+			//Port player to the other side if the dooor
+			ABackDoor* backDoorNearest = Cast<ABackDoor>(GetNearestDoor());
+			if(IsValid(backDoorNearest))
+			{
+				FVector vecLocation = backDoorNearest->GetTeleportPosition();
+//				Character->SetActorLocation(vecLocation);
+				Character->TeleportTo(vecLocation, GetActorRotation());
+			}
+			
 			AIController->SetIsHoldingPlayer(false);
 		}
 	}

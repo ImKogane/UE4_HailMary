@@ -23,8 +23,10 @@ class HAILMARY_API ABackDoor : public AInteractibleElement
 		#pragma region Accessors
 			UFUNCTION()
 			bool GetPlayerIsInside();
-			//UFUNCTION()
-			
+			UFUNCTION()
+			FORCEINLINE FVector GetEntrancePosition(){return _sceneComponentEntrancePosition->GetComponentLocation();}
+			UFUNCTION()
+			FORCEINLINE FVector GetTeleportPosition(){return _sceneComponentTeleportPosition->GetComponentLocation();}
 		#pragma endregion 
 	
 	protected:

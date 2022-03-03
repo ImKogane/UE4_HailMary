@@ -16,9 +16,8 @@ EBTNodeResult::Type UBTTNearestDoor::ExecuteTask(UBehaviorTreeComponent & OwnerC
 			ABackDoor* backDoorNearest = Cast<ABackDoor>(AICon->AIChar->GetNearestDoor());
 			if(IsValid(backDoorNearest))
             {
-				FVector vecLocation = backDoorNearest->GetActorLocation();
+				FVector vecLocation = backDoorNearest->GetEntrancePosition();
 				AICon->GetBlackboardComp()->SetValueAsVector("LocationToGo", vecLocation );
- //           	AICon->GetBlackboardComp()->SetValueAsObject("LocationToGo", AICon->AIChar->NearestDoor );
             }
 			return EBTNodeResult::Succeeded;
 		}
