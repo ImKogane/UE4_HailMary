@@ -11,7 +11,16 @@
 
 #pragma region ForwardDeclarations
 //	class UPerk_BaseComponent;
-#pragma endregion 
+#pragma endregion
+
+
+UENUM()
+enum EnumInputsState
+{
+	EnableAll			UMETA(DisplayName = "Enable"),
+	DisableMovement     UMETA(DisplayName = "DisableMovement"),
+	DisableAll			UMETA(DisplayName = "DisableMovement")
+};
 
 UCLASS(config=Game)
 class AStudentCharacter : public ACharacter
@@ -44,6 +53,8 @@ public:
 	    void GrabPlayer(AActor* Holder);
 		UFUNCTION()
 		void DropPlayer();
+		UFUNCTION()
+		void SetInputsState(EnumInputsState newState);
 	#pragma endregion PublicFunctions
 
 	#pragma region Accessor
@@ -85,6 +96,8 @@ protected:
 		AInteractibleElement* NearElement;
 	    UPROPERTY(EditAnywhere)
 	    USphereComponent* Collider;
+		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+		TEnumAsByte<EnumInputsState> _enumInputsState = EnumInputsState::EnableAll;
 	#pragma endregion 
 	
 	///////////////////// PLAYER STATS /////////////////////

@@ -73,26 +73,7 @@ void AStudentCharacter::BeginPlay()
 
 void AStudentCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
 {
-	PlayerInputComponent->BindAxis("MoveForward", this, &AStudentCharacter::MoveForward);
-	PlayerInputComponent->BindAxis("MoveRight", this, &AStudentCharacter::MoveRight);
-
-	// We have 2 versions of the rotation bindings to handle different kinds of devices differently
-	// "turn" handles devices that provide an absolute delta, such as a mouse.
-	// "turnrate" is for devices that we choose to treat as a rate of change, such as an analog joystick
-	PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
-	PlayerInputComponent->BindAxis("TurnRate", this, &AStudentCharacter::TurnAtRate);
-	PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
-	PlayerInputComponent->BindAxis("LookUpRate", this, &AStudentCharacter::LookUpAtRate);
-
-	PlayerInputComponent->BindAction("Sprint", IE_Pressed, this, &AStudentCharacter::Sprint);
-	PlayerInputComponent->BindAction("Sprint", IE_Released, this, &AStudentCharacter::Walk);
-
-	PlayerInputComponent->BindAction("Crouch", IE_Pressed, this, &AStudentCharacter::CrouchPlayer);
-	PlayerInputComponent->BindAction("Crouch", IE_Released, this, &AStudentCharacter::UnCrouchPlayer);
-	
-	PlayerInputComponent->BindAction("Interaction", IE_Pressed, this, &AStudentCharacter::Interact);
-	PlayerInputComponent->BindAction("Action", IE_Pressed, this, &AStudentCharacter::DoAction);
-	PlayerInputComponent->BindAction("Action", IE_Released, this, &AStudentCharacter::UndoAction);
+	SetInputsState(EnumInputsState::EnableAll);
 }
 
 /////////////////////// PLAYER MOVEMENT ///////////////////////
@@ -321,11 +302,11 @@ void AStudentCharacter::GrabPlayer(AActor* Holder)
 	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	if(Holder->IsA(AAICharacter::StaticClass()))
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Collision"));
+//		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Collision"));
 		AAICharacter* ItemHolder = Cast<AAICharacter>(Holder);
 		AttachToComponent(ItemHolder->GetMesh(),FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("Socket_test"));
 		ItemHolder->Character = this;
-		
+		SetInputsState(EnumInputsState::DisableMovement);
 	}
 }
 
@@ -334,5 +315,60 @@ void AStudentCharacter::DropPlayer()
 	GetMesh()->SetSimulatePhysics(true);
 	GetMesh()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 	DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
+	SetInputsState(EnumInputsState::EnableAll);
+}
+
+void AStudentCharacter::SetInputsState(EnumInputsState newState)
+{
+	//Assign New input state
+	_enumInputsState = newState;
+	
+	//Remove all inputs
+	UInputComponent* PlayerInputComponent = InputComponent;
+	PlayerInputComponent->ClearActionBindings();
+	PlayerInputComponent->AxisBindings.Empty();
+
+	//Setup new inputs according to the new state
+	switch (_enumInputsState)
+	{
+		case EnumInputsState::EnableAll :
+		{
+				PlayerInputComponent->BindAxis("MoveForward", this, &AStudentCharacter::MoveForward);
+				PlayerInputComponent->BindAxis("MoveRight", this, &AStudentCharacter::MoveRight);
+
+				// We have 2 versions of the rotation bindings to handle different kinds of devices differently
+				// "turn" handles devices that provide an absolute delta, such as a mouse.
+				// "turnrate" is for devices that we choose to treat as a rate of change, such as an analog joystick
+				PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
+				PlayerInputComponent->BindAxis("TurnRate", this, &AStudentCharacter::TurnAtRate);
+				PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
+				PlayerInputComponent->BindAxis("LookUpRate", this, &AStudentCharacter::LookUpAtRate);
+
+				PlayerInputComponent->BindAction("Sprint", IE_Pressed, this, &AStudentCharacter::Sprint);
+				PlayerInputComponent->BindAction("Sprint", IE_Released, this, &AStudentCharacter::Walk);
+
+				PlayerInputComponent->BindAction("Crouch", IE_Pressed, this, &AStudentCharacter::CrouchPlayer);
+				PlayerInputComponent->BindAction("Crouch", IE_Released, this, &AStudentCharacter::UnCrouchPlayer);
+	
+				PlayerInputComponent->BindAction("Interaction", IE_Pressed, this, &AStudentCharacter::Interact);
+				PlayerInputComponent->BindAction("Action", IE_Pressed, this, &AStudentCharacter::DoAction);
+				PlayerInputComponent->BindAction("Action", IE_Released, this, &AStudentCharacter::UndoAction);
+		}
+		case EnumInputsState::DisableMovement :
+		{
+				PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
+				PlayerInputComponent->BindAxis("TurnRate", this, &AStudentCharacter::TurnAtRate);
+				PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
+				PlayerInputComponent->BindAxis("LookUpRate", this, &AStudentCharacter::LookUpAtRate);
+					
+				// PlayerInputComponent->BindAction("Interaction", IE_Pressed, this, &AStudentCharacter::Interact);
+				// PlayerInputComponent->BindAction("Action", IE_Pressed, this, &AStudentCharacter::DoAction);
+				// PlayerInputComponent->BindAction("Action", IE_Released, this, &AStudentCharacter::UndoAction);
+		}
+		case EnumInputsState::DisableAll :
+		{
+			//none
+		}
+	}
 }
 

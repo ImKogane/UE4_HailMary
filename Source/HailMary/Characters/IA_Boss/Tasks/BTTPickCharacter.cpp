@@ -13,7 +13,7 @@ EBTNodeResult::Type UBTTPickCharacter::ExecuteTask(UBehaviorTreeComponent & Owne
 	{
 		if(AICon->AIChar)
 		{
-		    GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Yellow, TEXT("UBTTPickCharacter::ExecuteTask"));  
+//		    GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Yellow, TEXT("UBTTPickCharacter::ExecuteTask"));  
 			AICon->AIChar->Pick();
 			return EBTNodeResult::Succeeded;
 		}

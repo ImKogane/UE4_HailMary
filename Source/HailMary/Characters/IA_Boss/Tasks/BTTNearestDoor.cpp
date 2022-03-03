@@ -13,7 +13,7 @@ EBTNodeResult::Type UBTTNearestDoor::ExecuteTask(UBehaviorTreeComponent & OwnerC
 	{
 		if(AICon->AIChar)
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("UBTTNearestDoor::ExecuteTask"));  
+//			GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("UBTTNearestDoor::ExecuteTask"));  
 			AICon->AIChar->GetNearestDoor();
 			if(IsValid(AICon->AIChar->NearestDoor))
             {
