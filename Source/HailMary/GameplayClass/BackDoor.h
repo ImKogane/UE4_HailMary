@@ -17,6 +17,7 @@ class HAILMARY_API ABackDoor : public AInteractibleElement
 	public :
 		#pragma region PublicFunctions
 			ABackDoor();
+			bool GetPlayerIsInside();
 			virtual void Tick(float DeltaSeconds) override;
 		#pragma endregion 
 	
@@ -24,12 +25,14 @@ class HAILMARY_API ABackDoor : public AInteractibleElement
 		#pragma region ProtectedVariables
 			UPROPERTY(VisibleAnywhere)
 			class AStudentCharacter* NearPlayer;
+			UPROPERTY(VisibleAnywhere)
+			class AStudentCharacter* PlayerInside;
 			UPROPERTY(EditAnywhere)
 			USceneComponent* _sceneComponentEntrancePosition;
 			UPROPERTY(EditAnywhere)
 			USceneComponent* _sceneComponentTeleportPosition;
 		#pragma endregion
-
+	
 		#pragma region ProtectedFunctions
 			UFUNCTION()
 			void OpenDoor();
@@ -37,5 +40,5 @@ class HAILMARY_API ABackDoor : public AInteractibleElement
 								int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) override;
 			virtual void OnBoxOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
 								int32 OtherBodyIndex) override;
-		#pragma endregion 
+		#pragma endregion 	
 };

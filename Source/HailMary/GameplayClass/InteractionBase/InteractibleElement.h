@@ -8,6 +8,7 @@
 #include "InteractibleElement.generated.h"
 
 #pragma region ForwardDeclaration
+	class AStudentCharacter;
 	class AGameHUD;
 #pragma endregion
 
@@ -32,7 +33,7 @@ public:
 		// Called every frame
 		virtual void Tick(float DeltaTime) override;
 		UFUNCTION()
-		void Interaction();
+		virtual void Interaction(AStudentCharacter* studentCharacter);
 	#pragma endregion 
 	
 	#pragma region Accessors

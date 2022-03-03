@@ -11,12 +11,16 @@ void ABackDoor::OnBoxOverlapBegin(UPrimitiveComponent* OverlappedComponent, AAct
 	Super::OnBoxOverlapBegin(OverlappedComponent, OtherActor, OtherComp, OtherBodyIndex, bFromSweep, SweepResult);
 
 	AStudentCharacter* Player = Cast<AStudentCharacter>(OtherActor);
-	if (Player == nullptr)
+	if (Player != nullptr)
 	{
-		return; //Overlap actor isn't the player
+		NearPlayer = Player;
 	}
 
-	NearPlayer = Player;
+	AAICharacter* Boss = Cast<AAICharacter>(OtherActor);
+	if (Boss != nullptr)
+	{
+		return;
+	}
 }
 
 void ABackDoor::OnBoxOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
@@ -24,11 +28,16 @@ void ABackDoor::OnBoxOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor
 	Super::OnBoxOverlapEnd(OverlappedComponent, OtherActor, OtherComp, OtherBodyIndex);
 
 	AStudentCharacter* Player = Cast<AStudentCharacter>(OtherActor);
-	if (Player == nullptr)
+	if (Player != nullptr)
 	{
-		return; //Overlap actor isn't the player
+		NearPlayer = nullptr;
 	}
-	NearPlayer = nullptr;
+
+	AAICharacter* Boss = Cast<AAICharacter>(OtherActor);
+	if (Boss != nullptr)
+	{
+		return;
+	}
 }
 
 ABackDoor::ABackDoor()
@@ -44,7 +53,7 @@ void ABackDoor::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 	
-	if(NearPlayer != nullptr)
+	if(NearPlayer != nullptr && PlayerInside != nullptr)
 	{
 		if(NearPlayer->GetIsDoAction() && ElementProgress <= ElementMaxProgress)
 		{
@@ -62,11 +71,23 @@ void ABackDoor::Tick(float DeltaSeconds)
 	}	
 }
 
+bool ABackDoor::GetPlayerIsInside()
+{
+	if(PlayerInside != nullptr)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
 
 /**
  * @brief Open the door if the progress reach 100 percent
  */
 void ABackDoor::OpenDoor()
 {
-	
+	PlayerInside = nullptr;
 }
