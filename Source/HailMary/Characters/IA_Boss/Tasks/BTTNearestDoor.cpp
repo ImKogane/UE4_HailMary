@@ -2,8 +2,8 @@
 
 
 #include "HailMary/Characters/IA_Boss/Tasks/BTTNearestDoor.h"
-
 #include "HailMary/Characters/IA_Boss/MyAIController.h"
+#include "HailMary/GameplayClass/BackDoor.h"
 
 EBTNodeResult::Type UBTTNearestDoor::ExecuteTask(UBehaviorTreeComponent & OwnerComp, uint8 * NodeMemory)
 {
@@ -13,11 +13,12 @@ EBTNodeResult::Type UBTTNearestDoor::ExecuteTask(UBehaviorTreeComponent & OwnerC
 	{
 		if(AICon->AIChar)
 		{
-//			GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("UBTTNearestDoor::ExecuteTask"));  
-			AICon->AIChar->GetNearestDoor();
-			if(IsValid(AICon->AIChar->NearestDoor))
+			ABackDoor* backDoorNearest = Cast<ABackDoor>(AICon->AIChar->GetNearestDoor());
+			if(IsValid(backDoorNearest))
             {
-            	AICon->GetBlackboardComp()->SetValueAsObject("LocationToGo", AICon->AIChar->NearestDoor );
+				FVector vecLocation = backDoorNearest->GetActorLocation();
+				AICon->GetBlackboardComp()->SetValueAsVector("LocationToGo", vecLocation );
+ //           	AICon->GetBlackboardComp()->SetValueAsObject("LocationToGo", AICon->AIChar->NearestDoor );
             }
 			return EBTNodeResult::Succeeded;
 		}

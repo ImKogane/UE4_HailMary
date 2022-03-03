@@ -36,7 +36,10 @@ EBTNodeResult::Type UBTTargetPointSelection::ExecuteTask(UBehaviorTreeComponent 
 		} while (CurrentPoint == NextTargetPoint);
  
 		//Update the next location in the Blackboard so the bot can move to the next Blackboard value
-		BlackboardComp->SetValueAsObject("LocationToGo", NextTargetPoint);
+		FVector vecLocation = NextTargetPoint->GetActorLocation();
+		BlackboardComp->SetValueAsVector("LocationToGo", vecLocation );
+//		BlackboardComp->SetValueAsObject("LocationToGo", NextTargetPoint); //Old way, move to actor instead
+
  
 		//At this point, the task has been successfully completed
 		return EBTNodeResult::Succeeded;

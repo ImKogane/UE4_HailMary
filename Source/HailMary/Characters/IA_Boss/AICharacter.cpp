@@ -4,7 +4,7 @@
 #include "AICharacter.h"
 #include "MyAIController.h"
 #include "GameFramework/CharacterMovementComponent.h"
-#include "HailMary/GameplayClass/ExitDoor.h"
+#include "HailMary/GameplayClass/BackDoor.h"
 #include "Kismet/GameplayStatics.h"
 #include "Perception/PawnSensingComponent.h"
 
@@ -27,7 +27,7 @@ void AAICharacter::BeginPlay()
 
 	//Get references
 	 AIController = Cast<AMyAIController>(GetController());
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(),AExitDoor::StaticClass(), m_arrDoors);
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(),ABackDoor::StaticClass(), m_arrDoors);
 	
 	//Register the function that is going to fire when the character sees a Pawn
 	if (PawnSensingComp)

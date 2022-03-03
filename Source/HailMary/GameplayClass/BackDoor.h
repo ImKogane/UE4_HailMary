@@ -17,9 +17,14 @@ class HAILMARY_API ABackDoor : public AInteractibleElement
 	public :
 		#pragma region PublicFunctions
 			ABackDoor();
+			virtual void Tick(float DeltaSeconds) override;
+		#pragma endregion
+
+		#pragma region Accessors
 			UFUNCTION()
 			bool GetPlayerIsInside();
-			virtual void Tick(float DeltaSeconds) override;
+			//UFUNCTION()
+			
 		#pragma endregion 
 	
 	protected:
