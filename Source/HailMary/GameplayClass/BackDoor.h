@@ -14,24 +14,28 @@ class HAILMARY_API ABackDoor : public AInteractibleElement
 {
 	GENERATED_BODY()
 
-protected:
+	public :
+		#pragma region PublicFunctions
+			ABackDoor();
+			virtual void Tick(float DeltaSeconds) override;
+		#pragma endregion 
 	
+	protected:
+		#pragma region ProtectedVariables
+			UPROPERTY(VisibleAnywhere)
+			class AStudentCharacter* NearPlayer;
+			UPROPERTY(EditAnywhere)
+			USceneComponent* _sceneComponentEntrancePosition;
+			UPROPERTY(EditAnywhere)
+			USceneComponent* _sceneComponentTeleportPosition;
+		#pragma endregion
 
-	UPROPERTY(VisibleAnywhere)
-	class AStudentCharacter* NearPlayer;
-	
-	
-	UFUNCTION()
-	void OpenDoor();
-	
-	virtual void OnBoxOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
-						int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) override;
-	
-	virtual void OnBoxOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
-						int32 OtherBodyIndex) override;
-
-public :
-
-		virtual void Tick(float DeltaSeconds) override;
-	
+		#pragma region ProtectedFunctions
+			UFUNCTION()
+			void OpenDoor();
+			virtual void OnBoxOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
+								int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) override;
+			virtual void OnBoxOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
+								int32 OtherBodyIndex) override;
+		#pragma endregion 
 };

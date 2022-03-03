@@ -2,7 +2,6 @@
 
 
 #include "BackDoor.h"
-
 #include "HailMary/Characters/StudentCharacter/StudentCharacter.h"
 
 void ABackDoor::OnBoxOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
@@ -30,6 +29,15 @@ void ABackDoor::OnBoxOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor
 		return; //Overlap actor isn't the player
 	}
 	NearPlayer = nullptr;
+}
+
+ABackDoor::ABackDoor()
+{
+	_sceneComponentTeleportPosition = CreateDefaultSubobject<USceneComponent>("Teleport Position");
+	_sceneComponentTeleportPosition->SetupAttachment(RootComponent);
+	
+	_sceneComponentEntrancePosition= CreateDefaultSubobject<USceneComponent>("Entrance Position");
+	_sceneComponentEntrancePosition->SetupAttachment(RootComponent);
 }
 
 void ABackDoor::Tick(float DeltaSeconds)
