@@ -296,9 +296,6 @@ void AStudentCharacter::OnBeginOverlap(UPrimitiveComponent* OverlappedComp, AAct
 
 void AStudentCharacter::GrabPlayer(AActor* Holder)
 {
-	GetMesh()->SetSimulatePhysics(false);
-	GetMesh()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-	GetCapsuleComponent()->SetSimulatePhysics(false);
 	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	if(Holder->IsA(AAICharacter::StaticClass()))
 	{
@@ -312,8 +309,7 @@ void AStudentCharacter::GrabPlayer(AActor* Holder)
 
 void AStudentCharacter::DropPlayer()
 {
-	GetMesh()->SetSimulatePhysics(true);
-	GetMesh()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 	DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
 	SetInputsState(EnumInputsState::EnableAll);
 }
