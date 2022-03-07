@@ -13,5 +13,15 @@ UCLASS()
 class HAILMARY_API ABotTargetPoint : public ATargetPoint
 {
 	GENERATED_BODY()
-	
+
+	protected:
+		#pragma region ProtectedVariables
+			UPROPERTY(EditAnywhere, Category="Parameters")
+			int _nbPhase = -1;
+		#pragma endregion
+
+		#pragma region ProtectedFunction
+			UFUNCTION()
+			virtual void BeginPlay() override;
+		#pragma endregion 
 };
