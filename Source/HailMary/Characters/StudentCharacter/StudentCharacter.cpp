@@ -297,6 +297,7 @@ void AStudentCharacter::OnBeginOverlap(UPrimitiveComponent* OverlappedComp, AAct
 void AStudentCharacter::GrabPlayer(AActor* Holder)
 {
 	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	CameraBoom->bDoCollisionTest = false;
 	if(Holder->IsA(AAICharacter::StaticClass()))
 	{
 //		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Collision"));
@@ -310,6 +311,7 @@ void AStudentCharacter::GrabPlayer(AActor* Holder)
 void AStudentCharacter::DropPlayer()
 {
 	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+	CameraBoom->bDoCollisionTest = true;
 	DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
 	SetInputsState(EnumInputsState::EnableAll);
 }
