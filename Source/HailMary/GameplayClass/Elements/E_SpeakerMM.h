@@ -14,4 +14,20 @@ class HAILMARY_API AE_SpeakerMM : public AInteractibleElement
 {
 	GENERATED_BODY()
 	
+public:
+	AE_SpeakerMM();
+	
+	virtual void Interaction(AStudentCharacter* studentCharacter) override;
+	virtual void BeginPlay() override;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Component", meta = (AllowPrivateAccess = "true"))
+	UAudioComponent* SpeakerAudioComponent;
+
+protected:
+	UFUNCTION() void PlaySpeakerSound();
+	UFUNCTION() void StopSpeakerSound();
+
+	UPROPERTY(VisibleAnywhere, Category="Element details")
+	bool IsActivate;
+	
 };

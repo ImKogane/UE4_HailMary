@@ -3,3 +3,45 @@
 
 #include "E_SpeakerMM.h"
 
+#include "Components/AudioComponent.h"
+
+AE_SpeakerMM::AE_SpeakerMM()
+{
+	SpeakerAudioComponent = CreateDefaultSubobject<UAudioComponent>(TEXT("SpeakerAudio"));
+	SpeakerAudioComponent->SetupAttachment(BaseComponent);
+}
+
+void AE_SpeakerMM::BeginPlay()
+{
+	Super::BeginPlay();
+	StopSpeakerSound();
+}
+
+
+void AE_SpeakerMM::Interaction(AStudentCharacter* studentCharacter)
+{
+	Super::Interaction(studentCharacter);
+
+	if(!IsActivate)
+	{
+		PlaySpeakerSound();
+		IsActivate = true;
+		_strDisplayText = "Press E to stop speaker";
+	}
+	else
+	{
+		StopSpeakerSound();
+		IsActivate = false;
+		_strDisplayText = "Press E to activate speaker";
+	}
+}
+
+void AE_SpeakerMM::PlaySpeakerSound()
+{
+	SpeakerAudioComponent->Play();
+}
+
+void AE_SpeakerMM::StopSpeakerSound()
+{
+	SpeakerAudioComponent->Stop();
+}
