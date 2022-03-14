@@ -3,6 +3,8 @@
 
 #include "Phase.h"
 
+#include "Kismet/GameplayStatics.h"
+
 // Sets default values
 APhase::APhase()
 {
@@ -20,6 +22,19 @@ void APhase::BeginPlay()
 
 void APhase::Init()
 {
+	//Get all BotTargetPoints
+	TArray<AActor*> FoundActors;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ABotTargetPoint::StaticClass(), FoundActors);
+	for (AActor* currentActor : FoundActors)
+	{
+		ABotTargetPoint* l_currentTargetPoint= Cast<ABotTargetPoint>(currentActor);
+		
+		//only add to the list if the id of the phase is the same
+		if( l_currentTargetPoint->GetPhase() == this->GetPhase())
+		{
+			_arrBotTargetPoints.Add(l_currentTargetPoint);
+		}
+	}
 }
 
 // Called every frame
