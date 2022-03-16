@@ -26,7 +26,6 @@ public:
 		FORCEINLINE UFUNCTION() APhase* GetCurrentPhase(){return _currentPhase;}
 		UFUNCTION() TArray<APhase*> GetPlayablePhases();
 		UFUNCTION() void ResetInstance();
-	
 	#pragma endregion 
 	
 protected:
@@ -39,6 +38,8 @@ protected:
 		APlayCycle* playCycle;
 		UPROPERTY(VisibleAnywhere, Category="Phase")
 		APhase* _currentPhase;
+		UPROPERTY(VisibleAnywhere, Category="Phase")
+		TArray<APhase*> _arrPlayablePhases;
 		UPROPERTY(VisibleAnywhere, Category="Phase")
 		TArray<APhase*> _arrPhases;
 	#pragma 

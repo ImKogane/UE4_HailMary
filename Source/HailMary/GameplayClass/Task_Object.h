@@ -40,9 +40,9 @@ protected:
 		class AAreaDoor* AreaDoor;
 		UPROPERTY(EditDefaultsOnly, Category="Items")
 		TArray<TSubclassOf<ATaskItem_Object>> AvailableItems;
-		UPROPERTY(VisibleAnywhere, Category="Items")
+		UPROPERTY(EditAnywhere, Category="Items")
 		AInteractibleItem* MainNeedItemName;
-		UPROPERTY(VisibleAnywhere, Category="Items")
+		UPROPERTY(EditAnywhere, Category="Items")
 		AInteractibleItem* OtherNeedItemName;
 		UPROPERTY(VisibleAnywhere)
 		TArray<AStudentCharacter*> NearPlayers;

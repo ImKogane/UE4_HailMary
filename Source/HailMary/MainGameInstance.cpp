@@ -39,6 +39,14 @@ void UMainGameInstance::ResetInstance()
 TArray<APhase*> UMainGameInstance::GetPlayablePhases()
 {
 	//TODO : Get Current Phase + Previous Phases
-	return *(new TArray<APhase*>);
+	//_arrPlayablePhases.Add()
+	for (APhase* l_currentPhase : _arrPhases)
+	{
+		if( l_currentPhase->GetPhase() <= _currentPhase->GetPhase())
+		{
+			_arrPlayablePhases.Add(l_currentPhase);
+		}
+	}
+	return _arrPlayablePhases;
 }
 

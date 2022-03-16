@@ -29,7 +29,21 @@ TArray<AActor*> AMyAIController::GetAvailableTargetPoints()
 	{
 		if ( _gameInstance->GetCurrentPhase())
 		{
-			TArray<ABotTargetPoint*> l_arrBotTargetPoints = _gameInstance->GetCurrentPhase()->GetBotTargetPoints();
+			//Create the list of target Points
+			TArray<ABotTargetPoint*> l_arrBotTargetPoints;
+
+			//For each Playbable phases
+			TArray<APhase*> l_arrPhases = _gameInstance->GetPlayablePhases();
+			for(APhase* currentPhase : l_arrPhases)
+			{
+				//Get all the Target Points and add them to the list
+				for(ABotTargetPoint*  CurrentTargetPoint: currentPhase->GetBotTargetPoints())
+				{
+					l_arrBotTargetPoints.Add(CurrentTargetPoint);
+				}
+			}
+			
+			//Convert the list of Target point to actors
 			for (ABotTargetPoint* currentBotTargetPoint : l_arrBotTargetPoints )
 			{
 				AActor* currentActor = Cast<AActor>(currentBotTargetPoint);
