@@ -18,12 +18,15 @@ class HAILMARY_API UMainGameInstance : public UGameInstance
 	
 public:
 	#pragma region PublicFunctions
-		FORCEINLINE APlayCycle* GetPlayCycle(){return playCycle;}
-		FORCEINLINE int GetTaskCount(){return TaskCount;}
-		FORCEINLINE void SetDoorIsOpen(bool State){DoorIsOpen = State;}
-		FORCEINLINE void AddTaskCount(int NewTaskCount){ TaskCount += NewTaskCount; }
-		FORCEINLINE void SetPlayCycle(APlayCycle* newPlayCycle){ playCycle = newPlayCycle; }
+		FORCEINLINE UFUNCTION() APlayCycle* GetPlayCycle(){return playCycle;}
+		FORCEINLINE UFUNCTION() int GetTaskCount(){return TaskCount;}
+		FORCEINLINE UFUNCTION() void SetDoorIsOpen(bool State){DoorIsOpen = State;}
+		FORCEINLINE UFUNCTION() void AddTaskCount(int NewTaskCount){ TaskCount += NewTaskCount; }
+		FORCEINLINE UFUNCTION() void SetPlayCycle(APlayCycle* newPlayCycle){ playCycle = newPlayCycle; }
+		FORCEINLINE UFUNCTION() APhase* GetCurrentPhase(){return _currentPhase;}
+		UFUNCTION() TArray<APhase*> GetPlayablePhases();
 		UFUNCTION() void ResetInstance();
+	
 	#pragma endregion 
 	
 protected:

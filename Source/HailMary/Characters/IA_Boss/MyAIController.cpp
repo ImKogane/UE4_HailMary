@@ -2,6 +2,8 @@
 
 
 #include "MyAIController.h"
+
+#include "HailMary/MainGameInstance.h"
 #include "Kismet/GameplayStatics.h"
 
 
@@ -16,6 +18,26 @@ AMyAIController::AMyAIController()
 	LocationToGoKey = "LocationToGo";
 	TargetKey = "Target";
 	bIsHoldingPlayer = "bIsHoldingPlayer";
+}
+
+TArray<AActor*> AMyAIController::GetAvailableTargetPoints()
+{
+	BotTargetPoints.Reset();
+	//Get BotTargetPoints of the Current and previous Phase
+	_gameInstance = Cast<UMainGameInstance>(GetGameInstance());
+	if(IsValid(_gameInstance))
+	{
+		if ( _gameInstance->GetCurrentPhase())
+		{
+			TArray<ABotTargetPoint*> l_arrBotTargetPoints = _gameInstance->GetCurrentPhase()->GetBotTargetPoints();
+			for (ABotTargetPoint* currentBotTargetPoint : l_arrBotTargetPoints )
+			{
+				AActor* currentActor = Cast<AActor>(currentBotTargetPoint);
+				BotTargetPoints.Add(currentBotTargetPoint);
+			}
+		}
+	}
+	return BotTargetPoints; 
 }
 
 void AMyAIController::OnPossess(APawn* InPawn)
@@ -33,7 +55,6 @@ void AMyAIController::OnPossess(APawn* InPawn)
 				BlackboardComp->InitializeBlackboard(*(AIChar->BehaviorTree->BlackboardAsset));
 			}
 			
-			UGameplayStatics::GetAllActorsOfClass(GetWorld(), ABotTargetPoint::StaticClass(), BotTargetPoints);
 			//Start the behavior tree which corresponds to the specific character
 			BehaviorComp->StartTree(*AIChar->BehaviorTree);
 

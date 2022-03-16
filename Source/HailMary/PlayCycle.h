@@ -1,56 +1,50 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
-
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "PlayCycle.generated.h"
+
+#pragma  region ForwardDeclaration
+	class UMainGameInstance;
+#pragma endregion 
 
 UCLASS()
 class HAILMARY_API APlayCycle : public AActor
 {
 	GENERATED_BODY()
 	
-public:	
-	// Sets default values for this actor's properties
-	APlayCycle();
+public:
+	#pragma region PublicFunctions
+		// Sets default values for this actor's properties
+		APlayCycle();
+		// Called every frame
+		virtual void Tick(float DeltaTime) override;
+		UFUNCTION()
+		FString GetTimer();
+		UFUNCTION()
+		void ResetTimer();
+		UFUNCTION()
+		void StopTimer();
+	#pragma endregion 
 
 protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
-
-	UPROPERTY(EditDefaultsOnly, Category = "Gameplay")
-	int InitialLoopTime;
+	#pragma region ProtectedVariables
+		UPROPERTY(EditAnywhere, Category = "Gameplay")
+		int InitialLoopTime;
+		UPROPERTY(EditAnywhere, Category = "Gameplay")
+		int LoopTime;
+		UPROPERTY(VisibleAnywhere, Category = "Gameplay")
+		FTimerHandle GameTimer;
+		UPROPERTY()
+		UMainGameInstance* TheGameInstance;
+	#pragma endregion
 	
-	UPROPERTY(VisibleAnywhere, Category = "Gameplay")
-	int LoopTime;
-
-	UPROPERTY(VisibleAnywhere, Category = "Gameplay")
-	FTimerHandle GameTimer;
-
-	UFUNCTION()
-	void Loop();
-
-	UFUNCTION()
-	void Clock();
-
-	UFUNCTION()
-	void ShowTimer();
-
-	class UMainGameInstance* TheGameInstance;
-
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-	
-	UFUNCTION()
-	FString GetTimer();
-	
-	UFUNCTION()
-	void ResetTimer();
-	
-	UFUNCTION()
-	void StopTimer();
-
+	#pragma region ProtectedFunctions
+		UFUNCTION()
+		virtual void BeginPlay() override;
+		void Loop();
+		UFUNCTION()
+		void Clock();
+		UFUNCTION()
+		void ShowTimer();
+	#pragma endregion 
 };

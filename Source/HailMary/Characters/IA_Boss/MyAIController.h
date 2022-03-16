@@ -19,8 +19,6 @@ class HAILMARY_API AMyAIController : public AAIController
 {
 	GENERATED_BODY()
 	
-
-
 	public:
 		#pragma region PublicBVariable
 	        UPROPERTY()
@@ -41,16 +39,16 @@ class HAILMARY_API AMyAIController : public AAIController
 
 		#pragma region Accessors
 			FORCEINLINE UBlackboardComponent* GetBlackboardComp() const { return BlackboardComp; }
-			FORCEINLINE TArray<AActor*> GetAvailableTargetPoints() { return BotTargetPoints; }
+			FORCEINLINE TArray<AActor*> GetAvailableTargetPoints();
 		#pragma endregion
 
 	protected :
-		#pragma region ProtectedVariables
+		#pragma region ProtectedFunctions
 			/*Executes right when the controller possess a Pawn*/
 			virtual void OnPossess(APawn* InPawn) override;
 		#pragma endregion
 
-		#pragma region PrivateFunctions
+		#pragma region ProtectedVariables
 			/*Blackboard key*/
 			UPROPERTY(EditDefaultsOnly, Category = AI)
 			FName LocationToGoKey;
@@ -67,5 +65,7 @@ class HAILMARY_API AMyAIController : public AAIController
 			/*Behavior tree comp ref*/
 	        UPROPERTY()
 			UBehaviorTreeComponent* BehaviorComp;
+			UPROPERTY()
+			UMainGameInstance* _gameInstance = nullptr;
 		#pragma endregion 
 };

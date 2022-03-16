@@ -48,8 +48,6 @@ void APlayCycle::Loop()
 	if (LoopTime <= 0)
 	{
 		ResetTimer();
-		UGameplayStatics::OpenLevel(GetWorld(), FName(*GetWorld()->GetName()), false);
-		
 	}
 }
 
@@ -73,6 +71,12 @@ void APlayCycle::ShowTimer()
 
 void APlayCycle::ResetTimer()
 {
+	//Reset Level
+	UGameplayStatics::OpenLevel(GetWorld(), FName(*GetWorld()->GetName()), false);
+	//Reset Game Instance
+	UMainGameInstance* l_gameInstance = Cast<UMainGameInstance>(GetGameInstance());
+	l_gameInstance->ResetInstance();
+	//Reset Timer
 	GetWorldTimerManager().ClearTimer(GameTimer);
 	LoopTime = InitialLoopTime;
 	GetWorldTimerManager().SetTimer(GameTimer, this, &APlayCycle::Clock, 1.0f, true);

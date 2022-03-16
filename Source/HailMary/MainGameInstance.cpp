@@ -12,6 +12,9 @@ void UMainGameInstance::Init()
 {
 	Super::Init();
 
+	//Init variables
+	TaskCount = 0;
+	
 	//Get all phases
 	TArray<AActor*> FoundActors;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), APhase::StaticClass(), FoundActors);
@@ -23,13 +26,19 @@ void UMainGameInstance::Init()
 		//Initial current phase
 		if( l_currentPhase->GetPhase() == 0)
 		{
-			_currentPhase;
+			_currentPhase = l_currentPhase;
 		}
 	}
 }
 
 void UMainGameInstance::ResetInstance()
 {
-	TaskCount = 0;
+	Init();
+}
+
+TArray<APhase*> UMainGameInstance::GetPlayablePhases()
+{
+	//TODO : Get Current Phase + Previous Phases
+	return *(new TArray<APhase*>);
 }
 

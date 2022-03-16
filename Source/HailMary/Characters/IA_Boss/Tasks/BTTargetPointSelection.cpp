@@ -28,12 +28,20 @@ EBTNodeResult::Type UBTTargetPointSelection::ExecuteTask(UBehaviorTreeComponent 
 		ABotTargetPoint* NextTargetPoint = nullptr;
  
 		//Find a next point which is different from the current one
-		do
+		if(AvailableTargetPoints.Num()>0)
 		{
-			RandomIndex = FMath::RandRange(0, AvailableTargetPoints.Num()-1);
-			//Remember that the Array provided by the Controller function contains AActor* objects so we need to cast.
-			NextTargetPoint = Cast<ABotTargetPoint>(AvailableTargetPoints[RandomIndex]);
-		} while (CurrentPoint == NextTargetPoint);
+			do
+			{
+				RandomIndex = FMath::RandRange(0, AvailableTargetPoints.Num()-1);
+				//Remember that the Array provided by the Controller function contains AActor* objects so we need to cast.
+				NextTargetPoint = Cast<ABotTargetPoint>(AvailableTargetPoints[RandomIndex]);
+			} while (CurrentPoint == NextTargetPoint);
+		}
+		else
+		{
+			return EBTNodeResult::Failed;
+		}
+
  
 		//Update the next location in the Blackboard so the bot can move to the next Blackboard value
 		FVector vecLocation = NextTargetPoint->GetActorLocation();
