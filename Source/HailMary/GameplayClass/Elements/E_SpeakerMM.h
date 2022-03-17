@@ -10,6 +10,8 @@
  * 
  */
 UCLASS()
+
+
 class HAILMARY_API AE_SpeakerMM : public AInteractibleElement
 {
 	GENERATED_BODY()
@@ -22,6 +24,9 @@ public:
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Component", meta = (AllowPrivateAccess = "true"))
 	UAudioComponent* SpeakerAudioComponent;
+
+	UPROPERTY(EditInstanceOnly, Category = "Manager")
+	class AMerryMaker_BossManager* MerryMakerManager;
 
 protected:
 	UFUNCTION() void PlaySpeakerSound();
