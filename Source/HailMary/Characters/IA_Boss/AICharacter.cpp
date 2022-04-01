@@ -4,7 +4,7 @@
 #include "AICharacter.h"
 #include "MyAIController.h"
 #include "GameFramework/CharacterMovementComponent.h"
-#include "HailMary/GameplayClass/BackDoor.h"
+#include "HailMary/GameplayClass/Elements/BackDoor.h"
 #include "Kismet/GameplayStatics.h"
 #include "Perception/PawnSensingComponent.h"
 
