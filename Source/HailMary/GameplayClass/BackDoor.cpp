@@ -44,10 +44,10 @@ void ABackDoor::OnBoxOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor
 ABackDoor::ABackDoor()
 {
 	_sceneComponentTeleportPosition = CreateDefaultSubobject<USceneComponent>("Teleport Position");
-	_sceneComponentTeleportPosition->SetupAttachment(RootComponent);
+	_sceneComponentTeleportPosition->SetupAttachment(ElementMesh);
 	
 	_sceneComponentEntrancePosition= CreateDefaultSubobject<USceneComponent>("Entrance Position");
-	_sceneComponentEntrancePosition->SetupAttachment(RootComponent);
+	_sceneComponentEntrancePosition->SetupAttachment(ElementMesh);
 }
 
 void ABackDoor::Tick(float DeltaSeconds)
