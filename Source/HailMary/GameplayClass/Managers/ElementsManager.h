@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "HailMary/GameplayClass/BackDoor.h"
+#include "HailMary/GameplayClass/Elements/BackDoor.h"
 #include "ElementsManager.generated.h"
 
 UCLASS()

@@ -2,8 +2,9 @@
 
 
 #include "TaskSpawner.h"
-
+#include "HailMary/GameplayClass/Elements/Task_Object.h"
 #include "Kismet/GameplayStatics.h"
+
 
 // Sets default values
 ATaskSpawner::ATaskSpawner()
