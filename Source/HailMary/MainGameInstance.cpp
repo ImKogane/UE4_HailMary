@@ -14,6 +14,7 @@ void UMainGameInstance::Init()
 
 	//Init variables
 	TaskCount = 0;
+	_arrPhases.Empty();
 	
 	//Get all phases
 	TArray<AActor*> FoundActors;
@@ -36,10 +37,23 @@ void UMainGameInstance::ResetInstance()
 	Init();
 }
 
+void UMainGameInstance::AddTaskCount(int NewTaskCount)
+{
+	//Increment current phase
+	TaskCount += NewTaskCount;
+	//Update current phase
+	for (APhase* l_currentPhase : _arrPhases)
+	{
+		if( l_currentPhase->GetPhase() == TaskCount)
+		{
+			_currentPhase = l_currentPhase;
+		}
+	}
+}
+
 TArray<APhase*> UMainGameInstance::GetPlayablePhases()
 {
-	//TODO : Get Current Phase + Previous Phases
-	//_arrPlayablePhases.Add()
+	//Get Current Phase + Previous Phases
 	for (APhase* l_currentPhase : _arrPhases)
 	{
 		if( l_currentPhase->GetPhase() <= _currentPhase->GetPhase())
