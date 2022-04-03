@@ -73,7 +73,6 @@ void APlayCycle::ResetTimer()
 {
 	//Reset Level
 	UGameplayStatics::OpenLevel(GetWorld(), FName(*GetWorld()->GetName()), false);
-	//Reset Game Instance
 	UMainGameInstance* l_gameInstance = Cast<UMainGameInstance>(GetGameInstance());
 	l_gameInstance->ResetInstance();
 	//Reset Timer

@@ -18,7 +18,7 @@ EBTNodeResult::Type UBTTargetPointSelection::ExecuteTask(UBehaviorTreeComponent 
        
 		UBlackboardComponent* BlackboardComp = AICon->GetBlackboardComp();
 		ABotTargetPoint* CurrentPoint = Cast<ABotTargetPoint>(BlackboardComp->GetValueAsObject("LocationToGo"));
- 
+		
 		TArray<AActor*> AvailableTargetPoints = AICon->GetAvailableTargetPoints();
        
 		//This variable will contain a random index in order to determine the next possible point
@@ -28,7 +28,7 @@ EBTNodeResult::Type UBTTargetPointSelection::ExecuteTask(UBehaviorTreeComponent 
 		ABotTargetPoint* NextTargetPoint = nullptr;
  
 		//Find a next point which is different from the current one
-		if(AvailableTargetPoints.Num()>0)
+		if(AvailableTargetPoints.IsValidIndex(0))
 		{
 			do
 			{

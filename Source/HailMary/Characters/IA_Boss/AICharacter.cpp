@@ -34,8 +34,6 @@ void AAICharacter::BeginPlay()
 	{
 		PawnSensingComp->OnSeePawn.AddDynamic(this, &AAICharacter::OnSeePlayer);
 	}
-
-	
 }
 
 AActor* AAICharacter::GetNearestDoor()
@@ -124,6 +122,7 @@ void AAICharacter::Drop()
 			}
 			
 			AIController->SetIsHoldingPlayer(false);
+			AIController->SetNotSeenTarget();
 		}
 	}
 }
