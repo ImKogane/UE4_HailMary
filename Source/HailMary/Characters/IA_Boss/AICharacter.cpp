@@ -4,7 +4,7 @@
 #include "AICharacter.h"
 #include "MyAIController.h"
 #include "GameFramework/CharacterMovementComponent.h"
-#include "HailMary/GameplayClass/BackDoor.h"
+#include "HailMary/GameplayClass/Elements/BackDoor.h"
 #include "Kismet/GameplayStatics.h"
 #include "Perception/PawnSensingComponent.h"
 
@@ -34,8 +34,6 @@ void AAICharacter::BeginPlay()
 	{
 		PawnSensingComp->OnSeePawn.AddDynamic(this, &AAICharacter::OnSeePlayer);
 	}
-
-	
 }
 
 AActor* AAICharacter::GetNearestDoor()
@@ -124,6 +122,7 @@ void AAICharacter::Drop()
 			}
 			
 			AIController->SetIsHoldingPlayer(false);
+			AIController->SetNotSeenTarget();
 		}
 	}
 }

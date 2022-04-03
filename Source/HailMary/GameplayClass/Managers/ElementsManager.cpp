@@ -3,7 +3,6 @@
 
 #include "ElementsManager.h"
 
-#include "HailMary/GameplayClass/BackDoor.h"
 
 // Sets default values
 AElementsManager::AElementsManager()

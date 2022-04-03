@@ -4,6 +4,7 @@
 #include "MainGameInstance.h"
 
 #include "ToolBuilderUtil.h"
+#include "Characters/IA_Boss/AICharacter.h"
 #include "Kismet/GameplayStatics.h"
 
 
@@ -14,7 +15,9 @@ void UMainGameInstance::Init()
 
 	//Init variables
 	TaskCount = 0;
-	_arrPhases.Empty();
+		
+	//Clear array content
+	_arrPhases.Empty(); //crash here
 	
 	//Get all phases
 	TArray<AActor*> FoundActors;
@@ -39,14 +42,18 @@ void UMainGameInstance::ResetInstance()
 
 void UMainGameInstance::AddTaskCount(int NewTaskCount)
 {
+
 	//Increment current phase
 	TaskCount += NewTaskCount;
 	//Update current phase
-	for (APhase* l_currentPhase : _arrPhases)
+	if( _arrPhases.IsValidIndex(0))
 	{
-		if( l_currentPhase->GetPhase() == TaskCount)
+		for (APhase* l_currentPhase : _arrPhases)
 		{
-			_currentPhase = l_currentPhase;
+			if( l_currentPhase->GetPhase() == TaskCount)
+			{
+				_currentPhase = l_currentPhase;
+			}
 		}
 	}
 }

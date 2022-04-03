@@ -3,7 +3,7 @@
 
 #include "HailMary/Characters/IA_Boss/Tasks/BTTNearestDoor.h"
 #include "HailMary/Characters/IA_Boss/MyAIController.h"
-#include "HailMary/GameplayClass/BackDoor.h"
+#include "HailMary/GameplayClass/Elements/BackDoor.h"
 
 EBTNodeResult::Type UBTTNearestDoor::ExecuteTask(UBehaviorTreeComponent & OwnerComp, uint8 * NodeMemory)
 {

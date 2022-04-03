@@ -36,10 +36,13 @@ TArray<AActor*> AMyAIController::GetAvailableTargetPoints()
 			TArray<APhase*> l_arrPhases = _gameInstance->GetPlayablePhases();
 			for(APhase* currentPhase : l_arrPhases)
 			{
-				//Get all the Target Points and add them to the list
-				for(ABotTargetPoint*  CurrentTargetPoint: currentPhase->GetBotTargetPoints())
+				if(IsValid(currentPhase))
 				{
-					l_arrBotTargetPoints.Add(CurrentTargetPoint);
+					//Get all the Target Points and add them to the list
+					for(ABotTargetPoint*  CurrentTargetPoint: currentPhase->GetBotTargetPoints())
+					{
+						l_arrBotTargetPoints.Add(CurrentTargetPoint);
+					}
 				}
 			}
 			

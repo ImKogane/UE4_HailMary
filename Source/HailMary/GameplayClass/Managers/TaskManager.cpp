@@ -2,6 +2,7 @@
 
 
 #include "TaskManager.h"
+#include "HailMary/GameplayClass/Elements/Task_Object.h"
 
 // Sets default values
 ATaskManager::ATaskManager()
