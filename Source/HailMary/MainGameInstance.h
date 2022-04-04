@@ -21,7 +21,7 @@ public:
 		FORCEINLINE UFUNCTION() APlayCycle* GetPlayCycle(){return playCycle;}
 		FORCEINLINE UFUNCTION() int GetTaskCount(){return TaskCount;}
 		FORCEINLINE UFUNCTION() void SetDoorIsOpen(bool State){DoorIsOpen = State;}
-		FORCEINLINE UFUNCTION() void AddTaskCount(int NewTaskCount);
+		UFUNCTION() void AddTaskCount(int NewTaskCount);
 		FORCEINLINE UFUNCTION() void SetPlayCycle(APlayCycle* newPlayCycle){ playCycle = newPlayCycle; }
 		FORCEINLINE UFUNCTION() APhase* GetCurrentPhase(){return _currentPhase;}
 		UFUNCTION() TArray<APhase*> GetPlayablePhases();
