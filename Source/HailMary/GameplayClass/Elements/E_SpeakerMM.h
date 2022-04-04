@@ -25,12 +25,13 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Component", meta = (AllowPrivateAccess = "true"))
 	UAudioComponent* SpeakerAudioComponent;
 
-	UPROPERTY(EditInstanceOnly, Category = "Manager")
+	UPROPERTY(EditAnywhere, Category = "Manager")
 	class AMerryMaker_BossManager* MerryMakerManager;
 
-protected:
 	UFUNCTION() void PlaySpeakerSound();
 	UFUNCTION() void StopSpeakerSound();
+
+protected:
 
 	UPROPERTY(VisibleAnywhere, Category="Element details")
 	bool IsActivate;

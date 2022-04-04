@@ -3,6 +3,7 @@
 
 #include "AICharacter.h"
 #include "MyAIController.h"
+#include "Components/AudioComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "HailMary/GameplayClass/Elements/BackDoor.h"
 #include "Kismet/GameplayStatics.h"
@@ -18,6 +19,9 @@ AAICharacter::AAICharacter()
 	PawnSensingComp = CreateDefaultSubobject<UPawnSensingComponent>(TEXT("PawnSensingComp"));
 	//Set the peripheral vision angle to 90 degrees
 	PawnSensingComp->SetPeripheralVisionAngle(90.f);
+
+	BossAuraAudioComponent = CreateDefaultSubobject<UAudioComponent>(TEXT("BossAura"));
+	BossAuraAudioComponent->SetupAttachment(RootComponent);
 }
 
 // Called when the game starts or when spawned
@@ -78,6 +82,16 @@ void AAICharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 }
 
+void AAICharacter::PlayBossAura()
+{
+	BossAuraAudioComponent->Play();
+}
+
+void AAICharacter::StopBossAura()
+{
+	BossAuraAudioComponent->Stop();
+}
+
 void AAICharacter::OnSeePlayer(APawn* InPawn)
 {
 	//AMyAIController* AIController = Cast<AMyAIController>(GetController());
@@ -86,7 +100,7 @@ void AAICharacter::OnSeePlayer(APawn* InPawn)
 	{
 		AIController->StopMovement();
 		//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Je te vois"));
-		GetCharacterMovement()->MaxWalkSpeed = 400;
+		GetCharacterMovement()->MaxWalkSpeed = 700;
 		LastSeenTime = GetWorld()->GetTimeSeconds();
 		AIController->SetSeenTarget(InPawn);
 	}
@@ -112,7 +126,7 @@ void AAICharacter::Drop()
 		if(IsValid(Character))
 		{
 			Character->DropPlayer();
-			//GetCharacterMovement()->MaxWalkSpeed = 250;
+			GetCharacterMovement()->MaxWalkSpeed = 250;
 
 			//Port player to the other side if the dooor
 			ABackDoor* backDoorNearest = Cast<ABackDoor>(GetNearestDoor());
@@ -121,6 +135,7 @@ void AAICharacter::Drop()
 				FVector vecLocation = backDoorNearest->GetTeleportPosition();
 //				Character->SetActorLocation(vecLocation);
 				Character->TeleportTo(vecLocation, GetActorRotation());
+				Character = nullptr;
 			}
 			
 			AIController->SetIsHoldingPlayer(false);

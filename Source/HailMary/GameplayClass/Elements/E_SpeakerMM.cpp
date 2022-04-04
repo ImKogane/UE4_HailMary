@@ -4,9 +4,11 @@
 #include "E_SpeakerMM.h"
 
 #include "Components/AudioComponent.h"
+#include "HailMary/GameplayClass/Managers/MerryMaker_BossManager.h"
 
 AE_SpeakerMM::AE_SpeakerMM()
 {
+	//Speaker music component
 	SpeakerAudioComponent = CreateDefaultSubobject<UAudioComponent>(TEXT("SpeakerAudio"));
 	SpeakerAudioComponent->SetupAttachment(BaseComponent);
 }
@@ -27,11 +29,13 @@ void AE_SpeakerMM::Interaction(AStudentCharacter* studentCharacter)
 		PlaySpeakerSound();
 		IsActivate = true;
 		_strDisplayText = "Press E to stop speaker";
+		MerryMakerManager->ActivateSpeaker(this);
 	}
 	else
 	{
 		StopSpeakerSound();
 		IsActivate = false;
+		MerryMakerManager->DesactivateSpeaker(this);
 		_strDisplayText = "Press E to activate speaker";
 	}
 }

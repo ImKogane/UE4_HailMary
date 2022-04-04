@@ -13,15 +13,19 @@ class HAILMARY_API AAICharacter : public ACharacter
 	GENERATED_BODY()
 	
 public:
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Component", meta = (AllowPrivateAccess = "true"))
+	UAudioComponent* BossAuraAudioComponent;
+	
 	/*The Behavior Tree of the Character */
 	UPROPERTY(EditAnywhere, Category =AI)
 	class UBehaviorTree* BehaviorTree;
 	/*The Component which is used for the "seeing" sense of the AI*/
 	UPROPERTY(VisibleAnywhere,Category="AI")
 	class UPawnSensingComponent* PawnSensingComp;
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere,Category="AIDebug")
 	AStudentCharacter* Character;
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere,Category="AIDebug")
 	class AMyAIController* AIController;
 	UPROPERTY(VisibleAnywhere, Category="Door")
 	TArray<AActor*> m_arrDoors;
@@ -32,7 +36,7 @@ public:
 	UPROPERTY()
 	float LastSeenTime;
 	UPROPERTY()
-	float TimeOut = 10.0f;
+	float TimeOut = 8.0f;
 	
 	// Sets default values for this character's properties
 	AAICharacter();
@@ -48,6 +52,9 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	UFUNCTION() void PlayBossAura();
+	UFUNCTION() void StopBossAura();
 	
 protected:
 	// Called when the game starts or when spawned
