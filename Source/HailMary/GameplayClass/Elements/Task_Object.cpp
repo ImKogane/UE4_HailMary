@@ -68,11 +68,15 @@ void ATask_Object::OnBoxOverlapEnd(UPrimitiveComponent* OverlappedComponent, AAc
 	Super::OnBoxOverlapEnd(OverlappedComponent, OtherActor, OtherComp, OtherBodyIndex);
 
 	AStudentCharacter* Player = Cast<AStudentCharacter>(OtherActor);
-	if (Player == nullptr)
+	if (IsValid(Player))
 	{
-		return; //Overlap actor isn't the player
+		//Hide Hud Progress bar
+		if(_gameHud)
+		{
+			_gameHud->GetDefaultWidget()->HideProgressBar(Player->GetPlayerId());
+		}
+		NearPlayers.Remove(Player);
 	}
-	NearPlayers.Remove(Player);
 }
 
 void ATask_Object::Tick(float DeltaSeconds)
