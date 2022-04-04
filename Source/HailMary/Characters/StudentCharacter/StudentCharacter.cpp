@@ -305,6 +305,12 @@ void AStudentCharacter::GrabPlayer(AActor* Holder)
 		AttachToComponent(ItemHolder->GetMesh(),FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("Socket_test"));
 		ItemHolder->Character = this;
 		SetInputsState(EnumInputsState::DisableMovement);
+
+		//Hide Hud Progress bar
+		if(_gameHud)
+		{
+			_gameHud->GetDefaultWidget()->HideProgressBar(this->GetPlayerId());
+		}
 	}
 }
 
@@ -325,6 +331,7 @@ void AStudentCharacter::SetInputsState(EnumInputsState newState)
 	UInputComponent* PlayerInputComponent = InputComponent;
 	PlayerInputComponent->ClearActionBindings();
 	PlayerInputComponent->AxisBindings.Empty();
+	UndoAction();
 
 	//Setup new inputs according to the new state
 	switch (_enumInputsState)
@@ -362,6 +369,10 @@ void AStudentCharacter::SetInputsState(EnumInputsState newState)
 				// PlayerInputComponent->BindAction("Interaction", IE_Pressed, this, &AStudentCharacter::Interact);
 				// PlayerInputComponent->BindAction("Action", IE_Pressed, this, &AStudentCharacter::DoAction);
 				// PlayerInputComponent->BindAction("Action", IE_Released, this, &AStudentCharacter::UndoAction);
+		}
+		case EnumInputsState::DisableMovementAndInputs :
+		{
+			//none
 		}
 		case EnumInputsState::DisableAll :
 		{

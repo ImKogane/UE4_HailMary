@@ -17,9 +17,10 @@
 UENUM()
 enum EnumInputsState
 {
-	EnableAll			UMETA(DisplayName = "Enable"),
-	DisableMovement     UMETA(DisplayName = "DisableMovement"),
-	DisableAll			UMETA(DisplayName = "DisableMovement")
+	EnableAll					UMETA(DisplayName = "Enable"),
+	DisableMovementAndInputs	UMETA(DisplayName = "DisableMovementAndInputs"),	//Camera still free but no Inputs
+	DisableMovement				UMETA(DisplayName = "DisableMovement"),				//Camera still free & Inputs
+	DisableAll					UMETA(DisplayName = "DisableMovement")				
 };
 
 UCLASS(config=Game)
@@ -78,6 +79,8 @@ public:
 		UPerk_BaseComponent* GetSecondPerk();
 		UFUNCTION()
 		FORCEINLINE int GetPlayerId(){return m_nbPlayerId;}
+		UFUNCTION()
+		FORCEINLINE TEnumAsByte<EnumInputsState> GetEnumInputsState(){return _enumInputsState;}
 	#pragma endregion 
 
 protected:

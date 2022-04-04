@@ -83,6 +83,7 @@ void ATask_Object::Tick(float DeltaSeconds)
 	{
 		for (AStudentCharacter* Player : NearPlayers)
 		{
+			
 			if(Player->GetIsDoAction() && ElementProgress <= ElementMaxProgress)
 			{
 				ElementProgress += Player->GetMakeTaskSpeed();

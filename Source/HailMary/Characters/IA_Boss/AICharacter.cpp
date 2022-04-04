@@ -28,12 +28,14 @@ void AAICharacter::BeginPlay()
 	//Get references
 	 AIController = Cast<AMyAIController>(GetController());
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(),ABackDoor::StaticClass(), m_arrDoors);
+	_gameHud = Cast<AGameHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
 	
 	//Register the function that is going to fire when the character sees a Pawn
 	if (PawnSensingComp)
 	{
 		PawnSensingComp->OnSeePawn.AddDynamic(this, &AAICharacter::OnSeePlayer);
 	}
+	
 }
 
 AActor* AAICharacter::GetNearestDoor()
