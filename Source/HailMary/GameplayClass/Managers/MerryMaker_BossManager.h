@@ -17,6 +17,11 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Component", meta = (AllowPrivateAccess = "true"))
 	UAudioComponent* BossBangerMusicComponent;
+
+	UPROPERTY(VisibleAnywhere, Category = "Details")
+	bool BossBanger;
+
+	
 	
 protected:
 	// Called when the game starts or when spawned
@@ -31,6 +36,7 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-	void AddActiveSpeaker(AE_SpeakerMM* speaker);
+	void ActivateSpeaker(AE_SpeakerMM* speaker);
+	void DesactivateSpeaker(AE_SpeakerMM* speaker);
 
 };

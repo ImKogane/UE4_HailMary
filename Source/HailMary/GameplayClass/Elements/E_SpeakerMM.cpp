@@ -28,12 +28,13 @@ void AE_SpeakerMM::Interaction(AStudentCharacter* studentCharacter)
 		PlaySpeakerSound();
 		IsActivate = true;
 		_strDisplayText = "Press E to stop speaker";
-		MerryMakerManager->AddActiveSpeaker(this);
+		MerryMakerManager->ActivateSpeaker(this);
 	}
 	else
 	{
 		StopSpeakerSound();
 		IsActivate = false;
+		MerryMakerManager->DesactivateSpeaker(this);
 		_strDisplayText = "Press E to activate speaker";
 	}
 }
@@ -41,9 +42,11 @@ void AE_SpeakerMM::Interaction(AStudentCharacter* studentCharacter)
 void AE_SpeakerMM::PlaySpeakerSound()
 {
 	SpeakerAudioComponent->Play();
+	
 }
 
 void AE_SpeakerMM::StopSpeakerSound()
 {
 	SpeakerAudioComponent->Stop();
+	
 }

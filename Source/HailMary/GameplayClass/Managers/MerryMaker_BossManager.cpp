@@ -33,20 +33,47 @@ void AMerryMaker_BossManager::Tick(float DeltaTime)
 
 }
 
-void AMerryMaker_BossManager::AddActiveSpeaker(AE_SpeakerMM* speaker)
+void AMerryMaker_BossManager::ActivateSpeaker(AE_SpeakerMM* speaker)
 {
-	ActivesSpeakers.Add(speaker);
-	if(ActivesSpeakers.Num() == 2)
+	if(!BossBanger && Boss != nullptr)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Blue, TEXT("Two speaker are on !"));
-
-		if(Boss != nullptr) Boss->StopBossAura();
-		BossBangerMusicComponent->Play();
-
-		for (AE_SpeakerMM* speaker : ActivesSpeakers)
+		ActivesSpeakers.Add(speaker);
+		
+		FString IntAsString = FString::FromInt(ActivesSpeakers.Num());
+		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Orange, IntAsString);
+		
+		if(ActivesSpeakers.Num() == 2)
 		{
-			speaker->StopSpeakerSound();
+			Boss->StopBossAura();
+			BossBangerMusicComponent->Play();
+			BossBanger = true;
+
+			for (AE_SpeakerMM* speaker : ActivesSpeakers)
+			{
+				speaker->StopSpeakerSound();
+			}
 		}
 	}
 }
+
+void AMerryMaker_BossManager::DesactivateSpeaker(AE_SpeakerMM* speaker)
+{
+	ActivesSpeakers.Remove(speaker);
+
+	FString IntAsString = FString::FromInt(ActivesSpeakers.Num());
+	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Orange, IntAsString);
+	
+	if(BossBanger && Boss != nullptr)
+	{
+		//Stop boss banger music
+		BossBangerMusicComponent->Stop();
+		BossBanger = false;
+
+		//Re-activate originals sounds
+		Boss->PlayBossAura();
+		ActivesSpeakers[0]->PlaySpeakerSound();
+		
+	}
+}
+
 
