@@ -14,7 +14,7 @@ class HAILMARY_API AAICharacter : public ACharacter
 	
 public:
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Component", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Component", meta = (AllowPrivateAccess = "true"))
 	UAudioComponent* BossAuraAudioComponent;
 	
 	/*The Behavior Tree of the Character */
