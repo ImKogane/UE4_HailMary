@@ -84,7 +84,7 @@ void AAICharacter::OnSeePlayer(APawn* InPawn)
 	{
 		AIController->StopMovement();
 		//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Je te vois"));
-		GetCharacterMovement()->MaxWalkSpeed = 400;
+		GetCharacterMovement()->MaxWalkSpeed = 700;
 		LastSeenTime = GetWorld()->GetTimeSeconds();
 		AIController->SetSeenTarget(InPawn);
 	}
@@ -110,7 +110,7 @@ void AAICharacter::Drop()
 		if(IsValid(Character))
 		{
 			Character->DropPlayer();
-			//GetCharacterMovement()->MaxWalkSpeed = 250;
+			GetCharacterMovement()->MaxWalkSpeed = 250;
 
 			//Port player to the other side if the dooor
 			ABackDoor* backDoorNearest = Cast<ABackDoor>(GetNearestDoor());
@@ -119,6 +119,7 @@ void AAICharacter::Drop()
 				FVector vecLocation = backDoorNearest->GetTeleportPosition();
 //				Character->SetActorLocation(vecLocation);
 				Character->TeleportTo(vecLocation, GetActorRotation());
+				Character = nullptr;
 			}
 			
 			AIController->SetIsHoldingPlayer(false);

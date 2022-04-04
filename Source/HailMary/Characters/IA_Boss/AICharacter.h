@@ -19,9 +19,9 @@ public:
 	/*The Component which is used for the "seeing" sense of the AI*/
 	UPROPERTY(VisibleAnywhere,Category="AI")
 	class UPawnSensingComponent* PawnSensingComp;
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere,Category="AIDebug")
 	AStudentCharacter* Character;
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere,Category="AIDebug")
 	class AMyAIController* AIController;
 	UPROPERTY(VisibleAnywhere, Category="Door")
 	TArray<AActor*> m_arrDoors;
@@ -32,7 +32,7 @@ public:
 	UPROPERTY()
 	float LastSeenTime;
 	UPROPERTY()
-	float TimeOut = 10.0f;
+	float TimeOut = 8.0f;
 	
 	// Sets default values for this character's properties
 	AAICharacter();
