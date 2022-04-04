@@ -15,6 +15,8 @@ void ATask_Object::BeginPlay()
 	GenerateTask();
 	TheGameInstance = Cast<UMainGameInstance>(GetGameInstance());
 	_strDisplayText = _strDisplayTextLocked;
+	//Get References
+	_gameHud = Cast<AGameHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
 }
 
 void ATask_Object::GenerateTask()
@@ -84,14 +86,27 @@ void ATask_Object::Tick(float DeltaSeconds)
 			if(Player->GetIsDoAction() && ElementProgress <= ElementMaxProgress)
 			{
 				ElementProgress += Player->GetMakeTaskSpeed();
-				FString ProgressString = FString::FromInt(ElementProgress);
-				GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Green, ProgressString);
+				
+				//Update Hud Progress bar
+				if(_gameHud)
+				{
+					_gameHud->GetDefaultWidget()->SetProgressBarValue(Player->GetPlayerId(),ElementProgress);
+				}
 
 				ElementInteractionCount++;
 			}
-			else if(ElementProgress > ElementMaxProgress)
+			else
 			{
-				CompleteTask();
+				if(ElementProgress > ElementMaxProgress)
+				{
+					CompleteTask();
+				}
+				
+				//Hide Hud Progress bar
+				if(_gameHud)
+				{
+					_gameHud->GetDefaultWidget()->HideProgressBar(Player->GetPlayerId());
+				}
 			}
 		}
 

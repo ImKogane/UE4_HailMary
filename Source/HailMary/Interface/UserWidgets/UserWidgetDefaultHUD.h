@@ -4,6 +4,7 @@
 #include "CoreMinimal.h"
 #include "UserWidgetInteractDisplay.h"
 #include "Blueprint/UserWidget.h"
+#include "Components/ProgressBar.h"
 // #include "HailMary/Characters/StudentCharacter/StudentCharacter.h"
 #include "UserWidgetDefaultHUD.generated.h"
 
@@ -48,6 +49,8 @@ class HAILMARY_API UUserWidgetDefaultHUD : public UUserWidget
 			class UImage* imgPerk2Player1;
 			UPROPERTY(BlueprintReadOnly, meta=(BindWidget))
 			UUserWidgetInteractDisplay* widgetInteractPlayer1;
+			UPROPERTY(BlueprintReadOnly, meta=(BindWidget))
+			UProgressBar* progressbarPlayer1;
 		#pragma endregion
 	
 		#pragma region Player2
@@ -63,6 +66,8 @@ class HAILMARY_API UUserWidgetDefaultHUD : public UUserWidget
 			class UImage* imgPerk2Player2;
 			UPROPERTY(BlueprintReadOnly, meta=(BindWidget))
 			UUserWidgetInteractDisplay* widgetInteractPlayer2;
+			UPROPERTY(BlueprintReadOnly, meta=(BindWidget))
+			UProgressBar* progressbarPlayer2;
 		#pragma endregion 
 
 		#pragma region PublicFunctions
@@ -100,5 +105,9 @@ class HAILMARY_API UUserWidgetDefaultHUD : public UUserWidget
 			void SetTextInteractPlayer1(FString newText);
 			UFUNCTION()
 			void SetTextInteractPlayer2(FString newText);
+			UFUNCTION()
+			void SetProgressBarValue(int nbPlayerId, float fValue);
+			UFUNCTION()
+			void HideProgressBar(int nbPlayerId);
 		#pragma endregion 
 };
