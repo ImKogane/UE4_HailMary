@@ -12,10 +12,10 @@ AMerryMaker_BossManager::AMerryMaker_BossManager()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	//Banger music component
 	BossBangerMusicComponent = CreateDefaultSubobject<UAudioComponent>(TEXT("BossMusic"));
 	BossBangerMusicComponent->SetupAttachment(RootComponent);
-
-
+	
 }
 
 // Called when the game starts or when spawned
@@ -35,19 +35,19 @@ void AMerryMaker_BossManager::Tick(float DeltaTime)
 
 void AMerryMaker_BossManager::ActivateSpeaker(AE_SpeakerMM* speaker)
 {
-	if(!BossBanger && Boss != nullptr)
+	if(!BossBanger)
 	{
 		ActivesSpeakers.Add(speaker);
 		
-		FString IntAsString = FString::FromInt(ActivesSpeakers.Num());
-		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Orange, IntAsString);
-		
 		if(ActivesSpeakers.Num() == 2)
 		{
-			Boss->StopBossAura();
+			if(Boss != nullptr) Boss->StopBossAura();
+
+			//Activate boss banger music
 			BossBangerMusicComponent->Play();
 			BossBanger = true;
 
+			//Stop all speaker sounds
 			for (AE_SpeakerMM* speaker : ActivesSpeakers)
 			{
 				speaker->StopSpeakerSound();
@@ -59,20 +59,16 @@ void AMerryMaker_BossManager::ActivateSpeaker(AE_SpeakerMM* speaker)
 void AMerryMaker_BossManager::DesactivateSpeaker(AE_SpeakerMM* speaker)
 {
 	ActivesSpeakers.Remove(speaker);
-
-	FString IntAsString = FString::FromInt(ActivesSpeakers.Num());
-	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Orange, IntAsString);
 	
-	if(BossBanger && Boss != nullptr)
+	if(BossBanger)
 	{
 		//Stop boss banger music
 		BossBangerMusicComponent->Stop();
 		BossBanger = false;
 
 		//Re-activate originals sounds
-		Boss->PlayBossAura();
+		if(Boss != nullptr) Boss->PlayBossAura();
 		ActivesSpeakers[0]->PlaySpeakerSound();
-		
 	}
 }
 

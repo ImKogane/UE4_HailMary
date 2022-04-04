@@ -8,6 +8,7 @@
 
 AE_SpeakerMM::AE_SpeakerMM()
 {
+	//Speaker music component
 	SpeakerAudioComponent = CreateDefaultSubobject<UAudioComponent>(TEXT("SpeakerAudio"));
 	SpeakerAudioComponent->SetupAttachment(BaseComponent);
 }
@@ -42,11 +43,9 @@ void AE_SpeakerMM::Interaction(AStudentCharacter* studentCharacter)
 void AE_SpeakerMM::PlaySpeakerSound()
 {
 	SpeakerAudioComponent->Play();
-	
 }
 
 void AE_SpeakerMM::StopSpeakerSound()
 {
 	SpeakerAudioComponent->Stop();
-	
 }
