@@ -76,6 +76,8 @@ public:
 		UPerk_BaseComponent* GetFirstPerk();
 		UFUNCTION()	
 		UPerk_BaseComponent* GetSecondPerk();
+		UFUNCTION()
+		FORCEINLINE int GetPlayerId(){return m_nbPlayerId;}
 	#pragma endregion 
 
 protected:

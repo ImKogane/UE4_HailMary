@@ -27,6 +27,8 @@ void UUserWidgetDefaultHUD::PostStart()
 	bPostStartDone = true;
 	UpdatePerks(); // To Do once BOTH player have been Instantiated
 	UpdateTasks(); // Same then previous && When a task got completed
+	HideProgressBar(1);
+	HideProgressBar(2);
 }
 
 void UUserWidgetDefaultHUD::CheckPostStart()
@@ -261,4 +263,46 @@ void UUserWidgetDefaultHUD::SetTextInteractPlayer2(FString newText)
 {
 	FText NewText = FText::FromString(newText);
 	widgetInteractPlayer2->textInteract->SetText(NewText) ;
+}
+
+void UUserWidgetDefaultHUD::SetProgressBarValue(int nbPlayerId, float fValue)
+{
+	fValue = fValue / 100.0f; //convert value to percent
+	
+	if(nbPlayerId == 1 && m_player1)
+	{
+		if( progressbarPlayer1)
+		{
+			progressbarPlayer1->SetVisibility(ESlateVisibility::Visible);
+			progressbarPlayer1->SetPercent(fValue);
+		}
+	}
+	
+	if(nbPlayerId == 2 && m_player2)
+	{
+		if( progressbarPlayer2)
+		{
+			progressbarPlayer2->SetVisibility(ESlateVisibility::Visible);
+			progressbarPlayer2->SetPercent(fValue);
+		}
+	}
+}
+
+void UUserWidgetDefaultHUD::HideProgressBar(int nbPlayerId)
+{
+		if(nbPlayerId == 1 && m_player1)
+    	{
+    		if( progressbarPlayer1)
+    		{
+    			progressbarPlayer1->SetVisibility(ESlateVisibility::Hidden);
+    		}
+    	}
+    	
+    	if(nbPlayerId == 2 && m_player2)
+    	{
+    		if( progressbarPlayer2)
+    		{
+    			progressbarPlayer2->SetVisibility(ESlateVisibility::Hidden);
+    		}
+    	}
 }
