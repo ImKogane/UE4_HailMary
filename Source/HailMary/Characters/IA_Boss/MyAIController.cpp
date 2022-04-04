@@ -2,10 +2,8 @@
 
 
 #include "MyAIController.h"
-
 #include "HailMary/MainGameInstance.h"
 #include "Kismet/GameplayStatics.h"
-
 
 AMyAIController::AMyAIController()
 {
@@ -22,7 +20,11 @@ AMyAIController::AMyAIController()
 
 TArray<AActor*> AMyAIController::GetAvailableTargetPoints()
 {
-	BotTargetPoints.Reset();
+	if( BotTargetPoints.Num()>0)
+	{
+		BotTargetPoints.Reset();
+	}
+
 	//Get BotTargetPoints of the Current and previous Phase
 	_gameInstance = Cast<UMainGameInstance>(GetGameInstance());
 	if(IsValid(_gameInstance))

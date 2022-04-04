@@ -245,12 +245,18 @@ void UUserWidgetDefaultHUD::ShowInteractPlayer2()
 
 void UUserWidgetDefaultHUD::HideInteractPlayer1()
 {
-	widgetInteractPlayer1->SetVisibility(ESlateVisibility::Hidden);
+	if(widgetInteractPlayer1)
+	{
+		widgetInteractPlayer1->SetVisibility(ESlateVisibility::Hidden);
+	}
 }
 
 void UUserWidgetDefaultHUD::HideInteractPlayer2()
 {
-	widgetInteractPlayer2->SetVisibility(ESlateVisibility::Hidden);
+	if(widgetInteractPlayer2)
+	{
+		widgetInteractPlayer2->SetVisibility(ESlateVisibility::Hidden);
+	}
 }
 
 void UUserWidgetDefaultHUD::SetTextInteractPlayer1(FString newText)

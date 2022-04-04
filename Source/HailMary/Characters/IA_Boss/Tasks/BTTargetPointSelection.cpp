@@ -36,21 +36,16 @@ EBTNodeResult::Type UBTTargetPointSelection::ExecuteTask(UBehaviorTreeComponent 
 				//Remember that the Array provided by the Controller function contains AActor* objects so we need to cast.
 				NextTargetPoint = Cast<ABotTargetPoint>(AvailableTargetPoints[RandomIndex]);
 			} while (CurrentPoint == NextTargetPoint);
-		}
-		else
-		{
-			return EBTNodeResult::Failed;
-		}
+
+			//Update the next location in the Blackboard so the bot can move to the next Blackboard value
+			FVector vecLocation = NextTargetPoint->GetActorLocation();
+			BlackboardComp->SetValueAsVector("LocationToGo", vecLocation );
+			//		BlackboardComp->SetValueAsObject("LocationToGo", NextTargetPoint); //Old way, move to actor instead
 
  
-		//Update the next location in the Blackboard so the bot can move to the next Blackboard value
-		FVector vecLocation = NextTargetPoint->GetActorLocation();
-		BlackboardComp->SetValueAsVector("LocationToGo", vecLocation );
-//		BlackboardComp->SetValueAsObject("LocationToGo", NextTargetPoint); //Old way, move to actor instead
-
- 
-		//At this point, the task has been successfully completed
-		return EBTNodeResult::Succeeded;
+			//At this point, the task has been successfully completed
+			return EBTNodeResult::Succeeded;
+		}
 	}
 	return EBTNodeResult::Failed;
 }

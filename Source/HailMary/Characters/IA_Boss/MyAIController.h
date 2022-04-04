@@ -11,6 +11,7 @@
 #include "AICharacter.h"
 #include "MyAIController.generated.h"
 
+
 /**
  * 
  */
@@ -39,7 +40,7 @@ class HAILMARY_API AMyAIController : public AAIController
 
 		#pragma region Accessors
 			FORCEINLINE UBlackboardComponent* GetBlackboardComp() const { return BlackboardComp; }
-			FORCEINLINE TArray<AActor*> GetAvailableTargetPoints();
+			TArray<AActor*> GetAvailableTargetPoints();
 		#pragma endregion
 
 	protected :
