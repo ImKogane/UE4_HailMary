@@ -4,6 +4,7 @@
 #include "E_SpeakerMM.h"
 
 #include "Components/AudioComponent.h"
+#include "HailMary/GameplayClass/Managers/MerryMaker_BossManager.h"
 
 AE_SpeakerMM::AE_SpeakerMM()
 {
@@ -27,6 +28,7 @@ void AE_SpeakerMM::Interaction(AStudentCharacter* studentCharacter)
 		PlaySpeakerSound();
 		IsActivate = true;
 		_strDisplayText = "Press E to stop speaker";
+		MerryMakerManager->AddActiveSpeaker(this);
 	}
 	else
 	{

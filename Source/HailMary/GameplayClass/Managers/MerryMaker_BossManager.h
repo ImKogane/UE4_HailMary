@@ -15,12 +15,18 @@ public:
 	// Sets default values for this actor's properties
 	AMerryMaker_BossManager();
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Component", meta = (AllowPrivateAccess = "true"))
+	UAudioComponent* BossBangerMusicComponent;
+	
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 	
 	UPROPERTY(VisibleAnywhere, Category = "Merry Maker Elements")
 	TArray<class AE_SpeakerMM*> ActivesSpeakers;
+
+	UPROPERTY(EditInstanceOnly, Category = "Merry Maker Elements")
+	class AAICharacter* Boss;
 
 public:	
 	// Called every frame

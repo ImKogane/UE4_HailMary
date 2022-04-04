@@ -13,6 +13,10 @@ class HAILMARY_API AAICharacter : public ACharacter
 	GENERATED_BODY()
 	
 public:
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Component", meta = (AllowPrivateAccess = "true"))
+	UAudioComponent* BossAuraAudioComponent;
+	
 	/*The Behavior Tree of the Character */
 	UPROPERTY(EditAnywhere, Category =AI)
 	class UBehaviorTree* BehaviorTree;
@@ -48,6 +52,9 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	UFUNCTION() void PlayBossAura();
+	UFUNCTION() void StopBossAura();
 	
 protected:
 	// Called when the game starts or when spawned

@@ -3,6 +3,7 @@
 
 #include "AICharacter.h"
 #include "MyAIController.h"
+#include "Components/AudioComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "HailMary/GameplayClass/Elements/BackDoor.h"
 #include "Kismet/GameplayStatics.h"
@@ -18,6 +19,9 @@ AAICharacter::AAICharacter()
 	PawnSensingComp = CreateDefaultSubobject<UPawnSensingComponent>(TEXT("PawnSensingComp"));
 	//Set the peripheral vision angle to 90 degrees
 	PawnSensingComp->SetPeripheralVisionAngle(90.f);
+
+	BossAuraAudioComponent = CreateDefaultSubobject<UAudioComponent>(TEXT("BossAura"));
+	BossAuraAudioComponent->SetupAttachment(RootComponent);
 }
 
 // Called when the game starts or when spawned
@@ -74,6 +78,16 @@ void AAICharacter::Tick(float DeltaTime)
 void AAICharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+}
+
+void AAICharacter::PlayBossAura()
+{
+	BossAuraAudioComponent->Play();
+}
+
+void AAICharacter::StopBossAura()
+{
+	BossAuraAudioComponent->Stop();
 }
 
 void AAICharacter::OnSeePlayer(APawn* InPawn)
