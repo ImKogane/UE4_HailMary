@@ -48,6 +48,9 @@ ABackDoor::ABackDoor()
 	
 	_sceneComponentEntrancePosition= CreateDefaultSubobject<USceneComponent>("Entrance Position");
 	_sceneComponentEntrancePosition->SetupAttachment(ElementMesh);
+
+	_cameraComponent= CreateDefaultSubobject<UCameraComponent>("Camera");
+	_cameraComponent->SetupAttachment(ElementMesh);
 }
 
 void ABackDoor::Tick(float DeltaSeconds)

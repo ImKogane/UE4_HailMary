@@ -5,6 +5,7 @@
 #include "MyAIController.h"
 #include "Components/AudioComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "GameFramework/SpringArmComponent.h"
 #include "HailMary/GameplayClass/Elements/BackDoor.h"
 #include "Kismet/GameplayStatics.h"
 #include "Perception/PawnSensingComponent.h"
@@ -135,6 +136,13 @@ void AAICharacter::Drop()
 				FVector vecLocation = backDoorNearest->GetTeleportPosition();
 //				Character->SetActorLocation(vecLocation);
 				Character->TeleportTo(vecLocation, GetActorRotation());
+				//Inputs
+				Character->SetInputsState(EnumInputsState::DisableMovementAndCamera);
+				Character->SetActorRotation(backDoorNearest->GetCameraComponent()->GetComponentRotation());
+				//Camera
+				Character->CameraBoom->Deactivate();
+				Character->FollowCamera->SetWorldLocation(backDoorNearest->GetCameraComponent()->GetComponentLocation());
+				Character->FollowCamera->SetWorldRotation(backDoorNearest->GetCameraComponent()->GetComponentRotation());
 				Character = nullptr;
 			}
 			

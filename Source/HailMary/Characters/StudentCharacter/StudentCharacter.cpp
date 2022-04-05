@@ -370,6 +370,12 @@ void AStudentCharacter::SetInputsState(EnumInputsState newState)
 				// PlayerInputComponent->BindAction("Action", IE_Pressed, this, &AStudentCharacter::DoAction);
 				// PlayerInputComponent->BindAction("Action", IE_Released, this, &AStudentCharacter::UndoAction);
 		}
+		case EnumInputsState::DisableMovementAndCamera :
+		{
+			PlayerInputComponent->BindAction("Interaction", IE_Pressed, this, &AStudentCharacter::Interact);
+			PlayerInputComponent->BindAction("Action", IE_Pressed, this, &AStudentCharacter::DoAction);
+			PlayerInputComponent->BindAction("Action", IE_Released, this, &AStudentCharacter::UndoAction);
+		}
 		case EnumInputsState::DisableMovementAndInputs :
 		{
 			//none

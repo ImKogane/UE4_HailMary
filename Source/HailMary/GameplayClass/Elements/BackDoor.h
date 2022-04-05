@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Camera/CameraComponent.h"
 #include "HailMary/GameplayClass/InteractionBase/InteractibleElement.h"
 #include "BackDoor.generated.h"
 
@@ -27,6 +28,8 @@ class HAILMARY_API ABackDoor : public AInteractibleElement
 			FORCEINLINE FVector GetEntrancePosition(){return _sceneComponentEntrancePosition->GetComponentLocation();}
 			UFUNCTION()
 			FORCEINLINE FVector GetTeleportPosition(){return _sceneComponentTeleportPosition->GetComponentLocation();}
+			UFUNCTION()
+			FORCEINLINE UCameraComponent* GetCameraComponent(){return _cameraComponent;}
 		#pragma endregion 
 	
 	protected:
@@ -39,6 +42,8 @@ class HAILMARY_API ABackDoor : public AInteractibleElement
 			USceneComponent* _sceneComponentEntrancePosition;
 			UPROPERTY(EditAnywhere)
 			USceneComponent* _sceneComponentTeleportPosition;
+			UPROPERTY(EditAnywhere)
+			UCameraComponent* _cameraComponent;
 		#pragma endregion
 	
 		#pragma region ProtectedFunctions
