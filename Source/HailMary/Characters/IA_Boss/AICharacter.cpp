@@ -133,6 +133,8 @@ void AAICharacter::Drop()
 			ABackDoor* backDoorNearest = Cast<ABackDoor>(GetNearestDoor());
 			if(IsValid(backDoorNearest))
 			{
+				backDoorNearest->SetPlayerInside(Character);
+				//Port Player
 				FVector vecLocation = backDoorNearest->GetTeleportPosition();
 //				Character->SetActorLocation(vecLocation);
 				Character->TeleportTo(vecLocation, GetActorRotation());

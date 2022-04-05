@@ -4,6 +4,7 @@
 #include "BackDoor.h"
 #include "HailMary/Characters/IA_Boss/AICharacter.h"
 #include "HailMary/Characters/StudentCharacter/StudentCharacter.h"
+#include "Kismet/GameplayStatics.h"
 
 void ABackDoor::OnBoxOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
                                   UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
@@ -73,6 +74,20 @@ void ABackDoor::Tick(float DeltaSeconds)
 		}
 
 	}	
+}
+
+void ABackDoor::SetPlayerInside(AStudentCharacter* player)
+{
+	if( PlayerInside == nullptr)
+	{
+		PlayerInside = player;
+	}
+	else
+	{
+		//Someone already in the door : Game Over
+		UGameplayStatics::OpenLevel(GetWorld(), FName(*GetWorld()->GetName()), false); //Restart level
+	}
+
 }
 
 bool ABackDoor::GetPlayerIsInside()
