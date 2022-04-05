@@ -16,6 +16,7 @@ AMyAIController::AMyAIController()
 	LocationToGoKey = "LocationToGo";
 	TargetKey = "Target";
 	bIsHoldingPlayer = "bIsHoldingPlayer";
+	FloatTime = "Time";
 }
 
 TArray<AActor*> AMyAIController::GetAvailableTargetPoints()
@@ -110,3 +111,12 @@ void AMyAIController::SetIsHoldingPlayer(bool bValue)
 		BlackboardComp->SetValueAsBool(bIsHoldingPlayer, bValue);
 	}
 }
+
+
+// void AMyAIController::SetTime()
+// {
+// 	if(BehaviorComp)
+// 	{
+// 		BlackboardComp->SetValueAsFloat(FloatTime,  );
+// 	}
+// }

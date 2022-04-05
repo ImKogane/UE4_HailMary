@@ -6,6 +6,7 @@
 #include "Components/AudioComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "HailMary/GameplayClass/Elements/BackDoor.h"
+#include "HailMary/GameplayClass/Elements/E_SpeakerMM.h"
 #include "Kismet/GameplayStatics.h"
 #include "Perception/PawnSensingComponent.h"
 
@@ -32,6 +33,7 @@ void AAICharacter::BeginPlay()
 	//Get references
 	 AIController = Cast<AMyAIController>(GetController());
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(),ABackDoor::StaticClass(), m_arrDoors);
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(),AE_SpeakerMM::StaticClass(), m_arrMerryMaker);
 	_gameHud = Cast<AGameHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
 	
 	//Register the function that is going to fire when the character sees a Pawn
@@ -60,6 +62,26 @@ AActor* AAICharacter::GetNearestDoor()
 	}
 	return nullptr;
 }
+
+AActor* AAICharacter::GetNearestMerryMaker()
+{
+	if(m_arrMerryMaker.Num()>0 )
+	{
+		float fNearestMerryMakerDist = -1;
+		for (AActor*  currentMerryMaker : m_arrMerryMaker)
+		{
+			float fDistance = FVector::Dist(this->GetActorLocation(),currentMerryMaker->GetActorLocation());
+			if(fDistance < fNearestMerryMakerDist || fNearestMerryMakerDist == -1) // si la nouvelle distance est plus courte
+				{
+				NearestMerryMaker = currentMerryMaker;
+				fNearestMerryMakerDist = fDistance;
+				}
+		}
+		return NearestMerryMaker;
+	}
+	return nullptr;
+}
+
 
 // Called every frame
 void AAICharacter::Tick(float DeltaTime)

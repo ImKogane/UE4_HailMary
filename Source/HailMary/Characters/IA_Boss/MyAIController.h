@@ -36,6 +36,8 @@ class HAILMARY_API AMyAIController : public AAIController
 			void SetNotSeenTarget();
 			UFUNCTION()
 			void SetIsHoldingPlayer(bool bValue);
+	        // UFUNCTION()
+	        // void SetTime();
 		#pragma endregion 
 
 		#pragma region Accessors
@@ -57,6 +59,8 @@ class HAILMARY_API AMyAIController : public AAIController
 			FName TargetKey ;
 			UPROPERTY(EditDefaultsOnly, Category = AI)
 			FName bIsHoldingPlayer;
+			UPROPERTY(EditDefaultsOnly, Category = AI)
+			FName FloatTime ;
 	        UPROPERTY()
 			TArray<AActor*> BotTargetPoints;
 			/*----------Blackboard----------*/

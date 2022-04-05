@@ -31,12 +31,18 @@ public:
 	TArray<AActor*> m_arrDoors;
 	UPROPERTY(VisibleAnywhere, Category="Door")
 	AActor* NearestDoor;
+	UPROPERTY(VisibleAnywhere, Category="MerryMaker")
+	TArray<AActor*> m_arrMerryMaker;
+	UPROPERTY(VisibleAnywhere, Category="MerryMaker")
+	AActor* NearestMerryMaker;
 	UPROPERTY()
 	bool bAIVisible = false;
 	UPROPERTY()
 	float LastSeenTime;
 	UPROPERTY()
 	float TimeOut = 8.0f;
+	UPROPERTY()
+	class APlayCycle* TimeGame;
 	
 	// Sets default values for this character's properties
 	AAICharacter();
@@ -48,6 +54,8 @@ public:
 	void OnSeePlayer(APawn* Pawn);
 	UFUNCTION()
 	AActor* GetNearestDoor();
+	UFUNCTION()
+	AActor* GetNearestMerryMaker();
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 	// Called to bind functionality to input
