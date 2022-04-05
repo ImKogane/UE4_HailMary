@@ -21,6 +21,7 @@ class HAILMARY_API ABackDoor : public AInteractibleElement
 			virtual void Tick(float DeltaSeconds) override;
 			UFUNCTION()
 			void SetPlayerInside(AStudentCharacter* player);
+			virtual void Interaction(AStudentCharacter* studentCharacter) override;
 		#pragma endregion
 
 		#pragma region Accessors
@@ -46,6 +47,8 @@ class HAILMARY_API ABackDoor : public AInteractibleElement
 			USceneComponent* _sceneComponentTeleportPosition;
 			UPROPERTY(EditAnywhere)
 			UCameraComponent* _cameraComponent;
+			UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Component", meta = (AllowPrivateAccess = "true"))
+			UAudioComponent* _audioComponent;
 		#pragma endregion
 	
 		#pragma region ProtectedFunctions

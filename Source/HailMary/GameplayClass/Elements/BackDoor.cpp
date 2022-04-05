@@ -2,6 +2,8 @@
 
 
 #include "BackDoor.h"
+
+#include "Components/AudioComponent.h"
 #include "HailMary/Characters/IA_Boss/AICharacter.h"
 #include "HailMary/Characters/StudentCharacter/StudentCharacter.h"
 #include "Kismet/GameplayStatics.h"
@@ -52,6 +54,9 @@ ABackDoor::ABackDoor()
 
 	_cameraComponent= CreateDefaultSubobject<UCameraComponent>("Camera");
 	_cameraComponent->SetupAttachment(ElementMesh);
+
+	_audioComponent = CreateDefaultSubobject<UAudioComponent>(TEXT("audioCue"));
+	_audioComponent->SetupAttachment(RootComponent);
 }
 
 void ABackDoor::Tick(float DeltaSeconds)
@@ -87,7 +92,21 @@ void ABackDoor::SetPlayerInside(AStudentCharacter* player)
 		//Someone already in the door : Game Over
 		UGameplayStatics::OpenLevel(GetWorld(), FName(*GetWorld()->GetName()), false); //Restart level
 	}
+}
 
+void ABackDoor::Interaction(AStudentCharacter* studentCharacter)
+{
+	Super::Interaction(studentCharacter);
+	
+	if(PlayerInside == studentCharacter)
+	{
+		//Play cue
+		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("Play Cue"));
+		if(_audioComponent)
+		{
+			_audioComponent->Play();
+		}
+	}
 }
 
 bool ABackDoor::GetPlayerIsInside()
