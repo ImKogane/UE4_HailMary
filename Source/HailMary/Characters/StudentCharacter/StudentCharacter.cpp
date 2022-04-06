@@ -63,6 +63,8 @@ void AStudentCharacter::BeginPlay()
 	Super::BeginPlay();
 	//Get References
 	_gameHud = Cast<AGameHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
+	m_player1 = Cast<AStudentCharacter>(UGameplayStatics::GetPlayerController(GetWorld(), 0)->GetCharacter());
+	m_player2 = Cast<AStudentCharacter>(UGameplayStatics::GetPlayerController(GetWorld(), 1)->GetCharacter());
 	Collider->OnComponentBeginOverlap.AddDynamic(this, &AStudentCharacter::OnBeginOverlap);
 	SetPlayerId();
 	InstanciatePerks();
@@ -71,10 +73,8 @@ void AStudentCharacter::BeginPlay()
 void AStudentCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	if (IsAiming == true)
-	{
-		CameraDuringAim();
-	}
+	CameraDuringAim(1);
+	CameraDuringAim(2);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -298,6 +298,7 @@ void AStudentCharacter::UndoAction()
 void AStudentCharacter::Aim()
 {
 	IsAiming = true;
+	GetCharacterMovement()->MaxWalkSpeed = WalkSpeed;
 	OffsetAim = { 200.0, 50.0, 50.0 };
 	GetCameraBoom()->SocketOffset = OffsetAim;
 	_gameHud->GetDefaultWidget()->ShowCrosshairPlayer(GetPlayerId());
@@ -313,11 +314,27 @@ void AStudentCharacter::UndoAim()
 	GetFollowCamera()->SetFieldOfView(90.0);
 }
 
-void AStudentCharacter::CameraDuringAim()
+void AStudentCharacter::CameraDuringAim(int nbPlayerId)
 {
-	APlayerCameraManager* Camera = UGameplayStatics::GetPlayerController(GetWorld(), 0)->PlayerCameraManager;
-	FRotator newRotation = { 0.0, Camera->GetCameraRotation().Yaw, Camera->GetCameraRotation().Roll };
-	SetActorRotation(newRotation);
+	if (nbPlayerId == 1 && m_player1)
+	{
+		if (m_player1->IsAiming == true)
+		{
+			APlayerCameraManager* Camera = UGameplayStatics::GetPlayerController(GetWorld(), 0)->PlayerCameraManager;
+			FRotator newRotation = { 0.0, Camera->GetCameraRotation().Yaw, Camera->GetCameraRotation().Roll };
+			m_player1->SetActorRotation(newRotation);
+		}
+	}
+
+	if (nbPlayerId == 2 && m_player2)
+	{
+		if (m_player2->IsAiming == true)
+		{
+			APlayerCameraManager* Camera = UGameplayStatics::GetPlayerController(GetWorld(), 1)->PlayerCameraManager;
+			FRotator newRotation = { 0.0, Camera->GetCameraRotation().Yaw, Camera->GetCameraRotation().Roll };
+			m_player2->SetActorRotation(newRotation);
+		}
+	}
 }
 
 void AStudentCharacter::OnBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
