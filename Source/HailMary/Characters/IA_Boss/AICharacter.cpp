@@ -89,7 +89,7 @@ void AAICharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	
-	// AMyAIController* AIController = Cast<AMyAIController>(GetController());
+	//AMyAIController* AIController = Cast<AMyAIController>(GetController());
 	if(bAIVisible == true)
 	{
 		if((GetWorld()->TimeSeconds - LastSeenTime) > TimeOut)
@@ -117,14 +117,16 @@ void AAICharacter::StopBossAura()
 
 void AAICharacter::OnSeePlayer(APawn* InPawn)
 {
-	//AMyAIController* AIController = Cast<AMyAIController>(GetController());
 	//Set the seen target on the blackboard
 	if (AIController)
 	{
-		AIController->StopMovement();
-		//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Je te vois"));
-		GetCharacterMovement()->MaxWalkSpeed = 700;
+		// if(!IsValid(Character))
+		// {
+		// 	AIController->StopMovement();
+		// }
+		GetCharacterMovement()->MaxWalkSpeed = 300;
 		LastSeenTime = GetWorld()->GetTimeSeconds();
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Je te vois "));
 		AIController->SetSeenTarget(InPawn);
 	}
 }
@@ -136,7 +138,6 @@ void AAICharacter::Pick()
 	 	if(IsValid(Character))
 	 	{
 	 		Character->GrabPlayer(this);
-	 		//GetCharacterMovement()->MaxWalkSpeed = 250;
 	 		AIController->SetIsHoldingPlayer(true);
 	 	}
 	 }

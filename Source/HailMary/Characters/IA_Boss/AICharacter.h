@@ -40,9 +40,10 @@ public:
 	UPROPERTY()
 	float LastSeenTime;
 	UPROPERTY()
-	float TimeOut = 8.0f;
+	float TimeOut = 1.0f;
 	UPROPERTY()
 	class APlayCycle* TimeGame;
+	
 	
 	// Sets default values for this character's properties
 	AAICharacter();
