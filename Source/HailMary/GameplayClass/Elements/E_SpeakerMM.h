@@ -30,10 +30,13 @@ public:
 
 	UFUNCTION() void PlaySpeakerSound();
 	UFUNCTION() void StopSpeakerSound();
+	UFUNCTION()
+	FORCEINLINE FVector GetEntrancePosition(){return _sceneComponentEntrancePosition->GetComponentLocation();}
 
 protected:
 
 	UPROPERTY(VisibleAnywhere, Category="Element details")
 	bool IsActivate;
-	
+	UPROPERTY(EditAnywhere)
+	USceneComponent* _sceneComponentEntrancePosition;
 };

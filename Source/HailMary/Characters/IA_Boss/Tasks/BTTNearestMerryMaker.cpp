@@ -16,8 +16,8 @@ EBTNodeResult::Type UBTTNearestMerryMaker::ExecuteTask(UBehaviorTreeComponent & 
 			AE_SpeakerMM* MerryMakerNearest = Cast<AE_SpeakerMM>(AICon->AIChar->GetNearestMerryMaker());
 			if(IsValid(MerryMakerNearest))
 			{
-				//FVector vecLocation = MerryMakerNearest->GetEntrancePosition();
-				AICon->GetBlackboardComp()->SetValueAsVector("LocationToGo", MerryMakerNearest->GetActorLocation() );
+				FVector vecLocation = MerryMakerNearest->GetEntrancePosition();
+				AICon->GetBlackboardComp()->SetValueAsVector("LocationToGo", vecLocation );
 			}
 			return EBTNodeResult::Succeeded;
 		}
