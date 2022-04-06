@@ -97,6 +97,8 @@ protected:
 		bool IsDoAction;
 		UPROPERTY(VisibleAnywhere, Category = "Aim")
 		FVector OffsetAim;
+		UPROPERTY(VisibleAnywhere, Category = "Aim")
+		bool IsAiming;
 		UPROPERTY()
 		AInteractibleItem* NearItem;
 		UPROPERTY()
