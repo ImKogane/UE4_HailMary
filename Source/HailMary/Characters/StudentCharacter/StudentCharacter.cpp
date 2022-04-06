@@ -68,6 +68,15 @@ void AStudentCharacter::BeginPlay()
 	InstanciatePerks();
 }
 
+void AStudentCharacter::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+	if (IsAiming == true)
+	{
+		CameraDuringAim();
+	}
+}
+
 //////////////////////////////////////////////////////////////////////////
 // Input
 
@@ -302,6 +311,13 @@ void AStudentCharacter::UndoAim()
 	GetCameraBoom()->SocketOffset = OffsetAim;
 	_gameHud->GetDefaultWidget()->HideCrosshairPlayer(GetPlayerId());
 	GetFollowCamera()->SetFieldOfView(90.0);
+}
+
+void AStudentCharacter::CameraDuringAim()
+{
+	APlayerCameraManager* Camera = UGameplayStatics::GetPlayerController(GetWorld(), 0)->PlayerCameraManager;
+	FRotator newRotation = { 0.0, Camera->GetCameraRotation().Yaw, Camera->GetCameraRotation().Roll };
+	SetActorRotation(newRotation);
 }
 
 void AStudentCharacter::OnBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
