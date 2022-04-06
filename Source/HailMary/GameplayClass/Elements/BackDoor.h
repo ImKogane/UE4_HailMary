@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Camera/CameraComponent.h"
 #include "HailMary/GameplayClass/InteractionBase/InteractibleElement.h"
 #include "BackDoor.generated.h"
 
@@ -18,6 +19,9 @@ class HAILMARY_API ABackDoor : public AInteractibleElement
 		#pragma region PublicFunctions
 			ABackDoor();
 			virtual void Tick(float DeltaSeconds) override;
+			UFUNCTION()
+			void SetPlayerInside(AStudentCharacter* player);
+			virtual void Interaction(AStudentCharacter* studentCharacter) override;
 		#pragma endregion
 
 		#pragma region Accessors
@@ -27,18 +31,24 @@ class HAILMARY_API ABackDoor : public AInteractibleElement
 			FORCEINLINE FVector GetEntrancePosition(){return _sceneComponentEntrancePosition->GetComponentLocation();}
 			UFUNCTION()
 			FORCEINLINE FVector GetTeleportPosition(){return _sceneComponentTeleportPosition->GetComponentLocation();}
+			UFUNCTION()
+			FORCEINLINE UCameraComponent* GetCameraComponent(){return _cameraComponent;}
 		#pragma endregion 
 	
 	protected:
 		#pragma region ProtectedVariables
 			UPROPERTY(VisibleAnywhere)
-			class AStudentCharacter* NearPlayer;
+			TArray<AStudentCharacter*> _arrNearPlayer;
 			UPROPERTY(VisibleAnywhere)
 			class AStudentCharacter* PlayerInside;
 			UPROPERTY(EditAnywhere)
 			USceneComponent* _sceneComponentEntrancePosition;
 			UPROPERTY(EditAnywhere)
 			USceneComponent* _sceneComponentTeleportPosition;
+			UPROPERTY(EditAnywhere)
+			UCameraComponent* _cameraComponent;
+			UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Component", meta = (AllowPrivateAccess = "true"))
+			UAudioComponent* _audioComponent;
 		#pragma endregion
 	
 		#pragma region ProtectedFunctions

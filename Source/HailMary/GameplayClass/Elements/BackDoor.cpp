@@ -2,8 +2,12 @@
 
 
 #include "BackDoor.h"
+
+#include "Components/AudioComponent.h"
+#include "GameFramework/SpringArmComponent.h"
 #include "HailMary/Characters/IA_Boss/AICharacter.h"
 #include "HailMary/Characters/StudentCharacter/StudentCharacter.h"
+#include "Kismet/GameplayStatics.h"
 
 void ABackDoor::OnBoxOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
                                   UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
@@ -14,7 +18,7 @@ void ABackDoor::OnBoxOverlapBegin(UPrimitiveComponent* OverlappedComponent, AAct
 	AStudentCharacter* Player = Cast<AStudentCharacter>(OtherActor);
 	if (Player != nullptr)
 	{
-		NearPlayer = Player;
+		_arrNearPlayer.Add(Player);
 	}
 
 	AAICharacter* Boss = Cast<AAICharacter>(OtherActor);
@@ -29,11 +33,18 @@ void ABackDoor::OnBoxOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor
 	Super::OnBoxOverlapEnd(OverlappedComponent, OtherActor, OtherComp, OtherBodyIndex);
 
 	AStudentCharacter* Player = Cast<AStudentCharacter>(OtherActor);
-	if (Player != nullptr)
+	if (IsValid(Player))
 	{
-		NearPlayer = nullptr;
+		//Reset Progress
+		ElementProgress = 0;
+		//Hide Hud Progress bar
+		if(_gameHud)
+		{
+			_gameHud->GetDefaultWidget()->HideProgressBar(Player->GetPlayerId());
+		}
+		//Clear reference
+		_arrNearPlayer.Remove(Player);
 	}
-
 	AAICharacter* Boss = Cast<AAICharacter>(OtherActor);
 	if (Boss != nullptr)
 	{
@@ -48,28 +59,83 @@ ABackDoor::ABackDoor()
 	
 	_sceneComponentEntrancePosition= CreateDefaultSubobject<USceneComponent>("Entrance Position");
 	_sceneComponentEntrancePosition->SetupAttachment(ElementMesh);
+
+	_cameraComponent= CreateDefaultSubobject<UCameraComponent>("Camera");
+	_cameraComponent->SetupAttachment(ElementMesh);
+
+	_audioComponent = CreateDefaultSubobject<UAudioComponent>(TEXT("audioCue"));
+	_audioComponent->SetupAttachment(RootComponent);
 }
 
 void ABackDoor::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 	
-	if(NearPlayer != nullptr && PlayerInside != nullptr)
+	if(_arrNearPlayer.Num()>0 && PlayerInside != nullptr)
 	{
-		if(NearPlayer->GetIsDoAction() && ElementProgress <= ElementMaxProgress)
+		for ( AStudentCharacter* l_currentPlayer: _arrNearPlayer)
 		{
-			ElementProgress += NearPlayer->GetMakeTaskSpeed();
-				
-			FString ProgressString = FString::FromInt(ElementProgress);
-			GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Green, ProgressString);
-				
+			if(l_currentPlayer != PlayerInside)
+			{
+				if(l_currentPlayer->GetIsDoAction() && ElementProgress <= ElementMaxProgress)
+				{
+					ElementProgress += l_currentPlayer->GetMakeTaskSpeed();
+					//Update Hud Progress bar
+					if(_gameHud)
+					{
+						_gameHud->GetDefaultWidget()->SetProgressBarValue(l_currentPlayer->GetPlayerId(),ElementProgress);
+					}
+					//Debug
+					// FString ProgressString = FString::FromInt(ElementProgress);
+					// GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Green, ProgressString);
+				}
+				else
+				{
+					if(ElementProgress > ElementMaxProgress)
+					{
+						OpenDoor();
+					}
+					else if( ElementProgress > 0)
+					{
+						ElementProgress -= l_currentPlayer->GetMakeTaskSpeed();
+					}
+					//Hide Hud Progress bar
+					if(_gameHud)
+					{
+						_gameHud->GetDefaultWidget()->HideProgressBar(l_currentPlayer->GetPlayerId());
+					}
+				}
+			}
 		}
-		else if(ElementProgress > ElementMaxProgress)
-		{
-			OpenDoor();
-		}
-
 	}	
+}
+
+void ABackDoor::SetPlayerInside(AStudentCharacter* player)
+{
+	if( PlayerInside == nullptr)
+	{
+		PlayerInside = player;
+	}
+	else
+	{
+		//Someone already in the door : Game Over
+		UGameplayStatics::OpenLevel(GetWorld(), FName(*GetWorld()->GetName()), false); //Restart level
+	}
+}
+
+void ABackDoor::Interaction(AStudentCharacter* studentCharacter)
+{
+	Super::Interaction(studentCharacter);
+	
+	if(PlayerInside == studentCharacter)
+	{
+		//Play cue
+		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("Play Cue"));
+		if(_audioComponent)
+		{
+			_audioComponent->Play();
+		}
+	}
 }
 
 bool ABackDoor::GetPlayerIsInside()
@@ -90,5 +156,17 @@ bool ABackDoor::GetPlayerIsInside()
  */
 void ABackDoor::OpenDoor()
 {
+	//Port Player outside
+	FVector l_vecLocation = GetEntrancePosition();
+	PlayerInside->TeleportTo(l_vecLocation, GetActorRotation(),false,true);
+	//Enable back Inputs
+	PlayerInside->SetInputsState(EnumInputsState::EnableAll);
+	PlayerInside->SetActorRotation(this->GetCameraComponent()->GetComponentRotation());
+	//Reset Camera
+	PlayerInside->FollowCamera->ResetRelativeTransform();
+	PlayerInside->CameraBoom->Activate();
+
+	//Reset
 	PlayerInside = nullptr;
+	ElementProgress = 0;
 }

@@ -18,6 +18,7 @@ UENUM()
 enum EnumInputsState
 {
 	EnableAll					UMETA(DisplayName = "Enable"),
+	DisableMovementAndCamera	UMETA(DisplayName = "DisableMovementAndCamera"),	//Only Inputs Interact
 	DisableMovementAndInputs	UMETA(DisplayName = "DisableMovementAndInputs"),	//Camera still free but no Inputs
 	DisableMovement				UMETA(DisplayName = "DisableMovement"),				//Camera still free & Inputs
 	DisableAll					UMETA(DisplayName = "DisableMovement")				
