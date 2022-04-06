@@ -283,6 +283,20 @@ void AStudentCharacter::UndoAction()
 	IsDoAction = false;
 }
 
+void AStudentCharacter::Aim()
+{
+	OffsetAim = { 200.0, 50.0, 50.0 };
+	GetCameraBoom()->SocketOffset = OffsetAim;
+	_gameHud->GetDefaultWidget()->ShowCrosshairPlayer(GetPlayerId());
+}
+
+void AStudentCharacter::UndoAim()
+{
+	OffsetAim = { 0.0, 0.0, 0.0 };
+	GetCameraBoom()->SocketOffset = OffsetAim;
+	_gameHud->GetDefaultWidget()->HideCrosshairPlayer(GetPlayerId());
+}
+
 void AStudentCharacter::OnBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	if(OtherActor->IsA(AAICharacter::StaticClass()))
@@ -358,6 +372,9 @@ void AStudentCharacter::SetInputsState(EnumInputsState newState)
 				PlayerInputComponent->BindAction("Interaction", IE_Pressed, this, &AStudentCharacter::Interact);
 				PlayerInputComponent->BindAction("Action", IE_Pressed, this, &AStudentCharacter::DoAction);
 				PlayerInputComponent->BindAction("Action", IE_Released, this, &AStudentCharacter::UndoAction);
+
+				PlayerInputComponent->BindAction("Aim", IE_Pressed, this, &AStudentCharacter::Aim);
+				PlayerInputComponent->BindAction("Aim", IE_Released, this, &AStudentCharacter::UndoAim);
 		}
 		case EnumInputsState::DisableMovement :
 		{

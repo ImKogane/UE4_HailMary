@@ -95,6 +95,8 @@ protected:
 		AInteractibleItem* ItemInInventory;
 		UPROPERTY(VisibleAnywhere, Category="Player details")
 		bool IsDoAction;
+		UPROPERTY(VisibleAnywhere, Category = "Aim")
+		FVector OffsetAim;
 		UPROPERTY()
 		AInteractibleItem* NearItem;
 		UPROPERTY()
@@ -155,6 +157,10 @@ protected:
 		void DoAction();
 		UFUNCTION()
 		void UndoAction();
+		UFUNCTION()
+		void Aim();
+		UFUNCTION()
+		void UndoAim();
 	    UFUNCTION()
 	    void OnBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp,
 	                    int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);

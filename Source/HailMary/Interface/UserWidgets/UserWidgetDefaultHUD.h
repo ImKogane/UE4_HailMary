@@ -47,6 +47,8 @@ class HAILMARY_API UUserWidgetDefaultHUD : public UUserWidget
 			class UImage* imgPerk1Player1;
 			UPROPERTY(BlueprintReadOnly, meta=(BindWidget))
 			class UImage* imgPerk2Player1;
+			UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
+			class UImage* imgCrosshairPlayer1;
 			UPROPERTY(BlueprintReadOnly, meta=(BindWidget))
 			UUserWidgetInteractDisplay* widgetInteractPlayer1;
 			UPROPERTY(BlueprintReadOnly, meta=(BindWidget))
@@ -64,6 +66,8 @@ class HAILMARY_API UUserWidgetDefaultHUD : public UUserWidget
 			class UImage* imgPerk1Player2;
 			UPROPERTY(BlueprintReadOnly, meta=(BindWidget))
 			class UImage* imgPerk2Player2;
+			UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
+			class UImage* imgCrosshairPlayer2;
 			UPROPERTY(BlueprintReadOnly, meta=(BindWidget))
 			UUserWidgetInteractDisplay* widgetInteractPlayer2;
 			UPROPERTY(BlueprintReadOnly, meta=(BindWidget))
@@ -101,6 +105,10 @@ class HAILMARY_API UUserWidgetDefaultHUD : public UUserWidget
     		void HideInteractPlayer1();
     		UFUNCTION()
     		void HideInteractPlayer2();
+			UFUNCTION()
+			void ShowCrosshairPlayer(int nbPlayerId);
+			UFUNCTION()
+			void HideCrosshairPlayer(int nbPlayerId);
 			UFUNCTION()
 			void SetTextInteractPlayer1(FString newText);
 			UFUNCTION()

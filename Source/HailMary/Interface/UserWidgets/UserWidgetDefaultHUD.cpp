@@ -29,6 +29,8 @@ void UUserWidgetDefaultHUD::PostStart()
 	UpdateTasks(); // Same then previous && When a task got completed
 	HideProgressBar(1);
 	HideProgressBar(2);
+	HideCrosshairPlayer(1);
+	HideCrosshairPlayer(2);
 }
 
 void UUserWidgetDefaultHUD::CheckPostStart()
@@ -256,6 +258,44 @@ void UUserWidgetDefaultHUD::HideInteractPlayer2()
 	if(widgetInteractPlayer2)
 	{
 		widgetInteractPlayer2->SetVisibility(ESlateVisibility::Hidden);
+	}
+}
+
+void UUserWidgetDefaultHUD::ShowCrosshairPlayer(int nbPlayerId)
+{
+	if (nbPlayerId == 1 && m_player1)
+	{
+		if (imgCrosshairPlayer1)
+		{
+			imgCrosshairPlayer1->SetVisibility(ESlateVisibility::Visible);
+		}
+	}
+
+	if (nbPlayerId == 2 && m_player2)
+	{
+		if (imgCrosshairPlayer2)
+		{
+			imgCrosshairPlayer2->SetVisibility(ESlateVisibility::Visible);
+		}
+	}
+}
+
+void UUserWidgetDefaultHUD::HideCrosshairPlayer(int nbPlayerId)
+{
+	if (nbPlayerId == 1 && m_player1)
+	{
+		if (imgCrosshairPlayer1)
+		{
+			imgCrosshairPlayer1->SetVisibility(ESlateVisibility::Hidden);
+		}
+	}
+
+	if (nbPlayerId == 2 && m_player2)
+	{
+		if (imgCrosshairPlayer2)
+		{
+			imgCrosshairPlayer2->SetVisibility(ESlateVisibility::Hidden);
+		}
 	}
 }
 
