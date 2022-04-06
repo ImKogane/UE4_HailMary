@@ -38,7 +38,7 @@ class HAILMARY_API ABackDoor : public AInteractibleElement
 	protected:
 		#pragma region ProtectedVariables
 			UPROPERTY(VisibleAnywhere)
-			class AStudentCharacter* NearPlayer;
+			TArray<AStudentCharacter*> _arrNearPlayer;
 			UPROPERTY(VisibleAnywhere)
 			class AStudentCharacter* PlayerInside;
 			UPROPERTY(EditAnywhere)
