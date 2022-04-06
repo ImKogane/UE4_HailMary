@@ -68,6 +68,15 @@ void AStudentCharacter::BeginPlay()
 	InstanciatePerks();
 }
 
+void AStudentCharacter::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+	if (IsAiming == true)
+	{
+		CameraDuringAim();
+	}
+}
+
 //////////////////////////////////////////////////////////////////////////
 // Input
 
@@ -149,8 +158,11 @@ void AStudentCharacter::MoveRight(float Value)
 
 void AStudentCharacter::Sprint()
 {
-	IsPlayerSprint = true;
-	GetCharacterMovement()->MaxWalkSpeed = SprintSpeed;
+	if (IsAiming == false)
+	{
+		IsPlayerSprint = true;
+		GetCharacterMovement()->MaxWalkSpeed = SprintSpeed;
+	}
 }
 
 void AStudentCharacter::Walk()
@@ -283,6 +295,31 @@ void AStudentCharacter::UndoAction()
 	IsDoAction = false;
 }
 
+void AStudentCharacter::Aim()
+{
+	IsAiming = true;
+	OffsetAim = { 200.0, 50.0, 50.0 };
+	GetCameraBoom()->SocketOffset = OffsetAim;
+	_gameHud->GetDefaultWidget()->ShowCrosshairPlayer(GetPlayerId());
+	GetFollowCamera()->SetFieldOfView(70.0);
+}
+
+void AStudentCharacter::UndoAim()
+{
+	IsAiming = false;
+	OffsetAim = { 0.0, 0.0, 0.0 };
+	GetCameraBoom()->SocketOffset = OffsetAim;
+	_gameHud->GetDefaultWidget()->HideCrosshairPlayer(GetPlayerId());
+	GetFollowCamera()->SetFieldOfView(90.0);
+}
+
+void AStudentCharacter::CameraDuringAim()
+{
+	APlayerCameraManager* Camera = UGameplayStatics::GetPlayerController(GetWorld(), 0)->PlayerCameraManager;
+	FRotator newRotation = { 0.0, Camera->GetCameraRotation().Yaw, Camera->GetCameraRotation().Roll };
+	SetActorRotation(newRotation);
+}
+
 void AStudentCharacter::OnBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	if(OtherActor->IsA(AAICharacter::StaticClass()))
@@ -309,7 +346,7 @@ void AStudentCharacter::GrabPlayer(AActor* Holder)
 		//Hide Hud Progress bar
 		if(_gameHud)
 		{
-			_gameHud->GetDefaultWidget()->HideProgressBar(this->GetPlayerId());
+			_gameHud->GetDefaultWidget()->HideProgressBar(GetPlayerId());
 		}
 	}
 }
@@ -358,6 +395,9 @@ void AStudentCharacter::SetInputsState(EnumInputsState newState)
 				PlayerInputComponent->BindAction("Interaction", IE_Pressed, this, &AStudentCharacter::Interact);
 				PlayerInputComponent->BindAction("Action", IE_Pressed, this, &AStudentCharacter::DoAction);
 				PlayerInputComponent->BindAction("Action", IE_Released, this, &AStudentCharacter::UndoAction);
+
+				PlayerInputComponent->BindAction("Aim", IE_Pressed, this, &AStudentCharacter::Aim);
+				PlayerInputComponent->BindAction("Aim", IE_Released, this, &AStudentCharacter::UndoAim);
 		}
 		case EnumInputsState::DisableMovement :
 		{
