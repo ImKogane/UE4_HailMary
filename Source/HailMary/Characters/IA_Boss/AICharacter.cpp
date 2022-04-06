@@ -5,6 +5,7 @@
 #include "MyAIController.h"
 #include "Components/AudioComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "GameFramework/SpringArmComponent.h"
 #include "HailMary/GameplayClass/Elements/BackDoor.h"
 #include "HailMary/GameplayClass/Elements/E_SpeakerMM.h"
 #include "Kismet/GameplayStatics.h"
@@ -154,9 +155,18 @@ void AAICharacter::Drop()
 			ABackDoor* backDoorNearest = Cast<ABackDoor>(GetNearestDoor());
 			if(IsValid(backDoorNearest))
 			{
+				backDoorNearest->SetPlayerInside(Character);
+				//Port Player
 				FVector vecLocation = backDoorNearest->GetTeleportPosition();
 //				Character->SetActorLocation(vecLocation);
 				Character->TeleportTo(vecLocation, GetActorRotation());
+				//Inputs
+				Character->SetInputsState(EnumInputsState::DisableMovementAndCamera);
+				Character->SetActorRotation(backDoorNearest->GetCameraComponent()->GetComponentRotation());
+				//Camera
+				Character->CameraBoom->Deactivate();
+				Character->FollowCamera->SetWorldLocation(backDoorNearest->GetCameraComponent()->GetComponentLocation());
+				Character->FollowCamera->SetWorldRotation(backDoorNearest->GetCameraComponent()->GetComponentRotation());
 				Character = nullptr;
 			}
 			
