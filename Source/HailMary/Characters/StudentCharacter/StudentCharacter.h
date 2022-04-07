@@ -106,6 +106,10 @@ protected:
 		FVector OffsetAim;
 		UPROPERTY(VisibleAnywhere, Category = "Aim")
 		bool IsAiming;
+		UPROPERTY(VisibleAnywhere, Category = "Aim")
+		float AimStep;
+		UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Aim")
+		float AimSpeed;
 		UPROPERTY()
 		AInteractibleItem* NearItem;
 		UPROPERTY()
@@ -170,6 +174,8 @@ protected:
 		void Aim();
 		UFUNCTION()
 		void UndoAim();
+		UFUNCTION()
+		void CameraForAim();
 		UFUNCTION()
 		void CameraDuringAim(int nbPlayerId);
 	    UFUNCTION()
