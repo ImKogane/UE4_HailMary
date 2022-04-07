@@ -2,6 +2,7 @@
 
 #include "StudentCharacter.h"
 #include "HeadMountedDisplayFunctionLibrary.h"
+#include "DrawDebugHelpers.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
@@ -336,7 +337,7 @@ void AStudentCharacter::CameraDuringAim(int nbPlayerId)
 {
 	if (nbPlayerId == 1 && m_player1)
 	{
-		if (m_player1->IsAiming == true)
+		if (m_player1->IsAiming)
 		{
 			APlayerCameraManager* Camera = UGameplayStatics::GetPlayerController(GetWorld(), 0)->PlayerCameraManager;
 			FRotator newRotation = { 0.0, Camera->GetCameraRotation().Yaw, Camera->GetCameraRotation().Roll };
@@ -346,7 +347,7 @@ void AStudentCharacter::CameraDuringAim(int nbPlayerId)
 
 	if (nbPlayerId == 2 && m_player2)
 	{
-		if (m_player2->IsAiming == true)
+		if (m_player2->IsAiming)
 		{
 			APlayerCameraManager* Camera = UGameplayStatics::GetPlayerController(GetWorld(), 1)->PlayerCameraManager;
 			FRotator newRotation = { 0.0, Camera->GetCameraRotation().Yaw, Camera->GetCameraRotation().Roll };
@@ -355,7 +356,55 @@ void AStudentCharacter::CameraDuringAim(int nbPlayerId)
 	}
 }
 
+void AStudentCharacter::Shoot()
+{
+	if (m_player1)
+	{
+		if (m_player1->IsAiming && m_player1->ItemInInventory != nullptr)
+		{
+			FVector EyeLocation;
+			FRotator EyeRotation;
 
+			m_player1->GetActorEyesViewPoint(EyeLocation, EyeRotation);
+
+			FVector TraceEnd = EyeLocation + (EyeRotation.Vector() * 10000);
+
+			FCollisionQueryParams QueryParams;
+			QueryParams.AddIgnoredActor(m_player1);
+			QueryParams.bTraceComplex = true;
+
+			FHitResult Hit;
+			if (GetWorld()->LineTraceSingleByChannel(Hit, EyeLocation, TraceEnd, ECC_Visibility, QueryParams))
+			{
+
+			}
+			DrawDebugLine(GetWorld(), EyeLocation, TraceEnd, FColor::White, false, 1.0f, 0, 1.0f);
+		}
+	}
+	if (m_player2)
+	{
+		if (m_player2->IsAiming && m_player2->ItemInInventory != nullptr)
+		{
+			FVector EyeLocation;
+			FRotator EyeRotation;
+
+			m_player2->GetActorEyesViewPoint(EyeLocation, EyeRotation);
+
+			FVector TraceEnd = EyeLocation + (EyeRotation.Vector() * 10000);
+
+			FCollisionQueryParams QueryParams;
+			QueryParams.AddIgnoredActor(m_player2);
+			QueryParams.bTraceComplex = true;
+
+			FHitResult Hit;
+			if (GetWorld()->LineTraceSingleByChannel(Hit, EyeLocation, TraceEnd, ECC_Visibility, QueryParams))
+			{
+
+			}
+			DrawDebugLine(GetWorld(), EyeLocation, TraceEnd, FColor::White, false, 1.0f, 0, 1.0f);
+		}
+	}
+}
 
 void AStudentCharacter::OnBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
@@ -430,11 +479,14 @@ void AStudentCharacter::SetInputsState(EnumInputsState newState)
 				PlayerInputComponent->BindAction("Crouch", IE_Released, this, &AStudentCharacter::UnCrouchPlayer);
 	
 				PlayerInputComponent->BindAction("Interaction", IE_Pressed, this, &AStudentCharacter::Interact);
+
 				PlayerInputComponent->BindAction("Action", IE_Pressed, this, &AStudentCharacter::DoAction);
 				PlayerInputComponent->BindAction("Action", IE_Released, this, &AStudentCharacter::UndoAction);
 
 				PlayerInputComponent->BindAction("Aim", IE_Pressed, this, &AStudentCharacter::Aim);
 				PlayerInputComponent->BindAction("Aim", IE_Released, this, &AStudentCharacter::UndoAim);
+
+				PlayerInputComponent->BindAction("Shoot", IE_Pressed, this, &AStudentCharacter::Shoot);
 		}
 		case EnumInputsState::DisableMovement :
 		{
