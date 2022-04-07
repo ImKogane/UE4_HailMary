@@ -10,6 +10,7 @@
 #pragma region ForwardDeclaration
 	class AStudentCharacter;
 	class AGameHUD;
+	class UMainGameInstance;
 #pragma endregion
 
 UCLASS()
@@ -42,6 +43,8 @@ public:
 	
 protected:
 	#pragma region ProtectedVariables
+		UPROPERTY()
+		UMainGameInstance* _gameInstance;
 		UPROPERTY()
 		AGameHUD * _gameHud;
 		UPROPERTY(EditDefaultsOnly, Category="Element details")

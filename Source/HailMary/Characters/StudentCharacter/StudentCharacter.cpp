@@ -73,6 +73,7 @@ void AStudentCharacter::BeginPlay()
 void AStudentCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	CameraForAim();
 	CameraDuringAim(1);
 	CameraDuringAim(2);
 }
@@ -298,20 +299,37 @@ void AStudentCharacter::UndoAction()
 void AStudentCharacter::Aim()
 {
 	IsAiming = true;
-	GetCharacterMovement()->MaxWalkSpeed = WalkSpeed;
-	OffsetAim = { 200.0, 50.0, 50.0 };
-	GetCameraBoom()->SocketOffset = OffsetAim;
-	_gameHud->GetDefaultWidget()->ShowCrosshairPlayer(GetPlayerId());
-	GetFollowCamera()->SetFieldOfView(70.0);
 }
 
 void AStudentCharacter::UndoAim()
 {
 	IsAiming = false;
-	OffsetAim = { 0.0, 0.0, 0.0 };
-	GetCameraBoom()->SocketOffset = OffsetAim;
-	_gameHud->GetDefaultWidget()->HideCrosshairPlayer(GetPlayerId());
-	GetFollowCamera()->SetFieldOfView(90.0);
+}
+
+void AStudentCharacter::CameraForAim()
+{
+	if (IsAiming)
+	{
+		FVector LerpResult = {};
+		AimStep += FApp::GetDeltaTime() * AimSpeed;
+		LerpResult.X = FMath::Lerp(OffsetAim.X, 200.f, AimStep);
+		LerpResult.Y = FMath::Lerp(OffsetAim.Y, 50.f, AimStep);
+		LerpResult.Z = FMath::Lerp(OffsetAim.Z, 50.f, AimStep);
+		GetCharacterMovement()->MaxWalkSpeed = WalkSpeed;
+		GetCameraBoom()->SocketOffset = LerpResult;
+		_gameHud->GetDefaultWidget()->ShowCrosshairPlayer(GetPlayerId());
+	}
+	else
+	{
+		FVector LerpResult = {};
+		AimStep -= FApp::GetDeltaTime() * AimSpeed;
+		LerpResult.X = FMath::Lerp(OffsetAim.X, 200.f, AimStep);
+		LerpResult.Y = FMath::Lerp(OffsetAim.Y, 50.f, AimStep);
+		LerpResult.Z = FMath::Lerp(OffsetAim.Z, 50.f, AimStep);
+		GetCameraBoom()->SocketOffset = LerpResult;
+		_gameHud->GetDefaultWidget()->HideCrosshairPlayer(GetPlayerId());
+	}
+	AimStep = FMath::Clamp(AimStep, 0.f, 1.f);
 }
 
 void AStudentCharacter::CameraDuringAim(int nbPlayerId)
@@ -336,6 +354,8 @@ void AStudentCharacter::CameraDuringAim(int nbPlayerId)
 		}
 	}
 }
+
+
 
 void AStudentCharacter::OnBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {

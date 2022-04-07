@@ -15,6 +15,7 @@ void UMainGameInstance::Init()
 
 	//Init variables
 	TaskCount = 0;
+	_lstLockedPlayer.Reset();
 		
 	//Clear array content
 	_arrPhases.Empty(); //crash here
@@ -40,9 +41,23 @@ void UMainGameInstance::ResetInstance()
 	Init();
 }
 
+void UMainGameInstance::AddLockedPlayer(AStudentCharacter* studentToAdd)
+{
+	_lstLockedPlayer.Add(studentToAdd);
+}
+
+void UMainGameInstance::RemoveLockedPlayer(AStudentCharacter* studentToRem)
+{
+	_lstLockedPlayer.Remove(studentToRem);
+}
+
+int UMainGameInstance::GetnbLockedPlayer()
+{
+	return _lstLockedPlayer.Num();
+}
+
 void UMainGameInstance::AddTaskCount(int NewTaskCount)
 {
-
 	//Increment current phase
 	TaskCount += NewTaskCount;
 	//Update current phase

@@ -3,6 +3,7 @@
 
 #include "InteractibleElement.h"
 
+#include "HailMary/MainGameInstance.h"
 #include "HailMary/Characters/StudentCharacter/StudentCharacter.h"
 #include "Kismet/GameplayStatics.h"
 
@@ -22,7 +23,6 @@ AInteractibleElement::AInteractibleElement()
 	CollisionBox->SetCollisionProfileName("Trigger");
 	CollisionBox->SetBoxExtent(FVector(20.f, 20.f, 20.f));
 	CollisionBox->SetupAttachment(ElementMesh);
-
 }
 
 // Called when the game starts or when spawned
@@ -34,6 +34,7 @@ void AInteractibleElement::BeginPlay()
 	CollisionBox->OnComponentEndOverlap.AddDynamic(this, &AInteractibleElement::OnBoxOverlapEnd);
 	//Get References
 	_gameHud = Cast<AGameHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
+	_gameInstance = Cast<UMainGameInstance>(GetGameInstance());
 }
 
 // Called every frame
