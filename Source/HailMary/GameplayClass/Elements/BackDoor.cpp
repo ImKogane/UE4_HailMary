@@ -5,6 +5,7 @@
 
 #include "Components/AudioComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "HailMary/MainGameInstance.h"
 #include "HailMary/Characters/IA_Boss/AICharacter.h"
 #include "HailMary/Characters/StudentCharacter/StudentCharacter.h"
 #include "Kismet/GameplayStatics.h"
@@ -116,9 +117,12 @@ void ABackDoor::SetPlayerInside(AStudentCharacter* player)
 	{
 		PlayerInside = player;
 	}
-	else
+
+	_gameInstance->AddLockedPlayer(player);
+	
+	if( _gameInstance->GetnbLockedPlayer() > 1)
 	{
-		//Someone already in the door : Game Over
+		//Someone already locked somewhere : Game Over
 		UGameplayStatics::OpenLevel(GetWorld(), FName(*GetWorld()->GetName()), false); //Restart level
 	}
 }
@@ -167,6 +171,10 @@ void ABackDoor::OpenDoor()
 	PlayerInside->CameraBoom->Activate();
 
 	//Reset
+	if( _gameInstance && IsValid(PlayerInside))
+	{
+		_gameInstance->RemoveLockedPlayer(PlayerInside);
+	}
 	PlayerInside = nullptr;
 	ElementProgress = 0;
 }

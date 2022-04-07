@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "PlayCycle.h"
+#include "Characters/StudentCharacter/StudentCharacter.h"
 #include "Engine/GameInstance.h"
 #include "GameplayClass/Phase.h"
 #include "MainGameInstance.generated.h"
@@ -26,6 +27,9 @@ public:
 		FORCEINLINE UFUNCTION() APhase* GetCurrentPhase(){return _currentPhase;}
 		UFUNCTION() TArray<APhase*> GetPlayablePhases();
 		UFUNCTION() void ResetInstance();
+		UFUNCTION() void AddLockedPlayer(AStudentCharacter* studentToAdd);
+		UFUNCTION() void RemoveLockedPlayer(AStudentCharacter* studentToRem);
+		UFUNCTION() int GetnbLockedPlayer();
 	#pragma endregion 
 	
 protected:
@@ -42,6 +46,8 @@ protected:
 		TArray<APhase*> _arrPlayablePhases;
 		UPROPERTY(VisibleAnywhere, Category="Phase")
 		TArray<APhase*> _arrPhases;
+		UPROPERTY()
+		TArray<AStudentCharacter*> _lstLockedPlayer;
 	#pragma 
 	
 	#pragma region ProtectedFunctions
