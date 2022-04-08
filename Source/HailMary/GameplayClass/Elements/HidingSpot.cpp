@@ -3,6 +3,7 @@
 
 #include "HidingSpot.h"
 
+#include "GameFramework/SpringArmComponent.h"
 #include "HailMary/MainGameInstance.h"
 #include "HailMary/Characters/StudentCharacter/StudentCharacter.h"
 #include "Kismet/GameplayStatics.h"
@@ -12,7 +13,10 @@ AHidingSpot::AHidingSpot()
 {
 	//(ACharacter::CapsuleComponentName
 	_sceneComponentTeleportPosition = CreateDefaultSubobject<USceneComponent>("sceneComponent");
-	_sceneComponentTeleportPosition->SetupAttachment(RootComponent);
+	_sceneComponentTeleportPosition->SetupAttachment(ElementMesh);
+
+	_cameraComponent= CreateDefaultSubobject<UCameraComponent>("Camera");
+	_cameraComponent->SetupAttachment(ElementMesh);
 }
 
 void AHidingSpot::BeginPlay()
@@ -57,22 +61,26 @@ void AHidingSpot::EnterLocker(AStudentCharacter* studentCharacter)
 		//Port player into the locker
 		if( IsValid(_sceneComponentTeleportPosition) && studentCharacter)
 		{
+			//Inputs
+			studentCharacter->SetInputsState(EnumInputsState::DisableAll);
+			//Player position & rotation
 			studentCharacter->SetActorLocation(_sceneComponentTeleportPosition->GetComponentLocation());
+			studentCharacter->SetActorRotation(_cameraComponent->GetComponentRotation());
+			//Camera
+			studentCharacter->CameraBoom->Deactivate();
+			studentCharacter->FollowCamera->SetWorldLocation(_cameraComponent->GetComponentLocation());
+			studentCharacter->FollowCamera->SetWorldRotation(_cameraComponent->GetComponentRotation());
+			//Hide Hud Progress Interaction text
+			SetHudEnable(false);
 		}
 
-		//Check if the other player is in a locker too ?
-		for (AHidingSpot* hidingSpot: _arrHidingSpots)
+		//Add Locked Player To GameInstance
+		_gameInstance->AddLockedPlayer(studentCharacter);
+		if( _gameInstance->GetnbLockedPlayer() > 1)
 		{
-			if(hidingSpot->GetContainPlayer() && hidingSpot != this)
-			{
-				//Si les deux joueur entrent, met fin au cycle actuel
-				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Orange, TEXT("Should end cycle"));
-				if( IsValid(gameInstance))
-				{
-					gameInstance->GetPlayCycle()->ResetTimer();
-					UGameplayStatics::OpenLevel(GetWorld(), FName(*GetWorld()->GetName()), false);
-				}
-			}
+			gameInstance->GetPlayCycle()->ResetTimer();
+			//Someone already locked somewhere : Game Over
+			UGameplayStatics::OpenLevel(GetWorld(), FName(*GetWorld()->GetName()), false); //Restart level
 		}
 	}
 }

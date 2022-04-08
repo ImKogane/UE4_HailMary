@@ -1,5 +1,6 @@
 
 #include "CoreMinimal.h"
+#include "Camera/CameraComponent.h"
 #include "Engine/TargetPoint.h"
 #include "HailMary/GameplayClass/InteractionBase/InteractibleElement.h"
 #include "HidingSpot.generated.h"
@@ -33,6 +34,8 @@ class HAILMARY_API AHidingSpot : public AInteractibleElement
 			TArray<AHidingSpot*> _arrHidingSpots;
 			UPROPERTY()
 			UMainGameInstance* gameInstance;
+			UPROPERTY(EditAnywhere)
+			UCameraComponent* _cameraComponent;
 		#pragma endregion 
 	
 		#pragma region ProtectedFunctions

@@ -11,65 +11,57 @@ UCLASS()
 class HAILMARY_API AInteractibleItem : public AActor
 {
 	GENERATED_BODY()
+	
+	public:
+		#pragma region PublicFunctions
+			// Sets default values for this actor's properties
+    		AInteractibleItem();
+			// Called every frame
+			virtual void Tick(float DeltaTime) override;
+			UFUNCTION()
+			void Take();
+			UFUNCTION()
+			void Drop(FVector NewLocation);
+			UFUNCTION()
+			void Use();
+		#pragma endregion
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Component", meta = (AllowPrivateAccess = "true"))
-	USceneComponent* BaseComponent;
-	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Component", meta = (AllowPrivateAccess = "true"))
-	UStaticMeshComponent* ItemMesh;
-	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Component", meta = (AllowPrivateAccess = "true"))
-	UBoxComponent* CollisionBox;
-	
-public:	
-	// Sets default values for this actor's properties
-	AInteractibleItem();
+		#pragma region Accessors
+			FORCEINLINE FString GetItemName() { return ItemName; }
+			FORCEINLINE bool GetIsTaskItem() { return IsTaskItem; }
+			FORCEINLINE UTexture2D* GetItemArtwork() { return ItemArtwork; }
+			FORCEINLINE void SetIsTake(bool bIsTake) { IsTake = bIsTake; }
+		#pragma endregion 
+		
+		#pragma region PublicVariables
+			UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Component", meta = (AllowPrivateAccess = "true"))
+			USceneComponent* BaseComponent;
+			UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Component", meta = (AllowPrivateAccess = "true"))
+			UStaticMeshComponent* ItemMesh;
+			UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Component", meta = (AllowPrivateAccess = "true"))
+			UBoxComponent* CollisionBox;
+		#pragma endregion 
 
 protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+	#pragma region ProtectedFunctions
+		// Called when the game starts or when spawned
+		virtual void BeginPlay() override;
+		UFUNCTION()
+		void OnBoxOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
+							int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+		UFUNCTION()
+		void OnBoxOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
+							int32 OtherBodyIndex);
+	#pragma endregion 
 
-	UFUNCTION()
-	void OnBoxOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
-						int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-
-	UFUNCTION()
-	void OnBoxOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
-						int32 OtherBodyIndex);
-
-	UPROPERTY(EditDefaultsOnly, Category="Item details")
-	FString ItemName;
-	
-	UPROPERTY(EditDefaultsOnly, Category="Item details")
-	UTexture2D* ItemArtwork;
-
-	UPROPERTY(VisibleAnywhere, Category="Item details")
-	bool IsTake;
-
-	UPROPERTY(VisibleAnywhere, Category="Item details")
-	bool IsTaskItem;
-
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
-	UFUNCTION()
-	void Take();
-
-	UFUNCTION()
-	void Drop(FVector NewLocation);
-
-	UFUNCTION()
-	void Use();
-
-	
-
-	FORCEINLINE FString GetItemName() { return ItemName; }
-	FORCEINLINE bool GetIsTaskItem() { return IsTaskItem; }
-	FORCEINLINE UTexture2D* GetItemArtwork() { return ItemArtwork; }
-	
-	FORCEINLINE void SetIsTake(bool bIsTake) { IsTake = bIsTake; }
-
-	
-
+	#pragma region ProtectedVariables
+		UPROPERTY(EditDefaultsOnly, Category="Item details")
+		FString ItemName;
+		UPROPERTY(EditDefaultsOnly, Category="Item details")
+		UTexture2D* ItemArtwork;
+		UPROPERTY(VisibleAnywhere, Category="Item details")
+		bool IsTake;
+		UPROPERTY(VisibleAnywhere, Category="Item details")
+		bool IsTaskItem;
+	#pragma endregion 
 };

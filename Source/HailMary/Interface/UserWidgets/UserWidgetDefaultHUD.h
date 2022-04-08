@@ -106,6 +106,8 @@ class HAILMARY_API UUserWidgetDefaultHUD : public UUserWidget
     		UFUNCTION()
     		void HideInteractPlayer2();
 			UFUNCTION()
+			void HideInteractPlayer(int nbPlayerId);
+			UFUNCTION()
 			void ShowCrosshairPlayer(int nbPlayerId);
 			UFUNCTION()
 			void HideCrosshairPlayer(int nbPlayerId);

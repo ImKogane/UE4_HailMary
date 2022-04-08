@@ -39,6 +39,8 @@ public:
 	
 	#pragma region Accessors
 		FORCEINLINE FString GetDisplayText(){return _strDisplayText;}
+		FORCEINLINE void SetHudEnable(bool value) { _bIsHudEnable = value; }
+		FORCEINLINE bool GetIsHudEnable(){return _bIsHudEnable;}
 	#pragma endregion 
 	
 protected:
@@ -57,6 +59,8 @@ protected:
 		float ElementProgress;
 		UPROPERTY(VisibleAnywhere, Category="Element stats")
 		int ElementInteractionCount;
+		UPROPERTY()
+		bool _bIsHudEnable;
 	#pragma endregion
 	
 	#pragma region ProtectedFunctions
