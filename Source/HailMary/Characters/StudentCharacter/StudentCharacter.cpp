@@ -2,6 +2,7 @@
 
 #include "StudentCharacter.h"
 #include "HeadMountedDisplayFunctionLibrary.h"
+#include "DrawDebugHelpers.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
@@ -13,6 +14,7 @@
 #include "HailMary/GameplayClass/Elements/Task_Object.h"
 #include "HailMary/Interface/HUD/GameHUD.h"
 #include "Kismet/GameplayStatics.h"
+
 
 //////////////////////////////////////////////////////////////////////////
 // AHailMaryCharacter
@@ -47,7 +49,7 @@ AStudentCharacter::AStudentCharacter()
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName); // Attach the camera to the end of the boom and let the boom adjust to match the controller orientation
 	FollowCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
-	
+
 	Collider = CreateDefaultSubobject<USphereComponent>(FName("Collider"));
 	Collider->SetupAttachment(GetMesh());
 	
@@ -66,6 +68,7 @@ void AStudentCharacter::BeginPlay()
 	m_player1 = Cast<AStudentCharacter>(UGameplayStatics::GetPlayerController(GetWorld(), 0)->GetCharacter());
 	m_player2 = Cast<AStudentCharacter>(UGameplayStatics::GetPlayerController(GetWorld(), 1)->GetCharacter());
 	Collider->OnComponentBeginOverlap.AddDynamic(this, &AStudentCharacter::OnBeginOverlap);
+	IsShooting = false;
 	SetPlayerId();
 	InstanciatePerks();
 }
@@ -74,8 +77,10 @@ void AStudentCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	CameraForAim();
-	CameraDuringAim(1);
-	CameraDuringAim(2);
+	DuringAim(1);
+	DuringAim(2);
+	ShootItem(1);
+	ShootItem(2);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -84,6 +89,16 @@ void AStudentCharacter::Tick(float DeltaTime)
 void AStudentCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
 {
 	SetInputsState(EnumInputsState::EnableAll);
+}
+
+FVector AStudentCharacter::GetPawnViewLocation() const
+{
+	if (FollowCamera)
+	{
+		return FollowCamera->GetComponentLocation();
+	}
+
+	return Super::GetPawnViewLocation();
 }
 
 /////////////////////// PLAYER MOVEMENT ///////////////////////
@@ -332,30 +347,130 @@ void AStudentCharacter::CameraForAim()
 	AimStep = FMath::Clamp(AimStep, 0.f, 1.f);
 }
 
-void AStudentCharacter::CameraDuringAim(int nbPlayerId)
+void AStudentCharacter::DuringAim(int nbPlayerId)
 {
 	if (nbPlayerId == 1 && m_player1)
 	{
-		if (m_player1->IsAiming == true)
+		if (m_player1->IsAiming)
 		{
 			APlayerCameraManager* Camera = UGameplayStatics::GetPlayerController(GetWorld(), 0)->PlayerCameraManager;
 			FRotator newRotation = { 0.0, Camera->GetCameraRotation().Yaw, Camera->GetCameraRotation().Roll };
 			m_player1->SetActorRotation(newRotation);
+			if (m_player1->ItemInInventory != nullptr && m_player1->ItemInInventory->GetIsTaskItem() == false)
+			{
+				if (m_player1->ItemInInventory->GetIsTake() == true)
+				{
+					m_player1->ItemInInventory->ItemMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+					m_player1->ItemInInventory->ItemMesh->AttachToComponent(m_player1->GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("ItemSocket"));
+					m_player1->ItemInInventory->SetActorLocation(m_player1->GetMesh()->GetSocketLocation("ItemSocket"));
+				}
+			}
+		}
+		else
+		{
+			if (m_player1->ItemInInventory != nullptr && m_player1->ItemInInventory->GetIsTaskItem() == false)
+			{
+				if (m_player1->ItemInInventory->GetIsTake() == true)
+				{
+					m_player1->ItemInInventory->ItemMesh->DetachFromComponent(FDetachmentTransformRules::KeepRelativeTransform);
+					FVector Zero = FVector(0, 0, 0);
+					m_player1->ItemInInventory->SetActorLocation(Zero);
+				}
+			}
 		}
 	}
 
 	if (nbPlayerId == 2 && m_player2)
 	{
-		if (m_player2->IsAiming == true)
+		if (m_player2->IsAiming)
 		{
 			APlayerCameraManager* Camera = UGameplayStatics::GetPlayerController(GetWorld(), 1)->PlayerCameraManager;
 			FRotator newRotation = { 0.0, Camera->GetCameraRotation().Yaw, Camera->GetCameraRotation().Roll };
 			m_player2->SetActorRotation(newRotation);
+			if (m_player2->ItemInInventory != nullptr && m_player2->ItemInInventory->GetIsTaskItem() == false)
+			{
+				if (m_player2->ItemInInventory->GetIsTake() == true)
+				{
+					m_player2->ItemInInventory->ItemMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+					m_player2->ItemInInventory->ItemMesh->AttachToComponent(m_player2->GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("ItemSocket"));
+					m_player2->ItemInInventory->SetActorLocation(m_player2->GetMesh()->GetSocketLocation("ItemSocket"));
+				}
+			}
+		}
+		else
+		{
+			if (m_player2->ItemInInventory != nullptr && m_player2->ItemInInventory->GetIsTaskItem() == false)
+			{
+				if (m_player2->ItemInInventory->GetIsTake() == true)
+				{
+					m_player2->ItemInInventory->ItemMesh->DetachFromComponent(FDetachmentTransformRules::KeepRelativeTransform);
+					FVector Zero = FVector(0, 0, 0);
+					m_player2->ItemInInventory->SetActorLocation(Zero);
+				}
+			}
 		}
 	}
 }
 
+void AStudentCharacter::Shoot()
+{
+	if (IsAiming)
+	{
+		IsShooting = true;
+	}	
+}
 
+void AStudentCharacter::ShootItem(int nbPlayerId)
+{
+	if (nbPlayerId == 1 && m_player1)
+	{
+		if (m_player1->IsShooting == true)
+		{
+			if (m_player1->IsAiming && m_player1->ItemInInventory != nullptr)
+			{
+				if (m_player1->ItemInInventory->GetIsTaskItem() == false && m_player1->ItemInInventory->GetIsTake() == true)
+				{
+					FVector ShootDirection = m_player1->CameraBoom->GetForwardVector();
+
+					m_player1->ItemInInventory->ItemMesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+					m_player1->ItemInInventory->ItemMesh->SetSimulatePhysics(true);
+					m_player1->ItemInInventory->ItemMesh->DetachFromComponent(FDetachmentTransformRules::KeepRelativeTransform);
+					m_player1->ItemInInventory->ItemMesh->AddForce(ShootDirection * 100000 * m_player1->ItemInInventory->ItemMesh->GetMass());
+					m_player1->ItemInInventory->SetIsTake(false);
+					m_player1->IsShooting = false;
+				}
+			}
+			else
+			{
+				m_player1->IsShooting = false;
+			}
+		}
+	}
+	if (nbPlayerId == 2 && m_player2)
+	{
+		if (m_player2->IsShooting == true)
+		{
+			if (m_player2->IsAiming && m_player2->ItemInInventory != nullptr)
+			{
+				if (m_player2->ItemInInventory->GetIsTaskItem() == false && m_player2->ItemInInventory->GetIsTake() == true)
+				{
+					FVector ShootDirection = m_player2->CameraBoom->GetForwardVector();
+
+					m_player2->ItemInInventory->ItemMesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+					m_player2->ItemInInventory->ItemMesh->SetSimulatePhysics(true);
+					m_player2->ItemInInventory->ItemMesh->DetachFromComponent(FDetachmentTransformRules::KeepRelativeTransform);
+					m_player2->ItemInInventory->ItemMesh->AddForce(ShootDirection * 100000 * m_player2->ItemInInventory->ItemMesh->GetMass());
+					m_player2->ItemInInventory->SetIsTake(false);
+					m_player2->IsShooting = false;
+				}
+			}
+			else
+			{
+				m_player2->IsShooting = false;
+			}
+		}
+	}
+}
 
 void AStudentCharacter::OnBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
@@ -430,11 +545,14 @@ void AStudentCharacter::SetInputsState(EnumInputsState newState)
 				PlayerInputComponent->BindAction("Crouch", IE_Released, this, &AStudentCharacter::UnCrouchPlayer);
 	
 				PlayerInputComponent->BindAction("Interaction", IE_Pressed, this, &AStudentCharacter::Interact);
+
 				PlayerInputComponent->BindAction("Action", IE_Pressed, this, &AStudentCharacter::DoAction);
 				PlayerInputComponent->BindAction("Action", IE_Released, this, &AStudentCharacter::UndoAction);
 
 				PlayerInputComponent->BindAction("Aim", IE_Pressed, this, &AStudentCharacter::Aim);
 				PlayerInputComponent->BindAction("Aim", IE_Released, this, &AStudentCharacter::UndoAim);
+
+				PlayerInputComponent->BindAction("Shoot", IE_Pressed, this, &AStudentCharacter::Shoot);
 		}
 		case EnumInputsState::DisableMovement :
 		{
