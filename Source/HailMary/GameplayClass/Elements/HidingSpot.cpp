@@ -71,12 +71,7 @@ void AHidingSpot::EnterLocker(AStudentCharacter* studentCharacter)
 			studentCharacter->FollowCamera->SetWorldLocation(_cameraComponent->GetComponentLocation());
 			studentCharacter->FollowCamera->SetWorldRotation(_cameraComponent->GetComponentRotation());
 			//Hide Hud Progress Interaction text
-			_strDisplayText = ""; // Disable Text on the locker once it has been used
-			// Bad Idea
-			// if(_gameHud)
-			// {
-			// 	_gameHud->GetDefaultWidget()->HideInteractPlayer(studentCharacter->GetPlayerId());
-			// }
+			SetHudEnable(false);
 		}
 
 		//Add Locked Player To GameInstance
