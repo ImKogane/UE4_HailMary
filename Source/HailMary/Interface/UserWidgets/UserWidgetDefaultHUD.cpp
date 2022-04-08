@@ -261,6 +261,25 @@ void UUserWidgetDefaultHUD::HideInteractPlayer2()
 	}
 }
 
+void UUserWidgetDefaultHUD::HideInteractPlayer(int nbPlayerId)
+{
+	if (nbPlayerId == 1 && m_player1)
+	{
+		if(widgetInteractPlayer1)
+		{
+			widgetInteractPlayer1->SetVisibility(ESlateVisibility::Hidden);
+		}
+	}
+
+	if (nbPlayerId == 2 && m_player2)
+	{
+		if(widgetInteractPlayer2)
+		{
+			widgetInteractPlayer2->SetVisibility(ESlateVisibility::Hidden);
+		}
+	}
+}
+
 void UUserWidgetDefaultHUD::ShowCrosshairPlayer(int nbPlayerId)
 {
 	if (nbPlayerId == 1 && m_player1)

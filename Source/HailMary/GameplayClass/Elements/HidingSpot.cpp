@@ -2,6 +2,8 @@
 
 
 #include "HidingSpot.h"
+
+#include "GameFramework/SpringArmComponent.h"
 #include "HailMary/MainGameInstance.h"
 #include "HailMary/Characters/StudentCharacter/StudentCharacter.h"
 #include "Kismet/GameplayStatics.h"
@@ -12,6 +14,9 @@ AHidingSpot::AHidingSpot()
 	//(ACharacter::CapsuleComponentName
 	_sceneComponentTeleportPosition = CreateDefaultSubobject<USceneComponent>("sceneComponent");
 	_sceneComponentTeleportPosition->SetupAttachment(ElementMesh);
+
+	_cameraComponent= CreateDefaultSubobject<UCameraComponent>("Camera");
+	_cameraComponent->SetupAttachment(ElementMesh);
 }
 
 void AHidingSpot::BeginPlay()
@@ -57,9 +62,21 @@ void AHidingSpot::EnterLocker(AStudentCharacter* studentCharacter)
 		if( IsValid(_sceneComponentTeleportPosition) && studentCharacter)
 		{
 			//Inputs
-			studentCharacter->SetInputsState(EnumInputsState::DisableMovementAndCamera);
-//			studentCharacter->SetActorRotation(this->GetCameraComponent()->GetComponentRotation());
+			studentCharacter->SetInputsState(EnumInputsState::DisableAll);
+			//Player position & rotation
 			studentCharacter->SetActorLocation(_sceneComponentTeleportPosition->GetComponentLocation());
+			studentCharacter->SetActorRotation(_cameraComponent->GetComponentRotation());
+			//Camera
+			studentCharacter->CameraBoom->Deactivate();
+			studentCharacter->FollowCamera->SetWorldLocation(_cameraComponent->GetComponentLocation());
+			studentCharacter->FollowCamera->SetWorldRotation(_cameraComponent->GetComponentRotation());
+			//Hide Hud Progress Interaction text
+			_strDisplayText = ""; // Disable Text on the locker once it has been used
+			// Bad Idea
+			// if(_gameHud)
+			// {
+			// 	_gameHud->GetDefaultWidget()->HideInteractPlayer(studentCharacter->GetPlayerId());
+			// }
 		}
 
 		//Add Locked Player To GameInstance

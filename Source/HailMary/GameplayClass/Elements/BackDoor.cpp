@@ -10,6 +10,21 @@
 #include "HailMary/Characters/StudentCharacter/StudentCharacter.h"
 #include "Kismet/GameplayStatics.h"
 
+ABackDoor::ABackDoor()
+{
+	_sceneComponentTeleportPosition = CreateDefaultSubobject<USceneComponent>("Teleport Position");
+	_sceneComponentTeleportPosition->SetupAttachment(ElementMesh);
+	
+	_sceneComponentEntrancePosition= CreateDefaultSubobject<USceneComponent>("Entrance Position");
+	_sceneComponentEntrancePosition->SetupAttachment(ElementMesh);
+
+	_cameraComponent= CreateDefaultSubobject<UCameraComponent>("Camera");
+	_cameraComponent->SetupAttachment(ElementMesh);
+
+	_audioComponent = CreateDefaultSubobject<UAudioComponent>(TEXT("audioCue"));
+	_audioComponent->SetupAttachment(RootComponent);
+}
+
 void ABackDoor::OnBoxOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
                                   UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
                                   const FHitResult& SweepResult)
@@ -53,20 +68,6 @@ void ABackDoor::OnBoxOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor
 	}
 }
 
-ABackDoor::ABackDoor()
-{
-	_sceneComponentTeleportPosition = CreateDefaultSubobject<USceneComponent>("Teleport Position");
-	_sceneComponentTeleportPosition->SetupAttachment(ElementMesh);
-	
-	_sceneComponentEntrancePosition= CreateDefaultSubobject<USceneComponent>("Entrance Position");
-	_sceneComponentEntrancePosition->SetupAttachment(ElementMesh);
-
-	_cameraComponent= CreateDefaultSubobject<UCameraComponent>("Camera");
-	_cameraComponent->SetupAttachment(ElementMesh);
-
-	_audioComponent = CreateDefaultSubobject<UAudioComponent>(TEXT("audioCue"));
-	_audioComponent->SetupAttachment(RootComponent);
-}
 
 void ABackDoor::Tick(float DeltaSeconds)
 {
