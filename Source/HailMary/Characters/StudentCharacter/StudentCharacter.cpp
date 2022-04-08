@@ -437,7 +437,9 @@ void AStudentCharacter::ShootItem(int nbPlayerId)
 					m_player1->ItemInInventory->ItemMesh->DetachFromComponent(FDetachmentTransformRules::KeepRelativeTransform);
 					m_player1->ItemInInventory->ItemMesh->AddForce(ShootDirection * 100000 * m_player1->ItemInInventory->ItemMesh->GetMass());
 					m_player1->ItemInInventory->SetIsTake(false);
+					m_player1->ItemInInventory = nullptr;
 					m_player1->IsShooting = false;
+					_gameHud->GetDefaultWidget()->UpdateItems();
 				}
 			}
 			else
@@ -461,7 +463,9 @@ void AStudentCharacter::ShootItem(int nbPlayerId)
 					m_player2->ItemInInventory->ItemMesh->DetachFromComponent(FDetachmentTransformRules::KeepRelativeTransform);
 					m_player2->ItemInInventory->ItemMesh->AddForce(ShootDirection * 100000 * m_player2->ItemInInventory->ItemMesh->GetMass());
 					m_player2->ItemInInventory->SetIsTake(false);
+					m_player2->ItemInInventory = nullptr;
 					m_player2->IsShooting = false;
+					_gameHud->GetDefaultWidget()->UpdateItems();
 				}
 			}
 			else
