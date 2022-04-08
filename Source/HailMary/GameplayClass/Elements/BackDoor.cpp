@@ -113,6 +113,17 @@ void ABackDoor::Tick(float DeltaSeconds)
 
 void ABackDoor::SetPlayerInside(AStudentCharacter* player)
 {
+	//Port Player
+	FVector vecLocation = this->GetTeleportPosition();
+	player->TeleportTo(vecLocation, GetActorRotation());
+	//Inputs
+	player->SetInputsState(EnumInputsState::DisableMovementAndCamera);
+	player->SetActorRotation(this->GetCameraComponent()->GetComponentRotation());
+	//Camera
+	player->CameraBoom->Deactivate();
+	player->FollowCamera->SetWorldLocation(this->GetCameraComponent()->GetComponentLocation());
+	player->FollowCamera->SetWorldRotation(this->GetCameraComponent()->GetComponentRotation());
+	
 	if( PlayerInside == nullptr)
 	{
 		PlayerInside = player;
