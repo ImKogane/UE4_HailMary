@@ -163,7 +163,10 @@ void UUserWidgetDefaultHUD::UpdateDisplayText()
 		else if ( IsValid(m_player1->GetNearInteractibleElement()))
 		{
 			UpdateDisplayTextElement(1);
-			ShowInteractPlayer1();
+			if(m_player1->GetNearInteractibleElement()->GetIsHudEnable())
+			{
+				ShowInteractPlayer1();
+			}
 		}
 		else
 		{
@@ -182,7 +185,10 @@ void UUserWidgetDefaultHUD::UpdateDisplayText()
 		else if ( IsValid(m_player2->GetNearInteractibleElement()))
 		{
 			UpdateDisplayTextElement(2);
-			ShowInteractPlayer2();
+			if(m_player2->GetNearInteractibleElement()->GetIsHudEnable())
+			{
+				ShowInteractPlayer2();
+			}
 		}
 		else
 		{
@@ -258,6 +264,25 @@ void UUserWidgetDefaultHUD::HideInteractPlayer2()
 	if(widgetInteractPlayer2)
 	{
 		widgetInteractPlayer2->SetVisibility(ESlateVisibility::Hidden);
+	}
+}
+
+void UUserWidgetDefaultHUD::HideInteractPlayer(int nbPlayerId)
+{
+	if (nbPlayerId == 1 && m_player1)
+	{
+		if(widgetInteractPlayer1)
+		{
+			widgetInteractPlayer1->SetVisibility(ESlateVisibility::Hidden);
+		}
+	}
+
+	if (nbPlayerId == 2 && m_player2)
+	{
+		if(widgetInteractPlayer2)
+		{
+			widgetInteractPlayer2->SetVisibility(ESlateVisibility::Hidden);
+		}
 	}
 }
 

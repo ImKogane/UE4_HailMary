@@ -134,17 +134,6 @@ void AAICharacter::Drop()
 			if(IsValid(backDoorNearest))
 			{
 				backDoorNearest->SetPlayerInside(Character);
-				//Port Player
-				FVector vecLocation = backDoorNearest->GetTeleportPosition();
-//				Character->SetActorLocation(vecLocation);
-				Character->TeleportTo(vecLocation, GetActorRotation());
-				//Inputs
-				Character->SetInputsState(EnumInputsState::DisableMovementAndCamera);
-				Character->SetActorRotation(backDoorNearest->GetCameraComponent()->GetComponentRotation());
-				//Camera
-				Character->CameraBoom->Deactivate();
-				Character->FollowCamera->SetWorldLocation(backDoorNearest->GetCameraComponent()->GetComponentLocation());
-				Character->FollowCamera->SetWorldRotation(backDoorNearest->GetCameraComponent()->GetComponentRotation());
 				Character = nullptr;
 			}
 			
