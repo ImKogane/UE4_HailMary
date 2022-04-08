@@ -110,6 +110,8 @@ protected:
 		float AimStep;
 		UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Aim")
 		float AimSpeed;
+		UPROPERTY(VisibleAnywhere, Category = "Shoot")
+		bool IsShooting;
 		UPROPERTY()
 		AInteractibleItem* NearItem;
 		UPROPERTY()
@@ -177,9 +179,11 @@ protected:
 		UFUNCTION()
 		void CameraForAim();
 		UFUNCTION()
-		void CameraDuringAim(int nbPlayerId);
+		void DuringAim(int nbPlayerId);
 		UFUNCTION()
 		void Shoot();
+		UFUNCTION()
+		void ShootItem(int nbPlayerId);
 	    UFUNCTION()
 	    void OnBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp,
 	                    int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
@@ -196,6 +200,7 @@ protected:
 		// APawn interface
 		virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 		// End of APawn interface
+		virtual FVector GetPawnViewLocation() const override;
 	#pragma endregion 
 
 

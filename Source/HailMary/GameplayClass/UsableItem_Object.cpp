@@ -7,3 +7,4 @@ AUsableItem_Object::AUsableItem_Object()
 {
 	IsTaskItem = false;
 }
+

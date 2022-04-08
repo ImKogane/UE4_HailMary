@@ -29,6 +29,7 @@ class HAILMARY_API AInteractibleItem : public AActor
 		#pragma region Accessors
 			FORCEINLINE FString GetItemName() { return ItemName; }
 			FORCEINLINE bool GetIsTaskItem() { return IsTaskItem; }
+			FORCEINLINE bool GetIsTake() { return IsTake; }
 			FORCEINLINE UTexture2D* GetItemArtwork() { return ItemArtwork; }
 			FORCEINLINE void SetIsTake(bool bIsTake) { IsTake = bIsTake; }
 		#pragma endregion 
