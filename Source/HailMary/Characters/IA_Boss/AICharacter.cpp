@@ -42,7 +42,12 @@ void AAICharacter::BeginPlay()
 	{
 		PawnSensingComp->OnSeePawn.AddDynamic(this, &AAICharacter::OnSeePlayer);
 	}
-	
+
+	//Setup Values
+	APlayerController* l_playerController = UGameplayStatics::GetPlayerController(this, 0);
+	AStudentCharacter* l_studentCharacter = Cast<AStudentCharacter>(l_playerController->GetCharacter());
+	_fDefaultSpeed = GetCharacterMovement()->GetMaxSpeed();
+	_fRunningSpeed = l_studentCharacter->GetRunningSpeed() * _fPlayerSeenSpeedMultiplicator;
 }
 
 AActor* AAICharacter::GetNearestDoor()
@@ -92,9 +97,11 @@ void AAICharacter::Tick(float DeltaTime)
 	//AMyAIController* AIController = Cast<AMyAIController>(GetController());
 	if(bAIVisible == true)
 	{
-		if((GetWorld()->TimeSeconds - LastSeenTime) > TimeOut)
+		if((GetWorld()->TimeSeconds - LastSeenTime) > m_fTimeOut)
 		{
 			AIController->SetNotSeenTarget();
+			//Reset Speed
+			GetCharacterMovement()->MaxWalkSpeed = _fRunningSpeed;
 		}
 	}
 }
@@ -120,17 +127,6 @@ void AAICharacter::OnSeePlayer(APawn* InPawn)
 	//Set the seen target on the blackboard
 	if (AIController)
 	{
-		// //GetPlayer reference
-		// AStudentCharacter* l_studentCharacter = Cast<AStudentCharacter>(InPawn);
-		// if(IsValid(l_studentCharacter))
-		// {
-		// 	Character = l_studentCharacter;
-		// }
-		// else
-		// {
-		// 	Character=nullptr;
-		// }
-
 		//Stop if target changed
 		if(!IsValid(AIController->GetBlackboardComp()->GetValueAsObject(AIController->GetTargetKey())))
 		{
@@ -138,9 +134,9 @@ void AAICharacter::OnSeePlayer(APawn* InPawn)
 		}
 		
 		//Default behavior
-		GetCharacterMovement()->MaxWalkSpeed = 300;
+		GetCharacterMovement()->MaxWalkSpeed = _fRunningSpeed;
 		LastSeenTime = GetWorld()->GetTimeSeconds();
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Je te vois "));
+//		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Je te vois "));
 		AIController->SetSeenTarget(InPawn);
 	}
 }

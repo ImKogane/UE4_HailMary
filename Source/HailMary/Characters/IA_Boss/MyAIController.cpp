@@ -140,7 +140,7 @@ void AMyAIController::SetNotSeenTarget()
 	if(BehaviorComp)
 	{
 		AIChar->bAIVisible = false;
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Je te vois pas"));
+//		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Je te vois pas"));
 		BlackboardComp->ClearValue("Target");
 	}
 }

@@ -39,10 +39,9 @@ public:
 	bool bAIVisible = false;
 	UPROPERTY()
 	float LastSeenTime;
-	UPROPERTY()
-	float TimeOut = 1.0f;
-	UPROPERTY()
-	class APlayCycle* TimeGame;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite,Category="Speed")
+	float m_fTimeOut = 1.0f;
+
 	
 	
 	// Sets default values for this character's properties
@@ -64,10 +63,20 @@ public:
 
 	UFUNCTION() void PlayBossAura();
 	UFUNCTION() void StopBossAura();
+
 	
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 	UPROPERTY()
 	AGameHUD * _gameHud;
+
+	#pragma region ProtectedVariable
+		UPROPERTY(EditAnywhere, BlueprintReadWrite,Category="Speed")
+		float _fPlayerSeenSpeedMultiplicator = 1.2f;
+		UPROPERTY(VisibleAnywhere, Category="Speed")
+		float _fDefaultSpeed;
+		UPROPERTY(VisibleAnywhere, Category="Speed")
+		float _fRunningSpeed;
+	#pragma endregion 
 };

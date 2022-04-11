@@ -68,8 +68,8 @@ public:
 		FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
 		FORCEINLINE AInteractibleItem* GetItemInInventory() { return ItemInInventory; }
 		FORCEINLINE bool GetIsDoAction() { return IsDoAction; }
-		FORCEINLINE float GetMakeTaskSpeed() { return MakeTaskSpeed; }
-		FORCEINLINE float GetOpenDoorSpeed() { return OpenDoorSpeed; }
+		FORCEINLINE float GetMakeTaskSpeed() { return _fMakeTaskSpeed; }
+		FORCEINLINE float GetOpenDoorSpeed() { return _fOpenDoorSpeed; }
 		void SetNearItem(AInteractibleItem* Item);
 		UFUNCTION()
 		FORCEINLINE AInteractibleItem* GetNearInteractibleItem(){return NearItem;}
@@ -84,7 +84,9 @@ public:
 		FORCEINLINE int GetPlayerId(){return m_nbPlayerId;}
 		UFUNCTION()
 		FORCEINLINE TEnumAsByte<EnumInputsState> GetEnumInputsState(){return _enumInputsState;}
-	#pragma endregion 
+		UFUNCTION()
+		FORCEINLINE float GetRunningSpeed(){return _fSprintSpeed;}
+	#pragma endregion
 
 protected:
 	#pragma  region RuntimeVariables
@@ -125,15 +127,15 @@ protected:
 	///////////////////// PLAYER STATS /////////////////////
 	#pragma region Player stats
 		UPROPERTY(EditDefaultsOnly, Category="Player stats")
-		float SprintSpeed;
+		float _fSprintSpeed;
 		UPROPERTY(EditDefaultsOnly, Category="Player stats")
-		float WalkSpeed;
+		float _fWalkSpeed;
 		UPROPERTY(EditDefaultsOnly, Category="Player stats")
-		float CrouchSpeed = 100;
+		float _fCrouchSpeed = 100;
 		UPROPERTY(EditDefaultsOnly, Category="Player stats")
-		float MakeTaskSpeed;
+		float _fMakeTaskSpeed;
 		UPROPERTY(EditDefaultsOnly, Category="Player stats")
-		float OpenDoorSpeed;
+		float _fOpenDoorSpeed;
 	#pragma endregion
 
 	#pragma region Perks
