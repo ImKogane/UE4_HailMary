@@ -139,11 +139,12 @@ void ABackDoor::SetPlayerInside(AStudentCharacter* player)
 	}
 }
 
-void ABackDoor::Interaction(AStudentCharacter* studentCharacter)
+void ABackDoor::Interaction(AActor* character)
 {
-	Super::Interaction(studentCharacter);
-	
-	if(PlayerInside == studentCharacter)
+	Super::Interaction(character);
+
+	AStudentCharacter* l_studentCharacter = Cast<AStudentCharacter>(character);
+	if(PlayerInside == l_studentCharacter)
 	{
 		//Play cue
 		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("Play Cue"));

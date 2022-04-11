@@ -17,26 +17,37 @@ class HAILMARY_API AE_SpeakerMM : public AInteractibleElement
 	GENERATED_BODY()
 	
 public:
-	AE_SpeakerMM();
-	
-	virtual void Interaction(AStudentCharacter* studentCharacter) override;
-	virtual void BeginPlay() override;
-	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Component", meta = (AllowPrivateAccess = "true"))
-	UAudioComponent* SpeakerAudioComponent;
+	#pragma region PublicFunctions
+		AE_SpeakerMM();
+		virtual void Interaction(AActor* Character) override;
+		virtual void BeginPlay() override;
+		UFUNCTION() void PlaySpeakerSound();
+		UFUNCTION() void StopSpeakerSound();
+	#pragma endregion
 
-	UPROPERTY(EditAnywhere, Category = "Manager")
-	class AMerryMaker_BossManager* MerryMakerManager;
+	#pragma region PublicVariables
+		UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Component", meta = (AllowPrivateAccess = "true"))
+		UAudioComponent* SpeakerAudioComponent;
+		UPROPERTY(EditAnywhere, Category = "Manager")
+		class AMerryMaker_BossManager* MerryMakerManager;
+	#pragma endregion
 
-	UFUNCTION() void PlaySpeakerSound();
-	UFUNCTION() void StopSpeakerSound();
-	UFUNCTION()
-	FORCEINLINE FVector GetEntrancePosition(){return _sceneComponentEntrancePosition->GetComponentLocation();}
+	#pragma region Accessor
+		UFUNCTION()
+		FORCEINLINE FVector GetEntrancePosition(){return _sceneComponentEntrancePosition->GetComponentLocation();}
+		UFUNCTION()
+		FORCEINLINE bool GetIsActivate(){return _bIsActivate; }
+		// UFUNCTION()
+		// FORCEINLINE void SetIsActivate(bool bValue){ _bIsActivate = bValue; }
+	#pragma endregion 
+
+
+
 
 protected:
 
 	UPROPERTY(VisibleAnywhere, Category="Element details")
-	bool IsActivate;
+	bool _bIsActivate;
 	UPROPERTY(EditAnywhere)
 	USceneComponent* _sceneComponentEntrancePosition;
 };

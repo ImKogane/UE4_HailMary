@@ -34,7 +34,7 @@ public:
 		// Called every frame
 		virtual void Tick(float DeltaTime) override;
 		UFUNCTION()
-		virtual void Interaction(AStudentCharacter* studentCharacter);
+		virtual void Interaction(AActor* Character);
 	#pragma endregion 
 	
 	#pragma region Accessors

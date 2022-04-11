@@ -18,6 +18,7 @@ EBTNodeResult::Type UBTTNearestMerryMaker::ExecuteTask(UBehaviorTreeComponent & 
 			{
 				FVector vecLocation = MerryMakerNearest->GetEntrancePosition();
 				AICon->GetBlackboardComp()->SetValueAsVector("LocationToGo", vecLocation );
+				AICon->SetIsActivateSpeaker(MerryMakerNearest->GetIsActivate());
 			}
 			return EBTNodeResult::Succeeded;
 		}

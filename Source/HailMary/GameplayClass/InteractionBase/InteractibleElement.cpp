@@ -71,8 +71,8 @@ void AInteractibleElement::OnBoxOverlapEnd(UPrimitiveComponent* OverlappedCompon
 	Player->SetNearElement(nullptr);
 }
 
-void AInteractibleElement::Interaction(AStudentCharacter* studentCharacter)
+void AInteractibleElement::Interaction(AActor* Character)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Blue, TEXT("Element interaction"));
+//	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Blue, TEXT("Element interaction"));
 }
 

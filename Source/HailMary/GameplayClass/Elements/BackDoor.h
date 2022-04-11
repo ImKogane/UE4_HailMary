@@ -21,7 +21,7 @@ class HAILMARY_API ABackDoor : public AInteractibleElement
 			virtual void Tick(float DeltaSeconds) override;
 			UFUNCTION()
 			void SetPlayerInside(AStudentCharacter* player);
-			virtual void Interaction(AStudentCharacter* studentCharacter) override;
+			virtual void Interaction(AActor* character) override;
 		#pragma endregion
 
 		#pragma region Accessors

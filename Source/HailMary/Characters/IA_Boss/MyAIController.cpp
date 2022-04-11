@@ -16,7 +16,7 @@ AMyAIController::AMyAIController()
 	LocationToGoKey = "LocationToGo";
 	TargetKey = "Target";
 	bIsHoldingPlayer = "bIsHoldingPlayer";
-	FloatTime = "Time";
+	bIsActivateSpeaker = "bIsActivateSpeaker";
 }
 
 TArray<AActor*> AMyAIController::GetAvailableTargetPoints()
@@ -112,11 +112,12 @@ void AMyAIController::SetIsHoldingPlayer(bool bValue)
 	}
 }
 
+void AMyAIController::SetIsActivateSpeaker(bool bValue)
+{
+	if(BehaviorComp)
+	{
+		BlackboardComp->SetValueAsBool(bIsActivateSpeaker, bValue);
+	}
+}
 
-// void AMyAIController::SetTime()
-// {
-// 	if(BehaviorComp)
-// 	{
-// 		BlackboardComp->SetValueAsFloat(FloatTime,  );
-// 	}
-// }
+

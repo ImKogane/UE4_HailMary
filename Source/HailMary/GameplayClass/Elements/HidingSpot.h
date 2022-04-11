@@ -21,7 +21,7 @@ class HAILMARY_API AHidingSpot : public AInteractibleElement
 
 		#pragma region PublicFunction
 			AHidingSpot();
-			virtual void Interaction(AStudentCharacter* studentCharacter) override;
+			virtual void Interaction(AActor* Character) override;
 		#pragma endregion 
 	
 	protected:

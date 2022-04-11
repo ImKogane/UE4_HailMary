@@ -4,6 +4,7 @@
 #include "E_SpeakerMM.h"
 
 #include "Components/AudioComponent.h"
+#include "HailMary/Characters/IA_Boss/AICharacter.h"
 #include "HailMary/GameplayClass/Managers/MerryMaker_BossManager.h"
 
 AE_SpeakerMM::AE_SpeakerMM()
@@ -23,23 +24,40 @@ void AE_SpeakerMM::BeginPlay()
 }
 
 
-void AE_SpeakerMM::Interaction(AStudentCharacter* studentCharacter)
+void AE_SpeakerMM::Interaction(AActor* Character)
 {
-	Super::Interaction(studentCharacter);
+	Super::Interaction(Character);
 
-	if(!IsActivate)
+	//If the Boss Activate the Bass
+	AAICharacter* MerryMaker = Cast<AAICharacter>(Character);
+	if(IsValid(MerryMaker))
 	{
+		//Just activate
 		PlaySpeakerSound();
-		IsActivate = true;
+		_bIsActivate = true;
 		_strDisplayText = "Press E to stop speaker";
 		MerryMakerManager->ActivateSpeaker(this);
 	}
-	else
+
+	//If the Player Activate the banger
+	AStudentCharacter* studentCharacter = Cast<AStudentCharacter>(Character);
+	if(IsValid(studentCharacter))
 	{
-		StopSpeakerSound();
-		IsActivate = false;
-		MerryMakerManager->DesactivateSpeaker(this);
-		_strDisplayText = "Press E to activate speaker";
+		//Toggle
+		if(!_bIsActivate)
+		{
+			PlaySpeakerSound();
+			_bIsActivate = true;
+			_strDisplayText = "Press E to stop speaker";
+			MerryMakerManager->ActivateSpeaker(this);
+		}
+		else
+		{
+			StopSpeakerSound();
+			_bIsActivate = false;
+			MerryMakerManager->DesactivateSpeaker(this);
+			_strDisplayText = "Press E to activate speaker";
+		}
 	}
 }
 

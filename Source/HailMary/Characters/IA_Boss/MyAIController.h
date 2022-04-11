@@ -36,8 +36,9 @@ class HAILMARY_API AMyAIController : public AAIController
 			void SetNotSeenTarget();
 			UFUNCTION()
 			void SetIsHoldingPlayer(bool bValue);
-	        // UFUNCTION()
-	        // void SetTime();
+	        UFUNCTION()
+	        void SetIsActivateSpeaker(bool bValue);
+	     
 		#pragma endregion 
 
 		#pragma region Accessors
@@ -60,7 +61,7 @@ class HAILMARY_API AMyAIController : public AAIController
 			UPROPERTY(EditDefaultsOnly, Category = AI)
 			FName bIsHoldingPlayer;
 			UPROPERTY(EditDefaultsOnly, Category = AI)
-			FName FloatTime ;
+			FName bIsActivateSpeaker;
 	        UPROPERTY()
 			TArray<AActor*> BotTargetPoints;
 			/*----------Blackboard----------*/

@@ -39,12 +39,14 @@ void AHidingSpot::BeginPlay()
 	}
 }
 
-void AHidingSpot::Interaction(AStudentCharacter* studentCharacter)
+void AHidingSpot::Interaction(AActor* character)
 {
-	Super::Interaction(studentCharacter);
-	if( IsValid(studentCharacter))
+	Super::Interaction(character);
+
+	AStudentCharacter* l_studentCharacter = Cast<AStudentCharacter>(character);
+	if( IsValid(l_studentCharacter))
 	{
-		EnterLocker(studentCharacter);
+		EnterLocker(l_studentCharacter);
 	}
 }
 
