@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Elements/Task_Object.h"
 #include "Engine/TargetPoint.h"
 #include "GameFramework/Actor.h"
 #include "HailMary/Characters/IA_Boss/BotTargetPoint.h"
@@ -18,6 +19,7 @@ public:
 		UFUNCTION()
 		FORCEINLINE int GetPhase(){return _nbPhase;}
 		FORCEINLINE TArray<ABotTargetPoint*> GetBotTargetPoints(){return _arrBotTargetPoints;}
+		FORCEINLINE TArray<ATask_Object*> GetTaskObjects(){return _ArrTask_Objects;}
 	#pragma endregion 
 	
 	#pragma region PublicFunctions
@@ -31,6 +33,8 @@ protected:
 		int _nbPhase = -1;
 		UPROPERTY(VisibleAnywhere, Category="Parameters")
 		TArray<ABotTargetPoint*> _arrBotTargetPoints;
+		UPROPERTY(VisibleAnywhere, Category="Parameters")
+		TArray<ATask_Object*> _ArrTask_Objects;
 	#pragma endregion
 
 	#pragma region ProtectedFunctions

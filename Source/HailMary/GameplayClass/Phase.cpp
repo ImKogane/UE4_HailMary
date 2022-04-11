@@ -23,9 +23,9 @@ void APhase::BeginPlay()
 void APhase::Init()
 {
 	//Get all BotTargetPoints
-	TArray<AActor*> FoundActors;
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ABotTargetPoint::StaticClass(), FoundActors);
-	for (AActor* currentActor : FoundActors)
+	TArray<AActor*> l_foundActors;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ABotTargetPoint::StaticClass(), l_foundActors);
+	for (AActor* currentActor : l_foundActors)
 	{
 		ABotTargetPoint* l_currentTargetPoint= Cast<ABotTargetPoint>(currentActor);
 		
@@ -33,6 +33,19 @@ void APhase::Init()
 		if( l_currentTargetPoint->GetPhase() == this->GetPhase())
 		{
 			_arrBotTargetPoints.Add(l_currentTargetPoint);
+		}
+	}
+	//Get all TaskObjects
+	l_foundActors.Empty();
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ATask_Object::StaticClass(), l_foundActors);
+	for (AActor* currentActor : l_foundActors)
+	{
+		ATask_Object* l_currentTaskObject= Cast<ATask_Object>(currentActor);
+		
+		//only add to the list if the id of the phase is the same
+		if( l_currentTaskObject->GetPhase() == this->GetPhase())
+		{
+			_ArrTask_Objects.Add(l_currentTaskObject);
 		}
 	}
 }

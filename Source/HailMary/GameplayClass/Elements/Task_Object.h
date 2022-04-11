@@ -48,6 +48,8 @@ protected:
 		UPROPERTY(VisibleAnywhere)
 		TArray<AStudentCharacter*> NearPlayers;
 		class UMainGameInstance* TheGameInstance;
+		UPROPERTY(EditAnywhere, Category="Parameters")
+		int _nbPhase = -1;
 	#pragma endregion 
 
 	#pragma region ProtectedFunctions
@@ -79,5 +81,6 @@ public :
 		FORCEINLINE int GetTaskArea() { return TaskArea; }
 		FORCEINLINE bool IsTaskUnlocked() { return TaskUnlocked; }
 		FORCEINLINE bool IsTaskCompleted() { return TaskCompleted; }
+		FORCEINLINE int GetPhase(){return _nbPhase;}
 	#pragma endregion 
 };

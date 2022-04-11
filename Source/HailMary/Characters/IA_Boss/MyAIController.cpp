@@ -60,6 +60,47 @@ TArray<AActor*> AMyAIController::GetAvailableTargetPoints()
 	return BotTargetPoints; 
 }
 
+TArray<AActor*> AMyAIController::GetAvailableTasksPoints()
+{
+	if( BotTasksPoints.Num()>0)
+	{
+		BotTasksPoints.Reset();
+	}
+
+	//Get BotTargetPoints of the Current and previous Phase
+	_gameInstance = Cast<UMainGameInstance>(GetGameInstance());
+	if(IsValid(_gameInstance))
+	{
+		if ( _gameInstance->GetCurrentPhase())
+		{
+			//Create the list of target Points
+			TArray<ATask_Object*> l_arrBotTasksPoints;
+			
+			//For each Playbable phases
+			TArray<APhase*> l_arrPhases = _gameInstance->GetPlayablePhases();
+			for(APhase* currentPhase : l_arrPhases)
+			{
+				if(IsValid(currentPhase))
+				{
+					//Get all the Target Points and add them to the list
+					for(ATask_Object*  CurrentTasksPoint: currentPhase->GetTaskObjects())
+					{
+						l_arrBotTasksPoints.Add(CurrentTasksPoint);
+					}
+				}
+			}
+			
+			//Convert the list of Target point to actors
+			for (ATask_Object* currentBotTasksPoint : l_arrBotTasksPoints )
+			{
+				AActor* currentActor = Cast<AActor>(currentBotTasksPoint);
+				BotTasksPoints.Add(currentBotTasksPoint);
+			}
+		}
+	}
+	return BotTasksPoints; 
+}
+
 void AMyAIController::OnPossess(APawn* InPawn)
 {
 		Super::OnPossess(InPawn);
