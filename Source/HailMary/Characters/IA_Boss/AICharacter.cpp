@@ -120,10 +120,24 @@ void AAICharacter::OnSeePlayer(APawn* InPawn)
 	//Set the seen target on the blackboard
 	if (AIController)
 	{
-		// if(!IsValid(Character))
+		// //GetPlayer reference
+		// AStudentCharacter* l_studentCharacter = Cast<AStudentCharacter>(InPawn);
+		// if(IsValid(l_studentCharacter))
 		// {
-		// 	AIController->StopMovement();
+		// 	Character = l_studentCharacter;
 		// }
+		// else
+		// {
+		// 	Character=nullptr;
+		// }
+
+		//Stop if target changed
+		if(!IsValid(AIController->GetBlackboardComp()->GetValueAsObject(AIController->GetTargetKey())))
+		{
+			AIController->StopMovement();
+		}
+		
+		//Default behavior
 		GetCharacterMovement()->MaxWalkSpeed = 300;
 		LastSeenTime = GetWorld()->GetTimeSeconds();
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Je te vois "));
