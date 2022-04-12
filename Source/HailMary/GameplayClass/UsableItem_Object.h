@@ -16,4 +16,7 @@ class HAILMARY_API AUsableItem_Object : public AInteractibleItem
 
 public:
 	AUsableItem_Object();
+
+	UFUNCTION()
+	virtual void Effect();
 };

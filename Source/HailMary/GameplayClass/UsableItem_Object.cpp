@@ -8,3 +8,8 @@ AUsableItem_Object::AUsableItem_Object()
 	IsTaskItem = false;
 }
 
+void AUsableItem_Object::Effect()
+{
+	//Nothing
+}
+
