@@ -15,6 +15,6 @@ class HAILMARY_API AGluePot : public AUsableItem_Object
 	GENERATED_BODY()
 	
 public: 
-
+	AGluePot();
 	virtual void Effect() override;
 };
