@@ -498,6 +498,7 @@ void AStudentCharacter::GrabPlayer(AActor* Holder)
 		AttachToComponent(ItemHolder->GetMesh(),FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("Socket_test"));
 		ItemHolder->Character = this;
 		SetInputsState(EnumInputsState::DisableMovement);
+		GetMesh()->bPauseAnims = true;
 
 		//Hide Hud Progress bar
 		if(_gameHud)
@@ -513,6 +514,7 @@ void AStudentCharacter::DropPlayer()
 	CameraBoom->bDoCollisionTest = true;
 	DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
 	SetInputsState(EnumInputsState::EnableAll);
+	GetMesh()->bPauseAnims = false;
 }
 
 void AStudentCharacter::SetInputsState(EnumInputsState newState)
