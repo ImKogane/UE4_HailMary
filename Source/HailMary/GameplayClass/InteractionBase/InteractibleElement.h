@@ -59,8 +59,8 @@ protected:
 		float ElementProgress;
 		UPROPERTY(VisibleAnywhere, Category="Element stats")
 		int ElementInteractionCount;
-		UPROPERTY()
-		bool _bIsHudEnable;
+		UPROPERTY(EditAnywhere, Category="Element stats")
+		bool _bIsHudEnable = true;
 	#pragma endregion
 	
 	#pragma region ProtectedFunctions
