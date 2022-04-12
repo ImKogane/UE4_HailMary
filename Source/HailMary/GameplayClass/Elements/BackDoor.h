@@ -49,6 +49,10 @@ class HAILMARY_API ABackDoor : public AInteractibleElement
 			UCameraComponent* _cameraComponent;
 			UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Component", meta = (AllowPrivateAccess = "true"))
 			UAudioComponent* _audioComponent;
+			UPROPERTY(EditDefaultsOnly, Category="Element details")
+			FString _strDisplayTextinside;
+			UPROPERTY(EditDefaultsOnly, Category="Element details")
+			FString _strDisplayTextOutside;
 		#pragma endregion
 	
 		#pragma region ProtectedFunctions

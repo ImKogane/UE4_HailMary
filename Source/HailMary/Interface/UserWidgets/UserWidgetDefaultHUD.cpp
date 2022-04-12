@@ -336,6 +336,50 @@ void UUserWidgetDefaultHUD::SetTextInteractPlayer2(FString newText)
 	widgetInteractPlayer2->textInteract->SetText(NewText) ;
 }
 
+void UUserWidgetDefaultHUD::SetTextInteractPlayer(int nbPlayerId, FString newText)
+{
+	if(nbPlayerId == 1 && m_player1)
+	{
+		SetTextInteractPlayer1(newText);
+	}
+	if(nbPlayerId == 2 && m_player2)
+	{
+		SetTextInteractPlayer2(newText);
+	}
+}
+
+void UUserWidgetDefaultHUD::SetTextInteractActive(int nbPlayerId, bool bValue)
+{
+	if(nbPlayerId == 1 && m_player1)
+	{
+		if( widgetInteractPlayer1)
+		{
+			if( bValue)
+			{
+				widgetInteractPlayer1->SetVisibility(ESlateVisibility::Visible);
+			}
+			else
+			{
+				widgetInteractPlayer1->SetVisibility(ESlateVisibility::Hidden);
+			}
+		}
+	}
+	if(nbPlayerId == 2 && m_player2)
+	{
+		if( widgetInteractPlayer2)
+		{
+			if( bValue)
+			{
+				widgetInteractPlayer2->SetVisibility(ESlateVisibility::Visible);
+			}
+			else
+			{
+				widgetInteractPlayer2->SetVisibility(ESlateVisibility::Hidden);
+			}
+		}
+	}
+}
+
 void UUserWidgetDefaultHUD::SetProgressBarValue(int nbPlayerId, float fValue)
 {
 	fValue = fValue / 100.0f; //convert value to percent

@@ -116,6 +116,10 @@ class HAILMARY_API UUserWidgetDefaultHUD : public UUserWidget
 			UFUNCTION()
 			void SetTextInteractPlayer2(FString newText);
 			UFUNCTION()
+			void SetTextInteractPlayer(int nbPlayerId, FString newText);
+			UFUNCTION()
+			void SetTextInteractActive(int nbPlayerId, bool bValue);
+			UFUNCTION()
 			void SetProgressBarValue(int nbPlayerId, float fValue);
 			UFUNCTION()
 			void HideProgressBar(int nbPlayerId);

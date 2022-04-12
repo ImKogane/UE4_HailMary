@@ -68,17 +68,35 @@ void ABackDoor::OnBoxOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor
 	}
 }
 
-
 void ABackDoor::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
+
+	//Update HUD texts
+	if(_gameHud)
+	{
+		//Player Inside
+		if( PlayerInside)
+		{
+			_gameHud->GetDefaultWidget()->SetTextInteractActive(PlayerInside->GetPlayerId(), true);
+			_gameHud->GetDefaultWidget()->SetTextInteractPlayer(PlayerInside->GetPlayerId(), _strDisplayTextinside);
+		}
+	}
+	
 	
 	if(_arrNearPlayer.Num()>0 && PlayerInside != nullptr)
 	{
 		for ( AStudentCharacter* l_currentPlayer: _arrNearPlayer)
 		{
+			//Update Progress Bar
 			if(l_currentPlayer != PlayerInside)
 			{
+				//Update HUD texts
+				if(_gameHud)
+				{
+					_gameHud->GetDefaultWidget()->SetTextInteractPlayer(l_currentPlayer->GetPlayerId(), _strDisplayTextOutside);
+				}
+				
 				if(l_currentPlayer->GetIsDoAction() && ElementProgress <= ElementMaxProgress)
 				{
 					ElementProgress += l_currentPlayer->GetMakeTaskSpeed();
@@ -87,9 +105,6 @@ void ABackDoor::Tick(float DeltaSeconds)
 					{
 						_gameHud->GetDefaultWidget()->SetProgressBarValue(l_currentPlayer->GetPlayerId(),ElementProgress);
 					}
-					//Debug
-					// FString ProgressString = FString::FromInt(ElementProgress);
-					// GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Green, ProgressString);
 				}
 				else
 				{
@@ -128,6 +143,29 @@ void ABackDoor::SetPlayerInside(AStudentCharacter* player)
 	if( PlayerInside == nullptr)
 	{
 		PlayerInside = player;
+		//Show Hud Interaction text
+		SetHudEnable(true);
+	}
+	
+	//Update Hud
+	if( PlayerInside)
+	{
+		_gameHud->GetDefaultWidget()->SetTextInteractPlayer(PlayerInside->GetPlayerId(), _strDisplayTextinside);
+	}
+	if(_arrNearPlayer.Num()>0)
+	{
+		for ( AStudentCharacter* l_currentPlayer: _arrNearPlayer)
+		{
+			if(l_currentPlayer != PlayerInside)
+			{
+				//Update HUD texts
+				if(_gameHud)
+				{
+					_gameHud->GetDefaultWidget()->SetTextInteractActive(l_currentPlayer->GetPlayerId(), true);
+					_gameHud->GetDefaultWidget()->SetTextInteractPlayer(l_currentPlayer->GetPlayerId(), _strDisplayTextOutside);
+				}
+			}
+		}
 	}
 
 	_gameInstance->AddLockedPlayer(player);
@@ -188,6 +226,29 @@ void ABackDoor::OpenDoor()
 	{
 		_gameInstance->RemoveLockedPlayer(PlayerInside);
 	}
+
+	//Update Hud
+	FString l_emptyStr = "";
+	if( IsValid(PlayerInside))
+	{
+		_gameHud->GetDefaultWidget()->SetTextInteractPlayer(PlayerInside->GetPlayerId(), l_emptyStr);
+		_gameHud->GetDefaultWidget()->SetTextInteractActive(PlayerInside->GetPlayerId(), false);
+	}
+	if(_arrNearPlayer.Num()>0)
+	{
+		for ( AStudentCharacter* l_currentPlayer: _arrNearPlayer)
+		{
+			if(l_currentPlayer != PlayerInside)
+			{
+				//Update HUD texts
+				if(_gameHud)
+				{
+					_gameHud->GetDefaultWidget()->SetTextInteractPlayer(l_currentPlayer->GetPlayerId(), l_emptyStr);
+				}
+			}
+		}
+	}
+	
 	PlayerInside = nullptr;
 	ElementProgress = 0;
 }
