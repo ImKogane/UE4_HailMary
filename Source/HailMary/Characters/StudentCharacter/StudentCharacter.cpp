@@ -219,11 +219,8 @@ void AStudentCharacter::SwitchItem()
 {
 	FVector tempLocation = NearItem->GetActorLocation();
 	AInteractibleItem* tempItem = ItemInInventory;
-
-	TakeItem();
-
 	tempItem->Drop(tempLocation);
-	//NearItem = tempItem;
+	TakeItem();
 	SetNearItem(tempItem);
 	NearItem->SetIsTake(false);
 }
@@ -379,7 +376,7 @@ void AStudentCharacter::DuringAim(int nbPlayerId)
 				if (m_player1->ItemInInventory->GetIsTake() == true)
 				{
 					m_player1->ItemInInventory->ItemMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-					m_player1->ItemInInventory->ItemMesh->AttachToComponent(m_player1->GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("ItemSocket"));
+					m_player1->ItemInInventory->AttachToComponent(m_player1->GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("ItemSocket"));
 					m_player1->ItemInInventory->SetActorLocation(m_player1->GetMesh()->GetSocketLocation("ItemSocket"));
 				}
 			}
@@ -390,7 +387,7 @@ void AStudentCharacter::DuringAim(int nbPlayerId)
 			{
 				if (m_player1->ItemInInventory->GetIsTake() == true)
 				{
-					m_player1->ItemInInventory->ItemMesh->DetachFromComponent(FDetachmentTransformRules::KeepRelativeTransform);
+					m_player1->ItemInInventory->DetachFromActor(FDetachmentTransformRules::KeepRelativeTransform);
 					FVector Zero = FVector(0, 0, 0);
 					m_player1->ItemInInventory->SetActorLocation(Zero);
 				}
@@ -410,7 +407,7 @@ void AStudentCharacter::DuringAim(int nbPlayerId)
 				if (m_player2->ItemInInventory->GetIsTake() == true)
 				{
 					m_player2->ItemInInventory->ItemMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-					m_player2->ItemInInventory->ItemMesh->AttachToComponent(m_player2->GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("ItemSocket"));
+					m_player2->ItemInInventory->AttachToComponent(m_player2->GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("ItemSocket"));
 					m_player2->ItemInInventory->SetActorLocation(m_player2->GetMesh()->GetSocketLocation("ItemSocket"));
 				}
 			}
@@ -421,7 +418,7 @@ void AStudentCharacter::DuringAim(int nbPlayerId)
 			{
 				if (m_player2->ItemInInventory->GetIsTake() == true)
 				{
-					m_player2->ItemInInventory->ItemMesh->DetachFromComponent(FDetachmentTransformRules::KeepRelativeTransform);
+					m_player2->ItemInInventory->DetachFromActor(FDetachmentTransformRules::KeepRelativeTransform);
 					FVector Zero = FVector(0, 0, 0);
 					m_player2->ItemInInventory->SetActorLocation(Zero);
 				}
@@ -452,7 +449,7 @@ void AStudentCharacter::ShootItem(int nbPlayerId)
 
 					m_player1->ItemInInventory->ItemMesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 					m_player1->ItemInInventory->ItemMesh->SetSimulatePhysics(true);
-					m_player1->ItemInInventory->ItemMesh->DetachFromComponent(FDetachmentTransformRules::KeepRelativeTransform);
+					m_player1->ItemInInventory->DetachFromActor(FDetachmentTransformRules::KeepRelativeTransform);
 					m_player1->ItemInInventory->ItemMesh->AddForce(ShootDirection * 100000 * m_player1->ItemInInventory->ItemMesh->GetMass());
 					m_player1->ItemInInventory->SetIsTake(false);
 					m_player1->ItemInInventory = nullptr;
@@ -479,7 +476,7 @@ void AStudentCharacter::ShootItem(int nbPlayerId)
 
 					m_player2->ItemInInventory->ItemMesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 					m_player2->ItemInInventory->ItemMesh->SetSimulatePhysics(true);
-					m_player2->ItemInInventory->ItemMesh->DetachFromComponent(FDetachmentTransformRules::KeepRelativeTransform);
+					m_player2->ItemInInventory->DetachFromActor(FDetachmentTransformRules::KeepRelativeTransform);
 					m_player2->ItemInInventory->ItemMesh->AddForce(ShootDirection * 100000 * m_player2->ItemInInventory->ItemMesh->GetMass());
 					m_player2->ItemInInventory->SetIsTake(false);
 					m_player2->ItemInInventory = nullptr;
