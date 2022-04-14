@@ -100,6 +100,8 @@ protected:
 		AInteractibleItem* ItemInInventory;
 		UPROPERTY(VisibleAnywhere, Category = "Item")
 		AInteractibleItem* NearItem;
+		UPROPERTY(VisibleAnywhere, Category = "Item")
+		bool NoItem;
 		UPROPERTY()
 		AStudentCharacter* m_player1 = nullptr;
 		UPROPERTY()
@@ -208,6 +210,8 @@ protected:
 
 private :
 	#pragma region PrivateFunctions
+		UFUNCTION()
+		void ItemSystem();
 		UFUNCTION()
 		void TakeItem();
 		UFUNCTION()

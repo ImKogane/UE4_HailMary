@@ -69,6 +69,7 @@ void AStudentCharacter::BeginPlay()
 	m_player2 = Cast<AStudentCharacter>(UGameplayStatics::GetPlayerController(GetWorld(), 1)->GetCharacter());
 	Collider->OnComponentBeginOverlap.AddDynamic(this, &AStudentCharacter::OnBeginOverlap);
 	IsShooting = false;
+	NoItem = true;
 	SetPlayerId();
 	InstanciatePerks();
 }
@@ -271,11 +272,30 @@ UPerk_BaseComponent* AStudentCharacter::GetSecondPerk()
 	return  nullptr;
 }
 
+void AStudentCharacter::ItemSystem()
+{
+	if (NoItem)
+	{
+		if (NearItem != nullptr && ItemInInventory == nullptr)
+		{
+			TakeItem();
+		}
+	}
+	else
+	{
+		if (NearItem != nullptr && ItemInInventory != nullptr)
+		{
+			SwitchItem();
+		}
+	}
+}
+
 void AStudentCharacter::TakeItem()
 {
 	ItemInInventory = NearItem;
 	NearItem->Take();
 	NearItem = nullptr;
+	NoItem = false;
 	if(_gameHud)
 	{
 		_gameHud->GetDefaultWidget()->UpdateItems();
@@ -286,22 +306,6 @@ void AStudentCharacter::TakeItem()
 
 void AStudentCharacter::Interact()
 {
-	if(NearItem != nullptr)
-	{
-		if(ItemInInventory == nullptr)
-		{
-			//First item take
-			TakeItem();	
-			
-		}
-		//If player already have item in his inventory
-		else
-		{
-			SwitchItem();
-		}
-		
-	}
-
 	if(NearElement != nullptr)
 	{
 		NearElement->Interaction(this);
@@ -449,6 +453,7 @@ void AStudentCharacter::ShootItem(int nbPlayerId)
 					m_player1->ItemInInventory->SetIsTake(false);
 					m_player1->ItemInInventory = nullptr;
 					m_player1->IsShooting = false;
+					m_player1->NoItem = true;
 					_gameHud->GetDefaultWidget()->UpdateItems();
 				}
 			}
@@ -475,6 +480,7 @@ void AStudentCharacter::ShootItem(int nbPlayerId)
 					m_player2->ItemInInventory->SetIsTake(false);
 					m_player2->ItemInInventory = nullptr;
 					m_player2->IsShooting = false;
+					m_player2->NoItem = true;
 					_gameHud->GetDefaultWidget()->UpdateItems();
 				}
 			}
@@ -560,7 +566,7 @@ void AStudentCharacter::SetInputsState(EnumInputsState newState)
 				PlayerInputComponent->BindAction("Crouch", IE_Pressed, this, &AStudentCharacter::CrouchPlayer);
 				PlayerInputComponent->BindAction("Crouch", IE_Released, this, &AStudentCharacter::UnCrouchPlayer);
 	
-				PlayerInputComponent->BindAction("Interaction", IE_Pressed, this, &AStudentCharacter::Interact);
+				PlayerInputComponent->BindAction("Interaction", IE_Pressed, this, &AStudentCharacter::ItemSystem);
 
 				PlayerInputComponent->BindAction("Action", IE_Pressed, this, &AStudentCharacter::DoAction);
 				PlayerInputComponent->BindAction("Action", IE_Released, this, &AStudentCharacter::UndoAction);
