@@ -47,6 +47,34 @@ void ATask_Object::OnBoxOverlapBegin(UPrimitiveComponent* OverlappedComponent, A
 	
 	NearPlayers.Add(Player);
 	
+	
+}
+
+void ATask_Object::OnBoxOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+	Super::OnBoxOverlapEnd(OverlappedComponent, OtherActor, OtherComp, OtherBodyIndex);
+
+	AStudentCharacter* Player = Cast<AStudentCharacter>(OtherActor);
+	if (IsValid(Player))
+	{
+		//Hide Hud Progress bar
+		if(_gameHud)
+		{
+			_gameHud->GetDefaultWidget()->HideProgressBar(Player->GetPlayerId());
+		}
+		NearPlayers.Remove(Player);
+	}
+}
+
+void ATask_Object::Interaction(AActor* Character)
+{
+	Super::Interaction(Character);
+
+
+	AStudentCharacter* Player = Cast<AStudentCharacter>(Character);
+
+	if(Player == nullptr) { return; }
+	
 	if(MainNeedItemName != nullptr && Player->GetItemInInventory() == MainNeedItemName)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Green, TEXT("Main item good"));
@@ -64,22 +92,6 @@ void ATask_Object::OnBoxOverlapBegin(UPrimitiveComponent* OverlappedComponent, A
 	if(MainNeedItemName == nullptr && OtherNeedItemName == nullptr && !TaskUnlocked)
 	{
 		UnlockTask();
-	}
-}
-
-void ATask_Object::OnBoxOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
-{
-	Super::OnBoxOverlapEnd(OverlappedComponent, OtherActor, OtherComp, OtherBodyIndex);
-
-	AStudentCharacter* Player = Cast<AStudentCharacter>(OtherActor);
-	if (IsValid(Player))
-	{
-		//Hide Hud Progress bar
-		if(_gameHud)
-		{
-			_gameHud->GetDefaultWidget()->HideProgressBar(Player->GetPlayerId());
-		}
-		NearPlayers.Remove(Player);
 	}
 }
 
