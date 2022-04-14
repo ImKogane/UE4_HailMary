@@ -77,6 +77,7 @@ void AStudentCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	CameraForAim();
+	Sprint();
 	DuringAim(1);
 	DuringAim(2);
 	ShootItem(1);
@@ -172,19 +173,28 @@ void AStudentCharacter::MoveRight(float Value)
 	}
 }
 
-void AStudentCharacter::Sprint()
+void AStudentCharacter::ToggleSprint()
 {
-	if (IsAiming == false)
+	if (IsPlayerSprint == false)
 	{
 		IsPlayerSprint = true;
-		GetCharacterMovement()->MaxWalkSpeed = _fSprintSpeed;
+	}
+	else
+	{
+		IsPlayerSprint = false;
 	}
 }
 
-void AStudentCharacter::Walk()
+void AStudentCharacter::Sprint()
 {
-	IsPlayerSprint = false;
-	GetCharacterMovement()->MaxWalkSpeed = _fWalkSpeed;
+	if (IsAiming == false && IsPlayerSprint)
+	{
+		GetCharacterMovement()->MaxWalkSpeed = _fSprintSpeed;
+	}
+	if (IsPlayerSprint == false)
+	{
+		GetCharacterMovement()->MaxWalkSpeed = _fWalkSpeed;
+	}
 }
 
 void AStudentCharacter::CrouchPlayer()
@@ -545,8 +555,7 @@ void AStudentCharacter::SetInputsState(EnumInputsState newState)
 				PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
 				PlayerInputComponent->BindAxis("LookUpRate", this, &AStudentCharacter::LookUpAtRate);
 
-				PlayerInputComponent->BindAction("Sprint", IE_Pressed, this, &AStudentCharacter::Sprint);
-				PlayerInputComponent->BindAction("Sprint", IE_Released, this, &AStudentCharacter::Walk);
+				PlayerInputComponent->BindAction("Sprint", IE_Pressed, this, &AStudentCharacter::ToggleSprint);
 
 				PlayerInputComponent->BindAction("Crouch", IE_Pressed, this, &AStudentCharacter::CrouchPlayer);
 				PlayerInputComponent->BindAction("Crouch", IE_Released, this, &AStudentCharacter::UnCrouchPlayer);

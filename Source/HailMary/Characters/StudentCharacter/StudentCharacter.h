@@ -94,7 +94,7 @@ protected:
 		AGameHUD * _gameHud;
 		UPROPERTY(VisibleAnywhere, Category="Player")
 		int m_nbPlayerId = 0;
-		UPROPERTY(EditDefaultsOnly, Category="Movement")
+		UPROPERTY(VisibleAnywhere, Category="Movement")
 		bool IsPlayerSprint;
 		UPROPERTY(EditAnywhere, Category="Player")
 		AInteractibleItem* ItemInInventory;
@@ -160,9 +160,9 @@ protected:
 		void MoveRight(float Value);
 		/** Player sprint system */
 		UFUNCTION()
-		void Sprint();
+		void ToggleSprint();
 		UFUNCTION()
-		void Walk();
+		void Sprint();
 		/** Player crouch system */
 		UFUNCTION()
 		void CrouchPlayer();
