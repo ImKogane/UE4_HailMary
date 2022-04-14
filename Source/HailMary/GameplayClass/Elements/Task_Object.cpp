@@ -14,9 +14,13 @@ void ATask_Object::BeginPlay()
 	Super::BeginPlay();
 	GenerateTask();
 	TheGameInstance = Cast<UMainGameInstance>(GetGameInstance());
+	//Override Text
+	_strDisplayTextLocked = MainNeedItemName->GetItemName() + " / " + OtherNeedItemName->GetItemName();
+	//Display locked Text
 	_strDisplayText = _strDisplayTextLocked;
 	//Get References
 	_gameHud = Cast<AGameHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
+
 }
 
 void ATask_Object::GenerateTask()
