@@ -56,7 +56,7 @@ void AE_SpeakerMM::Interaction(AActor* Character)
 			StopSpeakerSound();
 			_bIsActivate = false;
 			MerryMakerManager->DesactivateSpeaker(this);
-			_strDisplayText = "Press E to activate speaker";
+			_strDisplayText = "";
 		}
 	}
 }
