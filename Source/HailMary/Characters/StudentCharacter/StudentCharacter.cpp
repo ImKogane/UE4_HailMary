@@ -234,6 +234,10 @@ void AStudentCharacter::ResetInventory()
 	TempItem = ItemInInventory;
 	ItemInInventory = nullptr;
 	TempItem->Destroy(true);
+	if( _gameHud)
+	{
+		_gameHud->GetDefaultWidget()->UpdateItems();
+	}
 }
 
 void AStudentCharacter::SetNearItem(AInteractibleItem* Item)

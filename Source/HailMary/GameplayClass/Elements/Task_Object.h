@@ -27,11 +27,11 @@ protected:
 		bool TaskUnlocked;
 		UPROPERTY(EditAnywhere, Category="Task details")
 		bool TaskCompleted;
-		UPROPERTY(EditDefaultsOnly, Category="Task details")
+		UPROPERTY(EditAnywhere, Category="Task details")
 		FString _strDisplayTextLocked;
-		UPROPERTY(EditDefaultsOnly, Category="Task details")
+		UPROPERTY(EditAnywhere, Category="Task details")
 		FString _strDisplayTextUnlocked;
-		UPROPERTY(EditDefaultsOnly, Category="Task details")
+		UPROPERTY(EditAnywhere, Category="Task details")
 		FString _strDisplayTextCompleted;
 		UPROPERTY(EditInstanceOnly, Category="Task details")
 		class AAreaDoor* TaskDoor;
