@@ -4,6 +4,8 @@
 #include "BackDoor.h"
 
 #include "Components/AudioComponent.h"
+#include "Components/CapsuleComponent.h"
+#include "GameFramework/PawnMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "HailMary/MainGameInstance.h"
 #include "HailMary/Characters/IA_Boss/AICharacter.h"
@@ -129,6 +131,8 @@ void ABackDoor::Tick(float DeltaSeconds)
 
 void ABackDoor::SetPlayerInside(AStudentCharacter* player)
 {
+	//Stop player inertia
+	 player->GetMovementComponent()->Deactivate();
 	//Port Player
 	FVector vecLocation = this->GetTeleportPosition();
 	player->TeleportTo(vecLocation, GetActorRotation());
@@ -139,6 +143,8 @@ void ABackDoor::SetPlayerInside(AStudentCharacter* player)
 	player->CameraBoom->Deactivate();
 	player->FollowCamera->SetWorldLocation(this->GetCameraComponent()->GetComponentLocation());
 	player->FollowCamera->SetWorldRotation(this->GetCameraComponent()->GetComponentRotation());
+	//Reactivate movement comp
+	player->GetMovementComponent()->Activate();
 	
 	if( PlayerInside == nullptr)
 	{
