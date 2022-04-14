@@ -277,14 +277,14 @@ void AStudentCharacter::ItemSystem()
 {
 	if (NoItem)
 	{
-		if (NearItem != nullptr && ItemInInventory == nullptr)
+		if (NearItem != nullptr && ItemInInventory == nullptr && IsAiming == false)
 		{
 			TakeItem();
 		}
 	}
 	else
 	{
-		if (NearItem != nullptr && ItemInInventory != nullptr)
+		if (NearItem != nullptr && ItemInInventory != nullptr && IsAiming == false)
 		{
 			SwitchItem();
 		}
