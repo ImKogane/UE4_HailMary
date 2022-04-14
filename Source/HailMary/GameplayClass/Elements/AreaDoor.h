@@ -16,6 +16,9 @@ class HAILMARY_API AAreaDoor : public AActor
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Component", meta = (AllowPrivateAccess = "true"))
 	UStaticMeshComponent* DoorMesh;
+
+	UPROPERTY(EditInstanceOnly, Category="Door details")
+	int Area;
 	
 public:	
 	// Sets default values for this actor's properties

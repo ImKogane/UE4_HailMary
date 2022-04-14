@@ -3,7 +3,7 @@
 
 #include "Task_Object.h"
 
-#include "AreaDoor.h"
+#include "StorageDoor.h"
 #include "HailMary/HailMaryGameMode.h"
 #include "HailMary/GameplayClass/TaskItem_Object.h"
 #include "HailMary/MainGameInstance.h"
@@ -164,7 +164,7 @@ void ATask_Object::CompleteTask()
 	TaskCompleted = true;
 	TheGameInstance->AddTaskCount(1);
 //	TheGameInstance->GetPlayCycle()->ResetTimer();
-	if(TaskDoor != nullptr) TaskDoor->OpenDoor();
+	if(StorageDoor != nullptr) StorageDoor->OpenDoor();
 	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("Task completed"));
 	_strDisplayText = _strDisplayTextCompleted;
 	if(_gameHud )
