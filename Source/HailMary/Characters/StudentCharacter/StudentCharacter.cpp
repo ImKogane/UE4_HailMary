@@ -497,6 +497,7 @@ void AStudentCharacter::GrabPlayer(AActor* Holder)
 		AAICharacter* ItemHolder = Cast<AAICharacter>(Holder);
 		AttachToComponent(ItemHolder->GetMesh(),FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("Socket_test"));
 		ItemHolder->Character = this;
+		ItemHolder->Character->IsAiming = false;
 		SetInputsState(EnumInputsState::DisableMovement);
 		GetMesh()->bPauseAnims = true;
 
@@ -566,7 +567,7 @@ void AStudentCharacter::SetInputsState(EnumInputsState newState)
 				PlayerInputComponent->BindAxis("TurnRate", this, &AStudentCharacter::TurnAtRate);
 				PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
 				PlayerInputComponent->BindAxis("LookUpRate", this, &AStudentCharacter::LookUpAtRate);
-					
+				
 				// PlayerInputComponent->BindAction("Interaction", IE_Pressed, this, &AStudentCharacter::Interact);
 				// PlayerInputComponent->BindAction("Action", IE_Pressed, this, &AStudentCharacter::DoAction);
 				// PlayerInputComponent->BindAction("Action", IE_Released, this, &AStudentCharacter::UndoAction);
