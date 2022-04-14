@@ -44,14 +44,14 @@ void AE_SpeakerMM::Interaction(AActor* Character)
 	if(IsValid(studentCharacter))
 	{
 		//Toggle
-		if(!_bIsActivate)
-		{
-			PlaySpeakerSound();
-			_bIsActivate = true;
-			_strDisplayText = "Press E to stop speaker";
-			MerryMakerManager->ActivateSpeaker(this);
-		}
-		else
+		// if(!_bIsActivate)
+		// {
+		// 	PlaySpeakerSound();
+		// 	_bIsActivate = true;
+		// 	_strDisplayText = "Press E to stop speaker";
+		// 	MerryMakerManager->ActivateSpeaker(this);
+		// }
+		// else
 		{
 			StopSpeakerSound();
 			_bIsActivate = false;
