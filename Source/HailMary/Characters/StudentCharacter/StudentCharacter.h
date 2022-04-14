@@ -96,8 +96,12 @@ protected:
 		int m_nbPlayerId = 0;
 		UPROPERTY(VisibleAnywhere, Category="Movement")
 		bool IsPlayerSprint;
-		UPROPERTY(EditAnywhere, Category="Player")
+		UPROPERTY(VisibleAnywhere, Category = "Item")
 		AInteractibleItem* ItemInInventory;
+		UPROPERTY(VisibleAnywhere, Category = "Item")
+		AInteractibleItem* NearItem;
+		UPROPERTY(VisibleAnywhere, Category = "Item")
+		bool NoItem;
 		UPROPERTY()
 		AStudentCharacter* m_player1 = nullptr;
 		UPROPERTY()
@@ -114,8 +118,6 @@ protected:
 		float AimSpeed;
 		UPROPERTY(VisibleAnywhere, Category = "Shoot")
 		bool IsShooting;
-		UPROPERTY()
-		AInteractibleItem* NearItem;
 		UPROPERTY()
 		AInteractibleElement* NearElement;
 	    UPROPERTY(EditAnywhere)
@@ -208,6 +210,8 @@ protected:
 
 private :
 	#pragma region PrivateFunctions
+		UFUNCTION()
+		void ItemSystem();
 		UFUNCTION()
 		void TakeItem();
 		UFUNCTION()

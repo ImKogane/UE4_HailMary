@@ -78,13 +78,13 @@ void AInteractibleItem::OnBoxOverlapEnd(UPrimitiveComponent* OverlappedComponent
 void AInteractibleItem::Take()
 {
 	FVector Zero = FVector(0,0,0);
-	this->SetActorLocation(Zero);
+	SetActorLocation(Zero);
 	IsTake = true;
 }
 
 void AInteractibleItem::Drop(FVector NewLocation)
 {
-	this->SetActorLocation(NewLocation);
+	SetActorLocation(NewLocation);
 }
 
 void AInteractibleItem::Use()
