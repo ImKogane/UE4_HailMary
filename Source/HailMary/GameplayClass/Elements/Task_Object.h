@@ -65,6 +65,8 @@ protected:
 		
 		virtual void OnBoxOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
 							int32 OtherBodyIndex) override;
+
+		virtual void Interaction(AActor* Character) override;
 	#pragma endregion 
 
 public :

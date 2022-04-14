@@ -231,6 +231,8 @@ void AStudentCharacter::ResetInventory()
 	TempItem = ItemInInventory;
 	ItemInInventory = nullptr;
 	TempItem->Destroy(true);
+	NoItem = true;
+	
 	if( _gameHud)
 	{
 		_gameHud->GetDefaultWidget()->UpdateItems();
