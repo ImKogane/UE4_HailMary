@@ -8,4 +8,4 @@ The game is developed under Unreal Engine 4 with the C ++ language
 
 ## More informations
 
-Developpement by [Rodrigue](https://github.com/DumezRodrigue), [Janaky](https://github.com/janakyB) & [Matthias](https://github.com/ImKogane).
+Developpement by [Rodrigue](https://github.com/DumezRodrigue), [Janaky](https://github.com/janakyB) & [Matthias](https://github.com/ImKogane), [Léo](https://github.com/SatharielFR).
