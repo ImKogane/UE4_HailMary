@@ -160,7 +160,7 @@ void AAICharacter::Drop()
 		if(IsValid(Character))
 		{
 			Character->DropPlayer();
-			GetCharacterMovement()->MaxWalkSpeed = 250;
+			GetCharacterMovement()->MaxWalkSpeed = _fDefaultSpeed;
 
 			//Port player to the other side if the dooor
 			ABackDoor* backDoorNearest = Cast<ABackDoor>(GetNearestDoor());
