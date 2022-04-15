@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "GlueArea.h"
 #include "HailMary/GameplayClass/UsableItem_Object.h"
 #include "GluePot.generated.h"
 
@@ -16,10 +17,11 @@ class HAILMARY_API AGluePot : public AUsableItem_Object
 	
 public: 
 	AGluePot();
+	virtual void BeginPlay() override;
 	virtual void Effect(AActor*	actor) override;
 
 protected:
-	UPROPERTY()
-	TSubclassOf<AActor> GluePuddle;
+	UPROPERTY(EditAnywhere, Category="gluepot")
+	TSubclassOf<AGlueArea> _bpGlueArea;
 
 };
