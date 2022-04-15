@@ -56,6 +56,7 @@ void AGlueArea::OnBoxOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor
 	if (AI != nullptr)
 	{
 		AI->GetCharacterMovement()->MaxWalkSpeed *= reduceRate;
+		//AI->GetRunningSpeed() *= reduceRate;
 	}
 }
 

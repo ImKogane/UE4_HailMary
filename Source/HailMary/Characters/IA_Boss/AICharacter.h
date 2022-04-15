@@ -56,6 +56,8 @@ public:
 	AActor* GetNearestDoor();
 	UFUNCTION()
 	AActor* GetNearestMerryMaker();
+	UFUNCTION()
+	float GetRunningSpeed() { return _fRunningSpeed; }
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 	// Called to bind functionality to input
