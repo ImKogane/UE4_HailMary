@@ -58,6 +58,8 @@ public:
 	AActor* GetNearestMerryMaker();
 	UFUNCTION()
 	float GetRunningSpeed() { return _fRunningSpeed; }
+	UFUNCTION()
+	void SetRunningSpeed(float speed) { _fRunningSpeed = speed; }
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 	// Called to bind functionality to input
