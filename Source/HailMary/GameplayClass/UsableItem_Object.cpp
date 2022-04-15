@@ -16,12 +16,12 @@ void AUsableItem_Object::OnBoxOverlapBegin(UPrimitiveComponent* OverlappedCompon
 	{
 		if (Cast<AAICharacter>(OtherActor) != nullptr || OtherActor != nullptr)
 		{
-			Effect();
+			Effect(OtherActor);
 		}
 	}
 }
 
-void AUsableItem_Object::Effect()
+void AUsableItem_Object::Effect(AActor* actor)
 {
 	//Nothing
 }

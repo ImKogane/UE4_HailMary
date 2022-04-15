@@ -16,5 +16,10 @@ class HAILMARY_API AGluePot : public AUsableItem_Object
 	
 public: 
 	AGluePot();
-	virtual void Effect() override;
+	virtual void Effect(AActor*	actor) override;
+
+protected:
+	UPROPERTY()
+	TSubclassOf<AActor> GluePuddle;
+
 };

@@ -5,11 +5,13 @@
 
 AGluePot::AGluePot()
 {
-
+	ConstructorHelpers::FObjectFinder<UBlueprint> blueprint_finder(TEXT("Blueprint'/Game/Blueprints/Items/Glue/GlueArea.GlueArea'"));
+	GluePuddle = blueprint_finder.Object->GeneratedClass;
 }
 
-void AGluePot::Effect()
+void AGluePot::Effect(AActor* actor)
 {
-	Super::Effect();
+	Super::Effect(actor);
+	GetWorld()->SpawnActor<AActor>(GluePuddle, actor->GetActorLocation(), actor->GetActorRotation());
 	this->Destroy();
 }
