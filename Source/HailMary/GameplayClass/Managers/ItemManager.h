@@ -4,8 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "HailMary/GameplayClass/TaskItem_Object.h"
-#include "HailMary/GameplayClass/UsableItem_Object.h"
+#include "HailMary/GameplayClass/Items_Objects/UsableItem_Object.h"
+#include "HailMary/GameplayClass/Items_Objects/TaskItem_Object.h"
+#include "HailMary/GameplayClass/Items_Objects/KeyItem_Object.h"
 #include "HailMary/GameplayClass/InteractionBase/InteractibleItem.h"
 #include "HailMary/GameplayClass/Spawner/ItemSpawner.h"
 #include "HailMary/GameplayClass/Spawner/Task_ItemSpawner.h"

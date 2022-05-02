@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GlueArea.h"
-#include "HailMary/GameplayClass/UsableItem_Object.h"
+#include "HailMary/GameplayClass/Items_Objects/UsableItem_Object.h"
 #include "GluePot.generated.h"
 
 /**

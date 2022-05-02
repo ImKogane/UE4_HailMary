@@ -4,18 +4,14 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "HailMary/GameplayClass/InteractionBase/InteractibleElement.h"
 #include "AreaDoor.generated.h"
 
+class UBoxComponent;
 UCLASS()
-class HAILMARY_API AAreaDoor : public AActor
+class HAILMARY_API AAreaDoor : public AInteractibleElement
 {
 	GENERATED_BODY()
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Component", meta = (AllowPrivateAccess = "true"))
-	USceneComponent* BaseComponent;
-	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Component", meta = (AllowPrivateAccess = "true"))
-	UStaticMeshComponent* DoorMesh;
 
 	UPROPERTY(EditInstanceOnly, Category="Door details")
 	int Area;
@@ -23,6 +19,8 @@ class HAILMARY_API AAreaDoor : public AActor
 public:	
 	// Sets default values for this actor's properties
 	AAreaDoor();
+	
+	virtual void Interaction(AActor* Character) override;
 
 protected:
 	// Called when the game starts or when spawned

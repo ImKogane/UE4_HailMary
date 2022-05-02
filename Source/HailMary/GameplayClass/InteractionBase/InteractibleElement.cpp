@@ -16,7 +16,7 @@ AInteractibleElement::AInteractibleElement()
 	BaseComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Base"));
 	BaseComponent->SetupAttachment(RootComponent);
 	
-	ElementMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("ItemMesh"));
+	ElementMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("ElementMesh"));
 	ElementMesh->SetupAttachment(BaseComponent);
 
 	CollisionBox = CreateDefaultSubobject<UBoxComponent>(TEXT("Collision box"));

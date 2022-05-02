@@ -3,17 +3,33 @@
 
 #include "AreaDoor.h"
 
+#include "Components/BoxComponent.h"
+#include "HailMary/Characters/StudentCharacter/StudentCharacter.h"
+#include "HailMary/GameplayClass/Items_Objects/KeyItem_Object.h"
+
 // Sets default values
 AAreaDoor::AAreaDoor()
 {
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	BaseComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Base"));
-	BaseComponent->SetupAttachment(RootComponent);
-	
-	DoorMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("DoorMesh"));
-	DoorMesh->SetupAttachment(BaseComponent);
 
+}
+
+void AAreaDoor::Interaction(AActor* Character)
+{
+	Super::Interaction(Character);
+	AStudentCharacter* student = Cast<AStudentCharacter>(Character);
+
+	if(student != nullptr)
+	{
+		AKeyItem_Object* key = Cast<AKeyItem_Object>(student->GetItemInInventory());
+
+		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Blue, TEXT("Key "));
+		if(key != nullptr && key->GetKeyArea() == Area)
+		{
+			OpenDoor();
+		}
+	}
 }
 
 // Called when the game starts or when spawned
