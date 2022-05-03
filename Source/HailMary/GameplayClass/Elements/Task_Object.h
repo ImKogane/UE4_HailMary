@@ -45,7 +45,6 @@ protected:
 		AInteractibleItem* OtherNeedItemName;
 		UPROPERTY(VisibleAnywhere)
 		TArray<AStudentCharacter*> NearPlayers;
-		class UMainGameInstance* TheGameInstance;
 		UPROPERTY(EditAnywhere, Category="Parameters")
 		int _nbPhase = -1;
 	#pragma endregion 

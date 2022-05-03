@@ -4,6 +4,7 @@
 #include "AreaDoor.h"
 
 #include "Components/BoxComponent.h"
+#include "HailMary/MainGameInstance.h"
 #include "HailMary/Characters/StudentCharacter/StudentCharacter.h"
 #include "HailMary/GameplayClass/Items_Objects/KeyItem_Object.h"
 
@@ -36,18 +37,15 @@ void AAreaDoor::Interaction(AActor* Character)
 void AAreaDoor::BeginPlay()
 {
 	Super::BeginPlay();
+
+	TheGameInstance = Cast<UMainGameInstance>(GetGameInstance());
 	
 }
 
-// Called every frame
-void AAreaDoor::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-}
 
 void AAreaDoor::OpenDoor()
 {
+	TheGameInstance->AddTaskCount(1);
 	Destroy(true);
 }
 

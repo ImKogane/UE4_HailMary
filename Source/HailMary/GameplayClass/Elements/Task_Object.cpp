@@ -13,7 +13,7 @@ void ATask_Object::BeginPlay()
 {
 	Super::BeginPlay();
 	GenerateTask();
-	TheGameInstance = Cast<UMainGameInstance>(GetGameInstance());
+	
 	//Override Text
 	_strDisplayTextLocked = MainNeedItemName->GetItemName() + " / " + OtherNeedItemName->GetItemName();
 	//Display locked Text
@@ -162,7 +162,6 @@ void ATask_Object::UnlockTask()
 void ATask_Object::CompleteTask()
 {
 	TaskCompleted = true;
-	TheGameInstance->AddTaskCount(1);
 //	TheGameInstance->GetPlayCycle()->ResetTimer();
 	if(StorageDoor != nullptr) StorageDoor->OpenDoor();
 	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("Task completed"));
