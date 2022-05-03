@@ -15,6 +15,7 @@ AInteractibleElement::AInteractibleElement()
 
 	BaseComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Base"));
 	BaseComponent->SetupAttachment(RootComponent);
+
 	
 	ElementMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("ElementMesh"));
 	ElementMesh->SetupAttachment(BaseComponent);
@@ -23,6 +24,7 @@ AInteractibleElement::AInteractibleElement()
 	CollisionBox->SetCollisionProfileName("Trigger");
 	CollisionBox->SetBoxExtent(FVector(20.f, 20.f, 20.f));
 	CollisionBox->SetupAttachment(ElementMesh);
+	
 }
 
 // Called when the game starts or when spawned

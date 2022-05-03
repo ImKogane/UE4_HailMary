@@ -2,7 +2,6 @@
 
 
 #include "InteractibleItem.h"
-
 #include "HailMary/Characters/StudentCharacter/StudentCharacter.h"
 
 // Sets default values
@@ -11,19 +10,19 @@ AInteractibleItem::AInteractibleItem()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	//Base component
 	BaseComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Base"));
 	BaseComponent->SetupAttachment(RootComponent);
-	
+
+	//Mesh component
 	ItemMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("ItemMesh"));
 	ItemMesh->SetupAttachment(BaseComponent);
 
+	//CollisionBox component
 	CollisionBox = CreateDefaultSubobject<UBoxComponent>(TEXT("Collision box"));
 	CollisionBox->SetCollisionProfileName("Trigger");
 	CollisionBox->SetBoxExtent(FVector(20.f, 20.f, 20.f));
 	CollisionBox->SetupAttachment(ItemMesh);
-
-	
-
 }
 
 // Called when the game starts or when spawned
@@ -88,8 +87,4 @@ void AInteractibleItem::Drop(FVector NewLocation)
 	this->SetActorLocation(Location);
 }
 
-void AInteractibleItem::Use()
-{
-	
-}
 

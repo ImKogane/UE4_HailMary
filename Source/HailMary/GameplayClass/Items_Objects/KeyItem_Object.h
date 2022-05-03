@@ -6,19 +6,20 @@
 #include "HailMary/GameplayClass/InteractionBase/InteractibleItem.h"
 #include "KeyItem_Object.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class HAILMARY_API AKeyItem_Object : public AInteractibleItem
 {
 	GENERATED_BODY()
 
+public:
+	AKeyItem_Object();
+	
 private:
 	UPROPERTY(EditInstanceOnly, Category = "Key Details")
-	int KeyArea;
+	int KeyItemArea;
 
 public:
-	FORCEINLINE int GetKeyArea(){return KeyArea;}
+	FORCEINLINE void SetKeyArea(int area){KeyItemArea = area;}
+	FORCEINLINE int GetKeyArea(){return KeyItemArea;}
 	
 };

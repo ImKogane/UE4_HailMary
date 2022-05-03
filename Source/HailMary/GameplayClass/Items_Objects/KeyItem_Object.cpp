@@ -3,3 +3,7 @@
 
 #include "KeyItem_Object.h"
 
+AKeyItem_Object::AKeyItem_Object()
+{
+	IsTaskItem = false;
+}

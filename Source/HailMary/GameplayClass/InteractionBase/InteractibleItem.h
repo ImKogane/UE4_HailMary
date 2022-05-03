@@ -14,16 +14,12 @@ class HAILMARY_API AInteractibleItem : public AActor
 	
 	public:
 		#pragma region PublicFunctions
-			// Sets default values for this actor's properties
+	
     		AInteractibleItem();
-			// Called every frame
 			virtual void Tick(float DeltaTime) override;
-			UFUNCTION()
-			void Take();
-			UFUNCTION()
-			void Drop(FVector NewLocation);
-			UFUNCTION()
-			void Use();
+			UFUNCTION() void Take();
+			UFUNCTION() void Drop(FVector NewLocation);
+	
 		#pragma endregion
 
 		#pragma region Accessors
