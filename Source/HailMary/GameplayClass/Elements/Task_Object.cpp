@@ -4,9 +4,8 @@
 #include "Task_Object.h"
 
 #include "StorageDoor.h"
-#include "HailMary/HailMaryGameMode.h"
 #include "HailMary/GameplayClass/Items_Objects/TaskItem_Object.h"
-#include "HailMary/MainGameInstance.h"
+#include "HailMary/GameSettings//MainGameInstance.h"
 #include "Kismet/GameplayStatics.h"
 
 void ATask_Object::BeginPlay()

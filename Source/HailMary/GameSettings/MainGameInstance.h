@@ -3,10 +3,10 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "PlayCycle.h"
-#include "Characters/StudentCharacter/StudentCharacter.h"
+#include "../PlayCycle.h"
+#include "../Characters/StudentCharacter/StudentCharacter.h"
 #include "Engine/GameInstance.h"
-#include "GameplayClass/Phase.h"
+#include "../GameplayClass/Phase.h"
 #include "MainGameInstance.generated.h"
 
 /**

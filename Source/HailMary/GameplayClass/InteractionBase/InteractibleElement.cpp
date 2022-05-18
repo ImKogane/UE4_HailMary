@@ -3,7 +3,7 @@
 
 #include "InteractibleElement.h"
 
-#include "HailMary/MainGameInstance.h"
+#include "HailMary/GameSettings//MainGameInstance.h"
 #include "HailMary/Characters/StudentCharacter/StudentCharacter.h"
 #include "Kismet/GameplayStatics.h"
 

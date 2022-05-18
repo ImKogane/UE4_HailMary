@@ -3,7 +3,7 @@
 
 #include "PlayCycle.h"
 
-#include "MainGameInstance.h"
+#include "GameSettings/MainGameInstance.h"
 #include "Kismet/GameplayStatics.h"
 
 // Sets default values

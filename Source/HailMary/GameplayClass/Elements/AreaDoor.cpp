@@ -4,7 +4,7 @@
 #include "AreaDoor.h"
 
 #include "Components/BoxComponent.h"
-#include "HailMary/MainGameInstance.h"
+#include "HailMary/GameSettings/MainGameInstance.h"
 #include "HailMary/Characters/StudentCharacter/StudentCharacter.h"
 #include "HailMary/GameplayClass/Items_Objects/KeyItem_Object.h"
 

@@ -3,8 +3,7 @@
 
 #include "ExitDoor.h"
 
-#include "HailMary/HailMaryGameMode.h"
-#include "HailMary/MainGameInstance.h"
+#include "HailMary/GameSettings//MainGameInstance.h"
 #include "Kismet/GameplayStatics.h"
 
 void AExitDoor::BeginPlay()

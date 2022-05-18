@@ -2,7 +2,7 @@
 
 
 #include "MyAIController.h"
-#include "HailMary/MainGameInstance.h"
+#include "HailMary/GameSettings/MainGameInstance.h"
 #include "Kismet/GameplayStatics.h"
 
 AMyAIController::AMyAIController()

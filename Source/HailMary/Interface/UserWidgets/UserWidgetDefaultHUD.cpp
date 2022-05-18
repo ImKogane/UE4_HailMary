@@ -6,7 +6,7 @@
 //#include "ToolBuilderUtil.h"
 #include "Components/Image.h"
 #include "Components/TextBlock.h"
-#include "HailMary/MainGameInstance.h"
+#include "HailMary/GameSettings//MainGameInstance.h"
 #include "Kismet/GameplayStatics.h"
 #include "HailMary/Characters/StudentCharacter/StudentCharacter.h"
 

@@ -4,7 +4,7 @@
 #include "MainGameInstance.h"
 
 //#include "ToolBuilderUtil.h"
-#include "Characters/IA_Boss/AICharacter.h"
+#include "HailMary/Characters/IA_Boss/AICharacter.h"
 #include "Kismet/GameplayStatics.h"
 
 

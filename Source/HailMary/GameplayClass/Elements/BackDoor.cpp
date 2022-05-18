@@ -7,7 +7,7 @@
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/PawnMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
-#include "HailMary/MainGameInstance.h"
+#include "HailMary/GameSettings/MainGameInstance.h"
 #include "HailMary/Characters/IA_Boss/AICharacter.h"
 #include "HailMary/Characters/StudentCharacter/StudentCharacter.h"
 #include "Kismet/GameplayStatics.h"
