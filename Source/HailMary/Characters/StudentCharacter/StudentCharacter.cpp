@@ -495,6 +495,25 @@ void AStudentCharacter::ShootItem(int nbPlayerId)
 	}
 }
 
+#pragma region Pause system
+
+void AStudentCharacter::PauseGame()
+{
+	UGameplayStatics::GetPlayerController(GetWorld(), 0)->bShowMouseCursor = true;
+	_gameHud->ShowPauseMenu(true);
+	_gameHud->ShowDefaultHUD(false);
+	UGameplayStatics::SetGamePaused(GetWorld(), true);
+}
+
+void AStudentCharacter::UnpauseGame()
+{
+	_gameHud->ShowPauseMenu(false);
+	_gameHud->ShowDefaultHUD(true);
+	UGameplayStatics::SetGamePaused(GetWorld(), false);
+}
+
+#pragma endregion 
+
 void AStudentCharacter::OnBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	if(OtherActor->IsA(AAICharacter::StaticClass()))
@@ -578,6 +597,8 @@ void AStudentCharacter::SetInputsState(EnumInputsState newState)
 				PlayerInputComponent->BindAction("Aim", IE_Released, this, &AStudentCharacter::UndoAim);
 
 				PlayerInputComponent->BindAction("Shoot", IE_Pressed, this, &AStudentCharacter::Shoot);
+				
+				PlayerInputComponent->BindAction("Pause", IE_Pressed, this, &AStudentCharacter::PauseGame);
 		}
 		case EnumInputsState::DisableMovement :
 		{

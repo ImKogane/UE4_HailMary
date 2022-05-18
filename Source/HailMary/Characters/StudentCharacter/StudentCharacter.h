@@ -165,29 +165,24 @@ protected:
 		void ToggleSprint();
 		UFUNCTION()
 		void Sprint();
+	
 		/** Player crouch system */
-		UFUNCTION()
-		void CrouchPlayer();
-		UFUNCTION()
-		void UnCrouchPlayer();
-		UFUNCTION()
-		void Interact();
-		UFUNCTION()
-		void DoAction();
-		UFUNCTION()
-		void UndoAction();
-		UFUNCTION()
-		void Aim();
-		UFUNCTION()
-		void UndoAim();
-		UFUNCTION()
-		void CameraForAim();
-		UFUNCTION()
-		void DuringAim(int nbPlayerId);
-		UFUNCTION()
-		void Shoot();
-		UFUNCTION()
-		void ShootItem(int nbPlayerId);
+		UFUNCTION() void CrouchPlayer();
+		UFUNCTION() void UnCrouchPlayer();
+	
+		UFUNCTION() void Interact();
+		UFUNCTION() void DoAction();
+		UFUNCTION() void UndoAction();
+		UFUNCTION() void Aim();
+		UFUNCTION() void UndoAim();
+		UFUNCTION() void CameraForAim();
+		UFUNCTION() void DuringAim(int nbPlayerId);
+		UFUNCTION() void Shoot();
+		UFUNCTION() void ShootItem(int nbPlayerId);
+
+		UFUNCTION() void PauseGame();
+		UFUNCTION() void UnpauseGame();
+	
 	    UFUNCTION()
 	    void OnBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp,
 	                    int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
