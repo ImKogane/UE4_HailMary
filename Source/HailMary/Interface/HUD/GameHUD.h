@@ -16,11 +16,14 @@ class HAILMARY_API AGameHUD : public AHUD
 {
 	GENERATED_BODY()
 
-	public:
-		FORCEINLINE UUserWidgetDefaultHUD* GetDefaultWidget(){return WidgetDefaultHUD;}
-		FORCEINLINE UUserWidgetPauseMenu* GetPauseWidget(){return WidgetPauseMenu;}
-		UFUNCTION()
-		void Init();
+public:
+	FORCEINLINE UUserWidgetDefaultHUD* GetDefaultWidget(){return WidgetDefaultHUD;}
+	FORCEINLINE UUserWidgetPauseMenu* GetPauseWidget(){return WidgetPauseMenu;}
+	UFUNCTION()
+	void Init();
+
+	UFUNCTION() void ShowPauseMenu(bool state);
+	UFUNCTION() void ShowDefaultHUD(bool state);
 	
 	protected:
 		UPROPERTY(EditAnywhere)

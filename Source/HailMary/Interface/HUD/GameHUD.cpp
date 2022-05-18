@@ -12,6 +12,7 @@ void AGameHUD::Init()
 	{
 		WidgetDefaultHUD = CreateWidget<UUserWidgetDefaultHUD>(GetWorld(), BPWidgetDefaultHUD);
 		WidgetDefaultHUD->AddToViewport();
+		WidgetDefaultHUD->SetVisibility(ESlateVisibility::Visible);
 		WidgetDefaultHUD->GetReferences();
 	}
 
@@ -19,6 +20,31 @@ void AGameHUD::Init()
 	{
 		WidgetPauseMenu = CreateWidget<UUserWidgetPauseMenu>(GetWorld(), BPWidgetPauseMenu);
 		WidgetPauseMenu->AddToViewport();
+		WidgetPauseMenu->SetVisibility(ESlateVisibility::Hidden);
+	}
+}
+
+void AGameHUD::ShowPauseMenu(bool state)
+{
+	if(state)
+	{
+		WidgetPauseMenu->SetVisibility(ESlateVisibility::Visible);
+	}
+	else
+	{
+		WidgetPauseMenu->SetVisibility(ESlateVisibility::Hidden);
+	}
+}
+
+void AGameHUD::ShowDefaultHUD(bool state)
+{
+	if(state)
+	{
+		WidgetDefaultHUD->SetVisibility(ESlateVisibility::Visible);
+	}
+	else
+	{
+		WidgetDefaultHUD->SetVisibility(ESlateVisibility::Hidden);
 	}
 }
 
