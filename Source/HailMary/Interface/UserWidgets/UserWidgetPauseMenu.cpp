@@ -36,5 +36,6 @@ void UUserWidgetPauseMenu::ShowSettingsMenu()
 
 void UUserWidgetPauseMenu::BackToMenu()
 {
+	UGameplayStatics::OpenLevel(GetWorld(),"MainMenu_Level");
 	UE_LOG(LogTemp, Warning, TEXT("Go to menu"));
 }

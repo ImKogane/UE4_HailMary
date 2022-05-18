@@ -13,5 +13,7 @@ UCLASS()
 class HAILMARY_API AMainMenuGameMode : public AGameModeBase
 {
 	GENERATED_BODY()
+
+	virtual void BeginPlay() override;
 	
 };
