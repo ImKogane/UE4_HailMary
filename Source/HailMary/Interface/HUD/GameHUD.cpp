@@ -8,11 +8,17 @@
 
 void AGameHUD::Init()
 {
-	if( IsValid(_bpWidgetDefaultHUD))
+	if( IsValid(BPWidgetDefaultHUD))
 	{
-		_widgetDefaultHUD = CreateWidget<UUserWidgetDefaultHUD>(GetWorld(), _bpWidgetDefaultHUD);
-		_widgetDefaultHUD->AddToViewport();
-		_widgetDefaultHUD->GetReferences();
+		WidgetDefaultHUD = CreateWidget<UUserWidgetDefaultHUD>(GetWorld(), BPWidgetDefaultHUD);
+		WidgetDefaultHUD->AddToViewport();
+		WidgetDefaultHUD->GetReferences();
+	}
+
+	if( IsValid(BPWidgetPauseMenu))
+	{
+		WidgetPauseMenu = CreateWidget<UUserWidgetPauseMenu>(GetWorld(), BPWidgetPauseMenu);
+		WidgetPauseMenu->AddToViewport();
 	}
 }
 
@@ -32,8 +38,8 @@ void AGameHUD::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 		
-	if( IsValid(_widgetDefaultHUD))
+	if( IsValid(WidgetDefaultHUD))
 	{
-		_widgetDefaultHUD->UpdateWidget();
+		WidgetDefaultHUD->UpdateWidget();
 	}
 }
