@@ -36,6 +36,8 @@ void UUserWidgetPauseMenu::ShowSettingsMenu()
 
 void UUserWidgetPauseMenu::BackToMenu()
 {
+	APlayerController* controller = UGameplayStatics::GetPlayerController(GetWorld(), 1);
+	UGameplayStatics::RemovePlayer(controller, true);
 	UGameplayStatics::OpenLevel(GetWorld(),"MainMenu_Level");
 	UE_LOG(LogTemp, Warning, TEXT("Go to menu"));
 }
