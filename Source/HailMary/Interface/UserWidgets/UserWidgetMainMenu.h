@@ -13,5 +13,28 @@ UCLASS()
 class HAILMARY_API UUserWidgetMainMenu : public UUserWidget
 {
 	GENERATED_BODY()
+
+protected:
+	virtual void NativeConstruct() override;
+
+	class AMainMenuHUD* HUDMainMenu;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget), Category = "UIElements")
+	class UButton* BtnPlay;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget), Category = "UIElements")
+	class UButton* BtnSettings;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget), Category = "UIElements")
+	class UButton* BtnExit;
+
+	UFUNCTION()
+	void PlayGame();
+
+	UFUNCTION()
+	void ShowSettingsMenu();
+
+	UFUNCTION()
+	void ExitGame();
 	
 };
