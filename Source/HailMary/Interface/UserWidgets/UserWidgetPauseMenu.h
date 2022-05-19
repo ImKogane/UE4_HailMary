@@ -19,22 +19,22 @@ protected:
 
 	class AGameHUD* GameHud;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget), Category = "UIElements")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget, OptionalWidget=true))
 	class UButton* BtnResume;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget), Category = "UIElements")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget, OptionalWidget=true))
 	class UButton* BtnSettings;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget), Category = "UIElements")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget, OptionalWidget=true))
 	class UButton* BtnMenu;
 
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 	void ResumeGame();
 
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 	void ShowSettingsMenu();
 
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 	void BackToMenu();
 	
 };

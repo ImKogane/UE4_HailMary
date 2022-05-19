@@ -28,13 +28,13 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget), Category = "UIElements")
 	class UButton* BtnExit;
 
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 	void PlayGame();
 
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 	void ShowSettingsMenu();
 
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 	void ExitGame();
 	
 };

@@ -31,4 +31,5 @@ void UUserWidgetMainMenu::ShowSettingsMenu()
 
 void UUserWidgetMainMenu::ExitGame()
 {
+    GetWorld()->GetFirstPlayerController()->ConsoleCommand("quit");
 }
