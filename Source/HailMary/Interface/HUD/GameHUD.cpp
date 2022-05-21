@@ -22,6 +22,13 @@ void AGameHUD::Init()
 		WidgetPauseMenu->AddToViewport();
 		WidgetPauseMenu->SetVisibility(ESlateVisibility::Hidden);
 	}
+
+	if( IsValid(BPWidgetLoseScreen))
+	{
+		WidgetLoseScreen = CreateWidget<UUserWidgetLoseScreen>(GetWorld(), BPWidgetLoseScreen);
+		WidgetLoseScreen->AddToViewport();
+		WidgetLoseScreen->SetVisibility(ESlateVisibility::Hidden);
+	}
 }
 
 void AGameHUD::ShowPauseMenu(bool state)
@@ -45,6 +52,18 @@ void AGameHUD::ShowDefaultHUD(bool state)
 	else
 	{
 		WidgetDefaultHUD->SetVisibility(ESlateVisibility::Hidden);
+	}
+}
+
+void AGameHUD::ShowLoseScreen(bool state)
+{
+	if(state)
+	{
+		WidgetLoseScreen->SetVisibility(ESlateVisibility::Visible);
+	}
+	else
+	{
+		WidgetLoseScreen->SetVisibility(ESlateVisibility::Hidden);
 	}
 }
 

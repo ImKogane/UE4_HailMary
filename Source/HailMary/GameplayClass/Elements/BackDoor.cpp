@@ -10,6 +10,7 @@
 #include "HailMary/GameSettings/MainGameInstance.h"
 #include "HailMary/Characters/IA_Boss/AICharacter.h"
 #include "HailMary/Characters/StudentCharacter/StudentCharacter.h"
+#include "HailMary/GameSettings/HailMaryGameMode.h"
 #include "Kismet/GameplayStatics.h"
 
 ABackDoor::ABackDoor()
@@ -179,7 +180,12 @@ void ABackDoor::SetPlayerInside(AStudentCharacter* player)
 	if( _gameInstance->GetnbLockedPlayer() > 1)
 	{
 		//Someone already locked somewhere : Game Over
-		UGameplayStatics::OpenLevel(GetWorld(), FName(*GetWorld()->GetName()), false); //Restart level
+		AHailMaryGameMode* gamemode = Cast<AHailMaryGameMode>(GetWorld()->GetAuthGameMode());
+		if(gamemode != nullptr)
+		{
+			gamemode->LoseGame();
+		}
+		//UGameplayStatics::OpenLevel(GetWorld(), FName(*GetWorld()->GetName()), false); //Restart level
 	}
 }
 

@@ -15,6 +15,10 @@ public:
 	AHailMaryGameMode();
 
 	void BeginPlay() override;
+
+	UFUNCTION() void LoseGame();
+	UFUNCTION() void WinGame();
+	
 };
 
 

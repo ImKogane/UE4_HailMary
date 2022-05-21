@@ -13,5 +13,18 @@ UCLASS()
 class HAILMARY_API UUserWidgetLoseScreen : public UUserWidget
 {
 	GENERATED_BODY()
+protected:
+	virtual void NativeConstruct() override;
 	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget), Category = "UIElements")
+	class UButton* BtnRetry;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget), Category = "UIElements")
+	class UButton* BtnMenu;
+	
+	UFUNCTION(BlueprintCallable)
+	void Retry();
+
+	UFUNCTION(BlueprintCallable)
+	void BackToMenu();
 };
