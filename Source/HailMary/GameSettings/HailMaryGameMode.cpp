@@ -33,7 +33,6 @@ void AHailMaryGameMode::LoseGame()
 	AGameHUD* l_gameHud = Cast<AGameHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
 	if(IsValid(l_gameHud))
 	{
-		UGameplayStatics::GetPlayerController(this, 0)->bShowMouseCursor = true;
 		UGameplayStatics::SetGamePaused(GetWorld(), true);
 		l_gameHud->ShowLoseScreen(true);
 	}
@@ -41,5 +40,11 @@ void AHailMaryGameMode::LoseGame()
 
 void AHailMaryGameMode::WinGame()
 {
+	AGameHUD* l_gameHud = Cast<AGameHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
+	if(IsValid(l_gameHud))
+	{
+		UGameplayStatics::SetGamePaused(GetWorld(), true);
+		l_gameHud->ShowWinScreen(true);
+	}
 }
 

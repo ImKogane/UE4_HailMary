@@ -4,6 +4,7 @@
 #include "ExitDoor.h"
 
 #include "HailMary/GameSettings//MainGameInstance.h"
+#include "HailMary/GameSettings/HailMaryGameMode.h"
 #include "Kismet/GameplayStatics.h"
 
 void AExitDoor::BeginPlay()
@@ -71,4 +72,10 @@ void AExitDoor::OpenDoor()
 {
 	IsOpen = true;
 	TheGameInstance->SetDoorIsOpen(true);
+
+	AHailMaryGameMode* gamemode = Cast<AHailMaryGameMode>(GetWorld()->GetAuthGameMode());
+	if(gamemode != nullptr)
+	{
+		gamemode->WinGame();
+	}
 }

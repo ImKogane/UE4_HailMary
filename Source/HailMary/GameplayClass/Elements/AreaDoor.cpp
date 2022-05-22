@@ -7,6 +7,7 @@
 #include "HailMary/GameSettings/MainGameInstance.h"
 #include "HailMary/Characters/StudentCharacter/StudentCharacter.h"
 #include "HailMary/GameplayClass/Items_Objects/KeyItem_Object.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 AAreaDoor::AAreaDoor()
@@ -16,6 +17,8 @@ AAreaDoor::AAreaDoor()
 
 }
 
+
+
 void AAreaDoor::Interaction(AActor* Character)
 {
 	Super::Interaction(Character);
@@ -24,10 +27,10 @@ void AAreaDoor::Interaction(AActor* Character)
 	if(student != nullptr)
 	{
 		AKeyItem_Object* key = Cast<AKeyItem_Object>(student->GetItemInInventory());
-
-		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Blue, TEXT("Key "));
+		
 		if(key != nullptr && key->GetKeyArea() == Area)
 		{
+			student->ResetInventory();
 			OpenDoor();
 		}
 	}
@@ -39,13 +42,21 @@ void AAreaDoor::BeginPlay()
 	Super::BeginPlay();
 
 	TheGameInstance = Cast<UMainGameInstance>(GetGameInstance());
-	
+	_gameHud = Cast<AGameHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
 }
 
 
 void AAreaDoor::OpenDoor()
 {
+	
 	TheGameInstance->AddTaskCount(1);
+	
+	if(_gameHud )
+	{
+		_gameHud->GetDefaultWidget()->UpdateDisplayText();
+		_gameHud->GetDefaultWidget()->UpdateTasks();
+	}
+	
 	Destroy(true);
 }
 

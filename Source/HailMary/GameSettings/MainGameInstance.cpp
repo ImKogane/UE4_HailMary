@@ -14,7 +14,7 @@ void UMainGameInstance::Init()
 	Super::Init();
 
 	//Init variables
-	TaskCount = 0;
+	TaskCount = 1;
 	_lstLockedPlayer.Reset();
 		
 	//Clear array content

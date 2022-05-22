@@ -29,6 +29,13 @@ void AGameHUD::Init()
 		WidgetLoseScreen->AddToViewport();
 		WidgetLoseScreen->SetVisibility(ESlateVisibility::Hidden);
 	}
+	
+	if( IsValid(BPWidgetWinScreen))
+	{
+		WidgetWinScreen = CreateWidget<UUserWidgetWinScreen>(GetWorld(), BPWidgetWinScreen);
+		WidgetWinScreen->AddToViewport();
+		WidgetWinScreen->SetVisibility(ESlateVisibility::Hidden);
+	}
 }
 
 void AGameHUD::ShowPauseMenu(bool state)
@@ -57,15 +64,41 @@ void AGameHUD::ShowDefaultHUD(bool state)
 
 void AGameHUD::ShowLoseScreen(bool state)
 {
-	if(state)
+	if(WidgetLoseScreen != nullptr)
 	{
-		WidgetLoseScreen->SetVisibility(ESlateVisibility::Visible);
+		UGameplayStatics::GetPlayerController(GetWorld(), 0)->bShowMouseCursor = state;
+	
+		if(state)
+		{
+			WidgetLoseScreen->SetVisibility(ESlateVisibility::Visible);
+		}
+		else
+		{
+			WidgetLoseScreen->SetVisibility(ESlateVisibility::Hidden);
+		}
 	}
-	else
-	{
-		WidgetLoseScreen->SetVisibility(ESlateVisibility::Hidden);
-	}
+	
 }
+
+void AGameHUD::ShowWinScreen(bool state)
+{
+	if(WidgetWinScreen != nullptr)
+	{
+		UGameplayStatics::GetPlayerController(GetWorld(), 0)->bShowMouseCursor = state;
+	
+		if(state)
+		{
+			WidgetWinScreen->SetVisibility(ESlateVisibility::Visible);
+		}
+		else
+		{
+			WidgetWinScreen->SetVisibility(ESlateVisibility::Hidden);
+		}
+	}
+	
+}
+
+
 
 void AGameHUD::BeginPlay()
 {

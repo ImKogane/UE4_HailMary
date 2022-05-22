@@ -35,11 +35,8 @@ protected:
 		FString _strDisplayTextCompleted;
 		UPROPERTY(EditInstanceOnly, Category="Task details")
 		class AStorageDoor* StorageDoor;
-
+	
 		UPROPERTY(EditAnywhere, Category="Items")
-		TArray<TSubclassOf<class ATaskItem_Object>> AvailableItems;
-		
-		UPROPERTY(VisibleAnywhere, Category="Items")
 		AInteractibleItem* MainNeedItemName;
 		UPROPERTY(EditAnywhere, Category="Items")
 		AInteractibleItem* OtherNeedItemName;

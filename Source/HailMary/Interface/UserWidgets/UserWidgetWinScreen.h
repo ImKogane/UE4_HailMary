@@ -13,5 +13,20 @@ UCLASS()
 class HAILMARY_API UUserWidgetWinScreen : public UUserWidget
 {
 	GENERATED_BODY()
+
+protected:
+	virtual void NativeConstruct() override;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget), Category = "UIElements")
+	class UButton* BtnPlayAgain;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget), Category = "UIElements")
+	class UButton* BtnMenu;
+	
+	UFUNCTION(BlueprintCallable)
+	void PlayAgain();
+
+	UFUNCTION(BlueprintCallable)
+	void BackToMenu();
 	
 };

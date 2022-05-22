@@ -161,13 +161,13 @@ void ATask_Object::UnlockTask()
 void ATask_Object::CompleteTask()
 {
 	TaskCompleted = true;
-//	TheGameInstance->GetPlayCycle()->ResetTimer();
+	//TheGameInstance->GetPlayCycle()->ResetTimer();
+	
 	if(StorageDoor != nullptr) StorageDoor->OpenDoor();
-	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("Task completed"));
 	_strDisplayText = _strDisplayTextCompleted;
+	
 	if(_gameHud )
 	{
 		_gameHud->GetDefaultWidget()->UpdateDisplayText();
-		_gameHud->GetDefaultWidget()->UpdateTasks();
 	}
 }

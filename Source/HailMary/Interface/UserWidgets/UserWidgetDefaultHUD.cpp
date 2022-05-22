@@ -60,7 +60,7 @@ void UUserWidgetDefaultHUD::UpdateTimer()
 
 void UUserWidgetDefaultHUD::UpdateTasks()
 {
-	FString txtTaskCount = TEXT("Task Done : ") + FString::FromInt(gameInstance->GetTaskCount());
+	FString txtTaskCount = TEXT("Phase ") + FString::FromInt(gameInstance->GetTaskCount());
 	if(gameInstance->GetPlayCycle() != nullptr)
 	{
 		FString txtTimer = TEXT("Time left : ") + gameInstance->GetPlayCycle()->GetTimer();

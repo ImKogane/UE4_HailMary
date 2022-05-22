@@ -7,6 +7,7 @@
 #include "HailMary/Interface/UserWidgets/UserWidgetDefaultHUD.h"
 #include "HailMary/Interface/UserWidgets/UserWidgetLoseScreen.h"
 #include "HailMary/Interface/UserWidgets/UserWidgetPauseMenu.h"
+#include "HailMary/Interface/UserWidgets/UserWidgetWinScreen.h"
 #include "GameHUD.generated.h"
 
 /**
@@ -21,30 +22,40 @@ public:
 	FORCEINLINE UUserWidgetDefaultHUD* GetDefaultWidget(){return WidgetDefaultHUD;}
 	FORCEINLINE UUserWidgetPauseMenu* GetPauseWidget(){return WidgetPauseMenu;}
 	FORCEINLINE UUserWidgetLoseScreen* GetLoseWidget(){return WidgetLoseScreen;}
+	FORCEINLINE UUserWidgetWinScreen* GetWinWidget(){return WidgetWinScreen;}
 	UFUNCTION()
 	void Init();
 
 	UFUNCTION() void ShowPauseMenu(bool state);
 	UFUNCTION() void ShowDefaultHUD(bool state);
 	UFUNCTION() void ShowLoseScreen(bool state);
+	UFUNCTION() void ShowWinScreen(bool state);
+
+protected:
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<UUserWidgetDefaultHUD> BPWidgetDefaultHUD;
+	UPROPERTY()
+	UUserWidgetDefaultHUD* WidgetDefaultHUD;
+
+	//Pause menu widget
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<UUserWidgetPauseMenu> BPWidgetPauseMenu;
+	UPROPERTY()
+	UUserWidgetPauseMenu* WidgetPauseMenu;
+
+	//Lose screen widget
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<UUserWidgetLoseScreen> BPWidgetLoseScreen;
+	UPROPERTY()
+	UUserWidgetLoseScreen* WidgetLoseScreen;
+
+	//Lose screen widget
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<UUserWidgetWinScreen> BPWidgetWinScreen;
+	UPROPERTY()
+	UUserWidgetWinScreen* WidgetWinScreen;
+
 	
-	protected:
-		UPROPERTY(EditAnywhere)
-		TSubclassOf<UUserWidgetDefaultHUD> BPWidgetDefaultHUD;
-		UPROPERTY()
-		UUserWidgetDefaultHUD* WidgetDefaultHUD;
-
-		//Pause menu widget
-		UPROPERTY(EditAnywhere)
-		TSubclassOf<UUserWidgetPauseMenu> BPWidgetPauseMenu;
-		UPROPERTY()
-		UUserWidgetPauseMenu* WidgetPauseMenu;
-
-		//Lose screen widget
-		UPROPERTY(EditAnywhere)
-		TSubclassOf<UUserWidgetLoseScreen> BPWidgetLoseScreen;
-		UPROPERTY()
-		UUserWidgetLoseScreen* WidgetLoseScreen;
 
 	
 
