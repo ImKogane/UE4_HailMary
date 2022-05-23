@@ -31,9 +31,11 @@ AInteractibleElement::AInteractibleElement()
 void AInteractibleElement::BeginPlay()
 {
 	Super::BeginPlay();
+	
 	//Bind event
 	CollisionBox->OnComponentBeginOverlap.AddDynamic(this, &AInteractibleElement::OnBoxOverlapBegin);
 	CollisionBox->OnComponentEndOverlap.AddDynamic(this, &AInteractibleElement::OnBoxOverlapEnd);
+	
 	//Get References
 	_gameHud = Cast<AGameHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
 	_gameInstance = Cast<UMainGameInstance>(GetGameInstance());
@@ -49,7 +51,7 @@ void AInteractibleElement::OnBoxOverlapBegin(UPrimitiveComponent* OverlappedComp
 								UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
 								const FHitResult& SweepResult)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Blue, TEXT("Element near"));
+	//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Blue, TEXT("Element near"));
 	AStudentCharacter* Player = Cast<AStudentCharacter>(OtherActor);
 	if (Player == nullptr)
 	{

@@ -12,6 +12,8 @@ void AExitDoor::BeginPlay()
 	Super::BeginPlay();
 
 	TheGameInstance = Cast<UMainGameInstance>(GetGameInstance());
+	_gameHud = Cast<AGameHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
+
 }
 
 
@@ -50,15 +52,30 @@ void AExitDoor::Tick(float DeltaSeconds)
 	{
 			if(NearPlayer->GetIsDoAction() && ElementProgress <= ElementMaxProgress)
 			{
+				IsOpening = true;
 				ElementProgress += NearPlayer->GetMakeTaskSpeed();
 				
-				FString ProgressString = FString::FromInt(ElementProgress);
-				GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Green, ProgressString);
+				if(_gameHud)
+				{
+					_gameHud->GetDefaultWidget()->SetProgressBarValue(NearPlayer->GetPlayerId(),ElementProgress);
+				}
 				
+
 			}
-			else if(ElementProgress > ElementMaxProgress)
+			else
 			{
-				OpenDoor();
+				IsOpening = false;
+				
+				if(ElementProgress > ElementMaxProgress)
+				{
+					OpenDoor();
+				}
+
+				//Hide Hud Progress bar
+				if(_gameHud)
+				{
+					_gameHud->GetDefaultWidget()->HideProgressBar(NearPlayer->GetPlayerId());
+				}
 			}
 
 	}	

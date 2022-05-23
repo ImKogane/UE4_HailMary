@@ -22,9 +22,14 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category="Door details")
 	bool IsOpen;
-
+	
+	UPROPERTY(VisibleAnywhere, Category="Door details")
+	bool IsOpening;
+	
 	UPROPERTY(VisibleAnywhere)
 	AStudentCharacter* NearPlayer;
+
+	
 	
 	class UMainGameInstance* TheGameInstance;
 	

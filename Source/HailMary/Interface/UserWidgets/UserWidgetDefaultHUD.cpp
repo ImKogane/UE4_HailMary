@@ -113,7 +113,7 @@ void UUserWidgetDefaultHUD::UpdateItems()
 	if(m_player1)
 	{
 		//Item Txt
-		FString txtItemPlayer1= "Empty";
+		FString txtItemPlayer1= "";
 		if(IsValid(m_player1->GetItemInInventory()))
 		{
 			txtItemPlayer1 = m_player1->GetItemInInventory()->GetItemName();
@@ -132,7 +132,7 @@ void UUserWidgetDefaultHUD::UpdateItems()
 	if(m_player2)
 	{
 		//Item Txt
-		FString txtItemPlayer2= "Empty";
+		FString txtItemPlayer2= "";
 		if(IsValid(m_player2->GetItemInInventory()))
 		{
 			txtItemPlayer2 = m_player2->GetItemInInventory()->GetItemName();
