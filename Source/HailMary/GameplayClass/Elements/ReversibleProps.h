@@ -18,4 +18,9 @@ protected:
 	UPROPERTY(VisibleAnywhere, Category = "Elements details")
 	bool IsReverse;
 	
+	UPROPERTY(VisibleAnywhere, Category = "Elements details")
+	bool IsFalling;
+	
+	virtual void Interaction(AActor* Character) override;
+	
 };
