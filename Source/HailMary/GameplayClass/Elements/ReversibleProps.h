@@ -61,5 +61,8 @@ public:
 	
 	UFUNCTION()
 	void TimeLineProgress(float Value);
+
+	FORCEINLINE bool GetIsFalling(){ return IsFalling;}
+	FORCEINLINE bool GetIsReverse(){ return IsReverse;}
 	
 };

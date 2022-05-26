@@ -34,7 +34,7 @@ void AReversibleProps::Interaction(AActor* Character)
 {
 	Super::Interaction(Character);
 
-	if(!IsFalling)
+	if(!IsFalling && !IsReverse)
 	{
 		AStudentCharacter* Player = Cast<AStudentCharacter>(Character);
 
