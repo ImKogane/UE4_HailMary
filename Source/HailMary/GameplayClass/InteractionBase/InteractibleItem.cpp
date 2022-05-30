@@ -17,6 +17,7 @@ AInteractibleItem::AInteractibleItem()
 	//Mesh component
 	ItemMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("ItemMesh"));
 	ItemMesh->SetupAttachment(BaseComponent);
+	ItemMesh->SetNotifyRigidBodyCollision(true);
 
 	//CollisionBox component
 	CollisionBox = CreateDefaultSubobject<UBoxComponent>(TEXT("Collision box"));
@@ -31,7 +32,7 @@ void AInteractibleItem::BeginPlay()
 	Super::BeginPlay();
 	CollisionBox->OnComponentBeginOverlap.AddDynamic(this, &AInteractibleItem::OnBoxOverlapBegin);
 	CollisionBox->OnComponentEndOverlap.AddDynamic(this, &AInteractibleItem::OnBoxOverlapEnd);
-	
+	ItemMesh->OnComponentHit.AddDynamic(this, &AInteractibleItem::OnHit);
 }
 
 // Called every frame
@@ -58,7 +59,14 @@ void AInteractibleItem::OnBoxOverlapBegin(UPrimitiveComponent* OverlappedCompone
 	}
 }
 
+void AInteractibleItem::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
+{
+	//
+}
+
+
 void AInteractibleItem::OnBoxOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+
 								UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
 	AStudentCharacter* Player = Cast<AStudentCharacter>(OtherActor);

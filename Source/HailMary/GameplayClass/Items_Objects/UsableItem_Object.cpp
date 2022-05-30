@@ -9,14 +9,17 @@ AUsableItem_Object::AUsableItem_Object()
 	IsTaskItem = false;
 }
 
-void AUsableItem_Object::OnBoxOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+void AUsableItem_Object::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
-	Super::OnBoxOverlapBegin(OverlappedComponent, OtherActor, OtherComp, OtherBodyIndex, bFromSweep, SweepResult);
-	if (OtherActor->IsA(AAICharacter::StaticClass()) || OtherActor->ActorHasTag(TEXT("Ground")))
+	Super::OnHit(HitComponent, OtherActor, OtherComp, NormalImpulse, Hit);
+	if (OtherActor != nullptr)
 	{
-		if (Cast<AAICharacter>(OtherActor) != nullptr || OtherActor != nullptr)
+		if (OtherActor->IsA(AAICharacter::StaticClass()) || OtherActor->ActorHasTag(TEXT("Ground")))
 		{
-			Effect(OtherActor);
+			if (Cast<AAICharacter>(OtherActor) != nullptr || OtherActor != nullptr)
+			{
+				Effect(OtherActor);
+			}
 		}
 	}
 }
