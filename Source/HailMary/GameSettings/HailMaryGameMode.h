@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "HailMary/Characters/StudentCharacter/StudentCharacter.h"
 #include "GameFramework/GameModeBase.h"
 #include "HailMaryGameMode.generated.h"
 
@@ -13,6 +14,9 @@ class AHailMaryGameMode : public AGameModeBase
 
 public:
 	AHailMaryGameMode();
+
+	UPROPERTY(VisibleAnywhere, Category = "Player")
+	TArray<AStudentCharacter*> Players;
 
 	void BeginPlay() override;
 

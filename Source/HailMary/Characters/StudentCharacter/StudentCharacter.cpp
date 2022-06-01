@@ -65,11 +65,7 @@ void AStudentCharacter::BeginPlay()
 	Super::BeginPlay();
 	//Get References
 	_gameHud = Cast<AGameHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
-	m_player1 = Cast<AStudentCharacter>(UGameplayStatics::GetPlayerController(GetWorld(), 0)->GetCharacter());
-	m_player2 = Cast<AStudentCharacter>(UGameplayStatics::GetPlayerController(GetWorld(), 1)->GetCharacter());
 	Collider->OnComponentBeginOverlap.AddDynamic(this, &AStudentCharacter::OnBeginOverlap);
-	IsShooting = false;
-	NoItem = true;
 	SetPlayerId();
 	InstanciatePerks();
 }
@@ -77,12 +73,14 @@ void AStudentCharacter::BeginPlay()
 void AStudentCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	CameraForAim();
 	Sprint();
-	DuringAim(1);
-	DuringAim(2);
-	ShootItem(1);
-	ShootItem(2);
+	AHailMaryGameMode* _gameMode = Cast<AHailMaryGameMode>(GetWorld()->GetAuthGameMode());
+	for (AStudentCharacter* player : _gameMode->Players)
+	{
+		CameraForAim(player);
+		DuringAim(player);
+		ShootItem(player);
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -91,16 +89,6 @@ void AStudentCharacter::Tick(float DeltaTime)
 void AStudentCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
 {
 	SetInputsState(EnumInputsState::EnableAll);
-}
-
-FVector AStudentCharacter::GetPawnViewLocation() const
-{
-	if (FollowCamera)
-	{
-		return FollowCamera->GetComponentLocation();
-	}
-
-	return Super::GetPawnViewLocation();
 }
 
 /////////////////////// PLAYER MOVEMENT ///////////////////////
@@ -200,14 +188,12 @@ void AStudentCharacter::Sprint()
 
 void AStudentCharacter::CrouchPlayer()
 {
-	Crouch(true);
-	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("Crouch"));
+	//
 }
 
 void AStudentCharacter::UnCrouchPlayer()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("Uncrouch"));
-	UnCrouch(true);
+	//
 }
 
 #pragma endregion
@@ -315,9 +301,6 @@ void AStudentCharacter::Interact()
 	}
 }
 
-/**
- * @brief 
- */
 void AStudentCharacter::DoAction()
 {
 	IsDoAction = true;
@@ -338,18 +321,21 @@ void AStudentCharacter::UndoAim()
 	IsAiming = false;
 }
 
-void AStudentCharacter::CameraForAim()
+void AStudentCharacter::CameraForAim(AStudentCharacter* player)
 {
 	if (IsAiming)
 	{
-		FVector LerpResult = {};
-		AimStep += FApp::GetDeltaTime() * AimSpeed;
-		LerpResult.X = FMath::Lerp(OffsetAim.X, 200.f, AimStep);
-		LerpResult.Y = FMath::Lerp(OffsetAim.Y, 50.f, AimStep);
-		LerpResult.Z = FMath::Lerp(OffsetAim.Z, 50.f, AimStep);
-		GetCharacterMovement()->MaxWalkSpeed = _fWalkSpeed;
-		GetCameraBoom()->SocketOffset = LerpResult;
-		_gameHud->GetDefaultWidget()->ShowCrosshairPlayer(GetPlayerId());
+		if (player->ItemInInventory != nullptr && player->ItemInInventory->GetIsTaskItem() == false)
+		{
+			FVector LerpResult = {};
+			AimStep += FApp::GetDeltaTime() * AimSpeed;
+			LerpResult.X = FMath::Lerp(OffsetAim.X, 200.f, AimStep);
+			LerpResult.Y = FMath::Lerp(OffsetAim.Y, 50.f, AimStep);
+			LerpResult.Z = FMath::Lerp(OffsetAim.Z, 50.f, AimStep);
+			GetCharacterMovement()->MaxWalkSpeed = _fWalkSpeed;
+			GetCameraBoom()->SocketOffset = LerpResult;
+			_gameHud->GetDefaultWidget()->ShowCrosshairPlayer(GetPlayerId());
+		}
 	}
 	else
 	{
@@ -364,65 +350,37 @@ void AStudentCharacter::CameraForAim()
 	AimStep = FMath::Clamp(AimStep, 0.f, 1.f);
 }
 
-void AStudentCharacter::DuringAim(int nbPlayerId)
+void AStudentCharacter::DuringAim(AStudentCharacter* player)
 {
-	if (nbPlayerId == 1 && m_player1)
+	if (player != nullptr)
 	{
-		if (m_player1->IsAiming)
+		if (player->IsAiming)
 		{
-			APlayerCameraManager* Camera = UGameplayStatics::GetPlayerController(GetWorld(), 0)->PlayerCameraManager;
-			FRotator newRotation = { 0.0, Camera->GetCameraRotation().Yaw, Camera->GetCameraRotation().Roll };
-			m_player1->SetActorRotation(newRotation);
-			if (m_player1->ItemInInventory != nullptr && m_player1->ItemInInventory->GetIsTaskItem() == false)
+			if (player->ItemInInventory != nullptr && player->ItemInInventory->GetIsTaskItem() == false)
 			{
-				if (m_player1->ItemInInventory->GetIsTake() == true)
+				APlayerCameraManager* Camera = Cast<APlayerController>(player->GetController())->PlayerCameraManager;
+				FRotator newRotation = { 0.0, Camera->GetCameraRotation().Yaw, Camera->GetCameraRotation().Roll };
+				player->SetActorRotation(newRotation);
+				if (player->ItemInInventory != nullptr && player->ItemInInventory->GetIsTaskItem() == false)
 				{
-					m_player1->ItemInInventory->ItemMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-					m_player1->ItemInInventory->AttachToComponent(m_player1->GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("ItemSocket"));
-					m_player1->ItemInInventory->SetActorLocation(m_player1->GetMesh()->GetSocketLocation("ItemSocket"));
+					if (player->ItemInInventory->GetIsTake() == true)
+					{
+						player->ItemInInventory->ItemMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+						player->ItemInInventory->AttachToComponent(player->GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("ItemSocket"));
+						player->ItemInInventory->SetActorLocation(player->GetMesh()->GetSocketLocation("ItemSocket"));
+					}
 				}
 			}
 		}
 		else
 		{
-			if (m_player1->ItemInInventory != nullptr && m_player1->ItemInInventory->GetIsTaskItem() == false)
+			if (player->ItemInInventory != nullptr && player->ItemInInventory->GetIsTaskItem() == false)
 			{
-				if (m_player1->ItemInInventory->GetIsTake() == true)
+				if (player->ItemInInventory->GetIsTake() == true)
 				{
-					m_player1->ItemInInventory->DetachFromActor(FDetachmentTransformRules::KeepRelativeTransform);
+					player->ItemInInventory->DetachFromActor(FDetachmentTransformRules::KeepRelativeTransform);
 					FVector Zero = FVector(0, 0, 0);
-					m_player1->ItemInInventory->SetActorLocation(Zero);
-				}
-			}
-		}
-	}
-
-	if (nbPlayerId == 2 && m_player2)
-	{
-		if (m_player2->IsAiming)
-		{
-			APlayerCameraManager* Camera = UGameplayStatics::GetPlayerController(GetWorld(), 1)->PlayerCameraManager;
-			FRotator newRotation = { 0.0, Camera->GetCameraRotation().Yaw, Camera->GetCameraRotation().Roll };
-			m_player2->SetActorRotation(newRotation);
-			if (m_player2->ItemInInventory != nullptr && m_player2->ItemInInventory->GetIsTaskItem() == false)
-			{
-				if (m_player2->ItemInInventory->GetIsTake() == true)
-				{
-					m_player2->ItemInInventory->ItemMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-					m_player2->ItemInInventory->AttachToComponent(m_player2->GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("ItemSocket"));
-					m_player2->ItemInInventory->SetActorLocation(m_player2->GetMesh()->GetSocketLocation("ItemSocket"));
-				}
-			}
-		}
-		else
-		{
-			if (m_player2->ItemInInventory != nullptr && m_player2->ItemInInventory->GetIsTaskItem() == false)
-			{
-				if (m_player2->ItemInInventory->GetIsTake() == true)
-				{
-					m_player2->ItemInInventory->DetachFromActor(FDetachmentTransformRules::KeepRelativeTransform);
-					FVector Zero = FVector(0, 0, 0);
-					m_player2->ItemInInventory->SetActorLocation(Zero);
+					player->ItemInInventory->SetActorLocation(Zero);
 				}
 			}
 		}
@@ -437,59 +395,32 @@ void AStudentCharacter::Shoot()
 	}	
 }
 
-void AStudentCharacter::ShootItem(int nbPlayerId)
+void AStudentCharacter::ShootItem(AStudentCharacter* player)
 {
-	if (nbPlayerId == 1 && m_player1)
+	if (player != nullptr)
 	{
-		if (m_player1->IsShooting == true)
+		if (player->IsShooting == true)
 		{
-			if (m_player1->IsAiming && m_player1->ItemInInventory != nullptr)
+			if (player->IsAiming && player->ItemInInventory != nullptr)
 			{
-				if (m_player1->ItemInInventory->GetIsTaskItem() == false && m_player1->ItemInInventory->GetIsTake() == true)
+				if (player->ItemInInventory->GetIsTaskItem() == false && player->ItemInInventory->GetIsTake() == true)
 				{
-					FVector ShootDirection = m_player1->CameraBoom->GetForwardVector();
+					FVector ShootDirection = player->CameraBoom->GetForwardVector();
 
-					m_player1->ItemInInventory->ItemMesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
-					m_player1->ItemInInventory->ItemMesh->SetSimulatePhysics(true);
-					m_player1->ItemInInventory->DetachFromActor(FDetachmentTransformRules::KeepRelativeTransform);
-					m_player1->ItemInInventory->ItemMesh->AddForce(ShootDirection * 100000 * m_player1->ItemInInventory->ItemMesh->GetMass());
-					m_player1->ItemInInventory->SetIsTake(false);
-					m_player1->ItemInInventory = nullptr;
-					m_player1->IsShooting = false;
-					m_player1->NoItem = true;
+					player->ItemInInventory->ItemMesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+					player->ItemInInventory->ItemMesh->SetSimulatePhysics(true);
+					player->ItemInInventory->DetachFromActor(FDetachmentTransformRules::KeepRelativeTransform);
+					player->ItemInInventory->ItemMesh->AddForce(ShootDirection * 100000 * player->ItemInInventory->ItemMesh->GetMass());
+					player->ItemInInventory->SetIsTake(false);
+					player->ItemInInventory = nullptr;
+					player->IsShooting = false;
+					player->NoItem = true;
 					_gameHud->GetDefaultWidget()->UpdateItems();
 				}
 			}
 			else
 			{
-				m_player1->IsShooting = false;
-			}
-		}
-	}
-	if (nbPlayerId == 2 && m_player2)
-	{
-		if (m_player2->IsShooting == true)
-		{
-			if (m_player2->IsAiming && m_player2->ItemInInventory != nullptr)
-			{
-				if (m_player2->ItemInInventory->GetIsTaskItem() == false && m_player2->ItemInInventory->GetIsTake() == true)
-				{
-					FVector ShootDirection = m_player2->CameraBoom->GetForwardVector();
-
-					m_player2->ItemInInventory->ItemMesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
-					m_player2->ItemInInventory->ItemMesh->SetSimulatePhysics(true);
-					m_player2->ItemInInventory->DetachFromActor(FDetachmentTransformRules::KeepRelativeTransform);
-					m_player2->ItemInInventory->ItemMesh->AddForce(ShootDirection * 100000 * m_player2->ItemInInventory->ItemMesh->GetMass());
-					m_player2->ItemInInventory->SetIsTake(false);
-					m_player2->ItemInInventory = nullptr;
-					m_player2->IsShooting = false;
-					m_player2->NoItem = true;
-					_gameHud->GetDefaultWidget()->UpdateItems();
-				}
-			}
-			else
-			{
-				m_player2->IsShooting = false;
+				player->IsShooting = false;
 			}
 		}
 	}
@@ -531,7 +462,6 @@ void AStudentCharacter::GrabPlayer(AActor* Holder)
 	CameraBoom->bDoCollisionTest = false;
 	if(Holder->IsA(AAICharacter::StaticClass()))
 	{
-//		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Collision"));
 		AAICharacter* ItemHolder = Cast<AAICharacter>(Holder);
 		AttachToComponent(ItemHolder->GetMesh(),FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("Socket_test"));
 		ItemHolder->Character = this;
@@ -539,7 +469,6 @@ void AStudentCharacter::GrabPlayer(AActor* Holder)
 		SetInputsState(EnumInputsState::DisableMovement);
 		GetMesh()->bPauseAnims = true;
 
-		//Hide Hud Progress bar
 		if(_gameHud)
 		{
 			_gameHud->GetDefaultWidget()->HideProgressBar(GetPlayerId());
@@ -572,44 +501,40 @@ void AStudentCharacter::SetInputsState(EnumInputsState newState)
 	{
 		case EnumInputsState::EnableAll :
 		{
-				PlayerInputComponent->BindAxis("MoveForward", this, &AStudentCharacter::MoveForward);
-				PlayerInputComponent->BindAxis("MoveRight", this, &AStudentCharacter::MoveRight);
+			PlayerInputComponent->BindAxis("MoveForward", this, &AStudentCharacter::MoveForward);
+			PlayerInputComponent->BindAxis("MoveRight", this, &AStudentCharacter::MoveRight);
 
-				// We have 2 versions of the rotation bindings to handle different kinds of devices differently
-				// "turn" handles devices that provide an absolute delta, such as a mouse.
-				// "turnrate" is for devices that we choose to treat as a rate of change, such as an analog joystick
-				PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
-				PlayerInputComponent->BindAxis("TurnRate", this, &AStudentCharacter::TurnAtRate);
-				PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
-				PlayerInputComponent->BindAxis("LookUpRate", this, &AStudentCharacter::LookUpAtRate);
+			// We have 2 versions of the rotation bindings to handle different kinds of devices differently
+			// "turn" handles devices that provide an absolute delta, such as a mouse.
+			// "turnrate" is for devices that we choose to treat as a rate of change, such as an analog joystick
+			PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
+			PlayerInputComponent->BindAxis("TurnRate", this, &AStudentCharacter::TurnAtRate);
+			PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
+			PlayerInputComponent->BindAxis("LookUpRate", this, &AStudentCharacter::LookUpAtRate);
 
-				PlayerInputComponent->BindAction("Sprint", IE_Pressed, this, &AStudentCharacter::ToggleSprint);
+			PlayerInputComponent->BindAction("Sprint", IE_Pressed, this, &AStudentCharacter::ToggleSprint);
 
-				PlayerInputComponent->BindAction("Crouch", IE_Pressed, this, &AStudentCharacter::CrouchPlayer);
-				PlayerInputComponent->BindAction("Crouch", IE_Released, this, &AStudentCharacter::UnCrouchPlayer);
+			PlayerInputComponent->BindAction("Crouch", IE_Pressed, this, &AStudentCharacter::CrouchPlayer);
+			PlayerInputComponent->BindAction("Crouch", IE_Released, this, &AStudentCharacter::UnCrouchPlayer);
 	
-				PlayerInputComponent->BindAction("Interaction", IE_Pressed, this, &AStudentCharacter::ItemSystem);
+			PlayerInputComponent->BindAction("Interaction", IE_Pressed, this, &AStudentCharacter::ItemSystem);
 
-				PlayerInputComponent->BindAction("Action", IE_Pressed, this, &AStudentCharacter::DoAction);
-				PlayerInputComponent->BindAction("Action", IE_Released, this, &AStudentCharacter::UndoAction);
+			PlayerInputComponent->BindAction("Action", IE_Pressed, this, &AStudentCharacter::DoAction);
+			PlayerInputComponent->BindAction("Action", IE_Released, this, &AStudentCharacter::UndoAction);
 
-				PlayerInputComponent->BindAction("Aim", IE_Pressed, this, &AStudentCharacter::Aim);
-				PlayerInputComponent->BindAction("Aim", IE_Released, this, &AStudentCharacter::UndoAim);
+			PlayerInputComponent->BindAction("Aim", IE_Pressed, this, &AStudentCharacter::Aim);
+			PlayerInputComponent->BindAction("Aim", IE_Released, this, &AStudentCharacter::UndoAim);
 
-				PlayerInputComponent->BindAction("Shoot", IE_Pressed, this, &AStudentCharacter::Shoot);
+			PlayerInputComponent->BindAction("Shoot", IE_Pressed, this, &AStudentCharacter::Shoot);
 				
-				PlayerInputComponent->BindAction("Pause", IE_Pressed, this, &AStudentCharacter::PauseGame);
+			PlayerInputComponent->BindAction("Pause", IE_Pressed, this, &AStudentCharacter::PauseGame);
 		}
 		case EnumInputsState::DisableMovement :
 		{
-				PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
-				PlayerInputComponent->BindAxis("TurnRate", this, &AStudentCharacter::TurnAtRate);
-				PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
-				PlayerInputComponent->BindAxis("LookUpRate", this, &AStudentCharacter::LookUpAtRate);
-				
-				// PlayerInputComponent->BindAction("Interaction", IE_Pressed, this, &AStudentCharacter::Interact);
-				// PlayerInputComponent->BindAction("Action", IE_Pressed, this, &AStudentCharacter::DoAction);
-				// PlayerInputComponent->BindAction("Action", IE_Released, this, &AStudentCharacter::UndoAction);
+			PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
+			PlayerInputComponent->BindAxis("TurnRate", this, &AStudentCharacter::TurnAtRate);
+			PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
+			PlayerInputComponent->BindAxis("LookUpRate", this, &AStudentCharacter::LookUpAtRate);
 		}
 		case EnumInputsState::DisableMovementAndCamera :
 		{
