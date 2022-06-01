@@ -18,13 +18,13 @@ void AUsableItem_Object::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherA
 		{
 			if (Cast<AAICharacter>(OtherActor) != nullptr || OtherActor != nullptr)
 			{
-				Effect(OtherActor);
+				Effect(Hit);
 			}
 		}
 	}
 }
 
-void AUsableItem_Object::Effect(AActor* actor)
+void AUsableItem_Object::Effect(const FHitResult& Hit)
 {
 	//Nothing
 }

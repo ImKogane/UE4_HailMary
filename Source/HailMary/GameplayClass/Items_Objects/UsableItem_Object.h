@@ -20,5 +20,5 @@ public:
 	virtual void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit) override ;
 
 	UFUNCTION()
-	virtual void Effect(AActor* actor);
+	virtual void Effect(const FHitResult& Hit);
 };

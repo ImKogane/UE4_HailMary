@@ -18,7 +18,7 @@ class HAILMARY_API AGluePot : public AUsableItem_Object
 public: 
 	AGluePot();
 	virtual void BeginPlay() override;
-	virtual void Effect(AActor*	actor) override;
+	virtual void Effect(const FHitResult& Hit) override;
 
 protected:
 	UPROPERTY(EditAnywhere, Category="gluepot")

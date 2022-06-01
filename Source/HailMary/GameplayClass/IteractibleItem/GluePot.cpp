@@ -12,12 +12,13 @@ void AGluePot::BeginPlay()
 	Super::BeginPlay();
 }
 
-void AGluePot::Effect(AActor* actor)
+void AGluePot::Effect(const FHitResult& Hit)
 {
-	Super::Effect(actor);
+	Super::Effect(Hit);
 	if(IsValid(_bpGlueArea))
 	{
-		GetWorld()->SpawnActor<AActor>(_bpGlueArea, actor->GetActorLocation(), actor->GetActorRotation());
+		FRotator zero = { 0,0,0 };
+		GetWorld()->SpawnActor<AActor>(_bpGlueArea, Hit.Location, zero);
 	}
 	this->Destroy();
 }
