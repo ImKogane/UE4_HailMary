@@ -44,9 +44,7 @@ class HAILMARY_API UUserWidgetDefaultHUD : public UUserWidget
 			UPROPERTY(BlueprintReadOnly, meta=(BindWidget))
 			class UImage* imgItemPlayer1;
 			UPROPERTY(BlueprintReadOnly, meta=(BindWidget))
-			class UImage* imgPerk1Player1;
-			UPROPERTY(BlueprintReadOnly, meta=(BindWidget))
-			class UImage* imgPerk2Player1;
+			class UImage* imgPerkPlayer1;
 			UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
 			class UImage* imgCrosshairPlayer1;
 			UPROPERTY(BlueprintReadOnly, meta=(BindWidget))
@@ -63,9 +61,7 @@ class HAILMARY_API UUserWidgetDefaultHUD : public UUserWidget
 			UPROPERTY(BlueprintReadOnly, meta=(BindWidget))
 			class UImage* imgItemPlayer2;
 			UPROPERTY(BlueprintReadOnly, meta=(BindWidget))
-			class UImage* imgPerk1Player2;
-			UPROPERTY(BlueprintReadOnly, meta=(BindWidget))
-			class UImage* imgPerk2Player2;
+			class UImage* imgPerkPlayer2;
 			UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
 			class UImage* imgCrosshairPlayer2;
 			UPROPERTY(BlueprintReadOnly, meta=(BindWidget))

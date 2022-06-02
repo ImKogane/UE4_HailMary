@@ -75,36 +75,22 @@ void UUserWidgetDefaultHUD::UpdatePerks()
 	{
 		//First Perk Icon
 		UTexture2D* FirstPerkTexture = textureItemEmpty;
-		if(IsValid(m_player1->GetFirstPerk()))
+		if(IsValid(m_player1->GetPlayerPerk()))
 		{
-			FirstPerkTexture = m_player1->GetFirstPerk()->GetTextureIcon();
+			FirstPerkTexture = m_player1->GetPlayerPerk()->GetTextureIcon();
 		}
-		imgPerk1Player1->SetBrushFromTexture(FirstPerkTexture, false);
-		//Second Perk Icon
-		UTexture2D* SecondPerkTexture = textureItemEmpty;
-		if(IsValid(m_player1->GetSecondPerk()))
-		{
-			SecondPerkTexture = m_player1->GetSecondPerk()->GetTextureIcon();
-		}
-		imgPerk2Player1->SetBrushFromTexture(SecondPerkTexture, false);
+		imgPerkPlayer1->SetBrushFromTexture(FirstPerkTexture, false);
 	}
 
 	if(IsValid(m_player2))
 	{
 		//First Perk Icon
 		UTexture2D* FirstPerkTexture = textureItemEmpty;
-		if(IsValid(m_player2->GetFirstPerk()))
+		if(IsValid(m_player2->GetPlayerPerk()))
 		{
-			FirstPerkTexture = m_player2->GetFirstPerk()->GetTextureIcon();
+			FirstPerkTexture = m_player2->GetPlayerPerk()->GetTextureIcon();
 		}
-		imgPerk1Player2->SetBrushFromTexture(FirstPerkTexture, false);
-		//Second Perk Icon
-		UTexture2D* SecondPerkTexture = textureItemEmpty;
-		if(IsValid(m_player2->GetSecondPerk()))
-		{
-			SecondPerkTexture = m_player2->GetSecondPerk()->GetTextureIcon();
-		}
-		imgPerk2Player2->SetBrushFromTexture(SecondPerkTexture, false);
+		imgPerkPlayer2->SetBrushFromTexture(FirstPerkTexture, false);
 	}
 }
 
