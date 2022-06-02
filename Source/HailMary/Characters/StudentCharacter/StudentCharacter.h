@@ -78,9 +78,7 @@ public:
 		UFUNCTION()
 		FORCEINLINE AInteractibleElement* GetNearInteractibleElement(){return NearElement;}
 		UFUNCTION()
-		UPerk_BaseComponent* GetFirstPerk();
-		UFUNCTION()	
-		UPerk_BaseComponent* GetSecondPerk();
+		UPerk_BaseComponent* GetPlayerPerk();
 		UFUNCTION()
 		FORCEINLINE int GetPlayerId(){return m_nbPlayerId;}
 		UFUNCTION()
@@ -139,11 +137,12 @@ protected:
 
 	#pragma region Perks
 		UPROPERTY(EditDefaultsOnly, Category="Player Perks")
-		TArray<TSubclassOf<UPerk_BaseComponent>> ArrPassivePerkBp;
+		TSubclassOf<UPerk_BaseComponent> PlayerPerk_BP;
+	
 		UPROPERTY(EditDefaultsOnly, Category="Player Perks")
-		TArray<TSubclassOf<UPerk_BaseComponent>> ArrActivePerksBp;
-		UPROPERTY(VisibleAnywhere, Category="Player Perks")
-		TArray<UPerk_BaseComponent*> _arrPerks;
+		UPerk_BaseComponent* PlayerPerk;
+	
+	
 	#pragma endregion
 	
 	#pragma region ProtectedFunctions

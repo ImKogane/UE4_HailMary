@@ -121,16 +121,8 @@ void AStudentCharacter::SetPlayerId()
 void AStudentCharacter::InstanciatePerks()
 {
 	UWorld* world = GetWorld();
-	
-	for (TSubclassOf<UPerk_BaseComponent> currentPassivePerk : ArrPassivePerkBp)
-	{
-		_arrPerks.Add(NewObject<UPerk_BaseComponent>(this, currentPassivePerk));
-	}
 
-	for (TSubclassOf<UPerk_BaseComponent> currentActivePerk : ArrActivePerksBp)
-	{
-		_arrPerks.Add(NewObject<UPerk_BaseComponent>(this ,currentActivePerk));
-	}
+	PlayerPerk = NewObject<UPerk_BaseComponent>(this, PlayerPerk_BP);
 }
 
 void AStudentCharacter::MoveForward(float Value)
@@ -243,22 +235,13 @@ void AStudentCharacter::SetNearElement(AInteractibleElement* Element)
 	}
 }
 
-UPerk_BaseComponent* AStudentCharacter::GetFirstPerk()
+UPerk_BaseComponent* AStudentCharacter::GetPlayerPerk()
 {
-	if( _arrPerks.Num() > 0)
+	if(PlayerPerk_BP != nullptr)
 	{
-		 return  _arrPerks[0];
+		 return PlayerPerk;
 	}
 	return nullptr;
-}
-
-UPerk_BaseComponent* AStudentCharacter::GetSecondPerk()
-{
-	if( _arrPerks.Num() > 1)
-	{
-		return  _arrPerks[1];
-	}
-	return  nullptr;
 }
 
 void AStudentCharacter::ItemSystem()
