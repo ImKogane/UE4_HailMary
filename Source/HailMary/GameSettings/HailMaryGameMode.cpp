@@ -3,6 +3,7 @@
 #include "HailMaryGameMode.h"
 #include "HailMary/Characters/StudentCharacter/StudentCharacter.h"
 #include "Kismet/GameplayStatics.h"
+#include "EngineUtils.h"
 #include "UObject/ConstructorHelpers.h"
 
 AHailMaryGameMode::AHailMaryGameMode()
@@ -26,6 +27,8 @@ void AHailMaryGameMode::BeginPlay()
 	{
 		l_gameHud->Init();
 	}
+
+	FindAllActors(GetWorld(), Players);
 }
 
 void AHailMaryGameMode::LoseGame()

@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "HailMary/Characters/StudentCharacter/StudentCharacter.h"
 #include "GameFramework/GameModeBase.h"
 #include "HailMaryGameMode.generated.h"
 
@@ -14,6 +15,12 @@ class AHailMaryGameMode : public AGameModeBase
 public:
 	AHailMaryGameMode();
 
+	UPROPERTY(VisibleAnywhere, Category = "Player")
+	TArray<AStudentCharacter*> Players;
+
+	template<typename T>
+	void FindAllActors(UWorld* World, TArray<T*>& Out);
+
 	void BeginPlay() override;
 
 	UFUNCTION() void LoseGame();
@@ -21,5 +28,11 @@ public:
 	
 };
 
-
-
+template<typename T>
+void AHailMaryGameMode::FindAllActors(UWorld* World, TArray<T*>& Out)
+{
+	for (TActorIterator<T> It(World); It; ++It)
+	{
+		Out.Add(*It);
+	}
+}

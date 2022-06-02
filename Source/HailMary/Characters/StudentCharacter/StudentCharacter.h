@@ -7,6 +7,7 @@
 #include "HailMary/GameplayClass/InteractionBase/InteractibleElement.h"
 #include "HailMary/GameplayClass/InteractionBase/InteractibleItem.h"
 #include "HailMary/Interface/HUD/GameHUD.h"
+#include "HailMary/GameSettings/HailMaryGameMode.h"
 #include "StudentCharacter.generated.h"
 
 #pragma region ForwardDeclarations
@@ -91,7 +92,7 @@ public:
 protected:
 	#pragma  region RuntimeVariables
 		UPROPERTY()
-		AGameHUD * _gameHud;
+		AGameHUD* _gameHud;
 		UPROPERTY(VisibleAnywhere, Category="Player")
 		int m_nbPlayerId = 0;
 		UPROPERTY(VisibleAnywhere, Category="Movement")
@@ -101,11 +102,7 @@ protected:
 		UPROPERTY(VisibleAnywhere, Category = "Item")
 		AInteractibleItem* NearItem;
 		UPROPERTY(VisibleAnywhere, Category = "Item")
-		bool NoItem;
-		UPROPERTY()
-		AStudentCharacter* m_player1 = nullptr;
-		UPROPERTY()
-		AStudentCharacter* m_player2 = nullptr;
+		bool NoItem = true;
 		UPROPERTY(VisibleAnywhere, Category="Player details")
 		bool IsDoAction;
 		UPROPERTY(VisibleAnywhere, Category = "Aim")
@@ -117,7 +114,7 @@ protected:
 		UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Aim")
 		float AimSpeed;
 		UPROPERTY(VisibleAnywhere, Category = "Shoot")
-		bool IsShooting;
+		bool IsShooting = false;
 		UPROPERTY()
 		AInteractibleElement* NearElement;
 	    UPROPERTY(EditAnywhere)
@@ -173,13 +170,18 @@ protected:
 		UFUNCTION() void Interact();
 		UFUNCTION() void DoAction();
 		UFUNCTION() void UndoAction();
+
+		/** Player aim system */
 		UFUNCTION() void Aim();
 		UFUNCTION() void UndoAim();
-		UFUNCTION() void CameraForAim();
-		UFUNCTION() void DuringAim(int nbPlayerId);
-		UFUNCTION() void Shoot();
-		UFUNCTION() void ShootItem(int nbPlayerId);
+		UFUNCTION() void CameraForAim(AStudentCharacter* player);
+		UFUNCTION() void DuringAim(AStudentCharacter* player);
 
+		/** Player shoot system */
+		UFUNCTION() void Shoot();
+		UFUNCTION() void ShootItem(AStudentCharacter* player);
+
+		/** Menus */
 		UFUNCTION() void PauseGame();
 		UFUNCTION() void UnpauseGame();
 	
@@ -199,7 +201,6 @@ protected:
 		// APawn interface
 		virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 		// End of APawn interface
-		virtual FVector GetPawnViewLocation() const override;
 	#pragma endregion 
 
 
