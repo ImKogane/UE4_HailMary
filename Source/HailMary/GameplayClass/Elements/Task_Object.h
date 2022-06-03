@@ -18,7 +18,7 @@ class HAILMARY_API ATask_Object : public AInteractibleElement
 protected:
 	#pragma region ProtectedVariables
 		UPROPERTY(EditDefaultsOnly, Category="Task settings")
-		TArray<FString> TaskList;
+		TArray<FString> TaskStringList;
 		UPROPERTY(VisibleInstanceOnly, Category="Task details")
 		FString Task;
 		UPROPERTY(VisibleAnywhere, Category="Task details")
@@ -28,10 +28,12 @@ protected:
 		UPROPERTY(EditAnywhere, Category="Task details")
 		bool TaskCompleted;
 		UPROPERTY(EditAnywhere, Category="Task details")
+		bool TaskProgressionLocked;
+		UPROPERTY(EditAnywhere, Category="Task HUD Text")
 		FString _strDisplayTextLocked;
-		UPROPERTY(EditAnywhere, Category="Task details")
+		UPROPERTY(EditAnywhere, Category="Task HUD Text")
 		FString _strDisplayTextUnlocked;
-		UPROPERTY(EditAnywhere, Category="Task details")
+		UPROPERTY(EditAnywhere, Category="Task HUD Text")
 		FString _strDisplayTextCompleted;
 		UPROPERTY(EditInstanceOnly, Category="Task details")
 		class AStorageDoor* StorageDoor;
@@ -44,6 +46,9 @@ protected:
 		TArray<AStudentCharacter*> NearPlayers;
 		UPROPERTY(EditAnywhere, Category="Parameters")
 		int _nbPhase = -1;
+
+		UPROPERTY(EditAnywhere, Category="Parameters")
+		float DecreaseRate;
 	#pragma endregion 
 
 	#pragma region ProtectedFunctions

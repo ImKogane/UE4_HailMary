@@ -24,8 +24,8 @@ void ATask_Object::BeginPlay()
 
 void ATask_Object::GenerateTask()
 {
-	int RandIndex = FMath::RandRange(0, TaskList. Num()-1);
-	Task = TaskList[RandIndex];
+	int RandIndex = FMath::RandRange(0, TaskStringList. Num()-1);
+	Task = TaskStringList[RandIndex];
 
 	ElementName = Task;
 }
@@ -43,7 +43,11 @@ void ATask_Object::OnBoxOverlapBegin(UPrimitiveComponent* OverlappedComponent, A
 	{
 		return; //Overlap actor isn't the player
 	}
-	
+
+	if(Player->GetSaveTaskState())
+	{
+		TaskProgressionLocked = true;
+	}
 	NearPlayers.Add(Player);
 	
 	
@@ -102,7 +106,6 @@ void ATask_Object::Tick(float DeltaSeconds)
 	{
 		for (AStudentCharacter* Player : NearPlayers)
 		{
-			
 			if(Player->GetIsDoAction() && ElementProgress <= ElementMaxProgress)
 			{
 				ElementProgress += Player->GetMakeTaskSpeed();
@@ -130,9 +133,13 @@ void ATask_Object::Tick(float DeltaSeconds)
 			}
 		}
 
-		if(ElementInteractionCount == 0)
+		if(ElementInteractionCount == 0 && !TaskProgressionLocked)
 		{
-			ElementProgress = 0;
+			if(ElementProgress > 0)
+			{
+				ElementProgress -= DecreaseRate;
+			}
+			
 		}
 		
 		ElementInteractionCount = 0;
