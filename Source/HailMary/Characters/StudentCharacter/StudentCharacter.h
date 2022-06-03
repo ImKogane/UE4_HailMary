@@ -69,8 +69,13 @@ public:
 		FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
 		FORCEINLINE AInteractibleItem* GetItemInInventory() { return ItemInInventory; }
 		FORCEINLINE bool GetIsDoAction() { return IsDoAction; }
-		FORCEINLINE float GetMakeTaskSpeed() { return _fMakeTaskSpeed; }
-		FORCEINLINE float GetOpenDoorSpeed() { return _fOpenDoorSpeed; }
+		FORCEINLINE float GetMakeTaskSpeed() { return MakeTaskSpeed; }
+		FORCEINLINE float GetOpenDoorSpeed() { return OpenDoorSpeed; }
+	
+		FORCEINLINE bool GetSaveTaskState() { return SaveTaskState; }
+		FORCEINLINE void SetSaveTaskState(bool state) { SaveTaskState = state; }
+
+	
 		void SetNearItem(AInteractibleItem* Item);
 		UFUNCTION()
 		FORCEINLINE AInteractibleItem* GetNearInteractibleItem(){return NearItem;}
@@ -84,7 +89,7 @@ public:
 		UFUNCTION()
 		FORCEINLINE TEnumAsByte<EnumInputsState> GetEnumInputsState(){return _enumInputsState;}
 		UFUNCTION()
-		FORCEINLINE float GetRunningSpeed(){return _fSprintSpeed;}
+		FORCEINLINE float GetRunningSpeed(){return SprintSpeed;}
 	#pragma endregion
 
 protected:
@@ -119,20 +124,27 @@ protected:
 	    USphereComponent* Collider;
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 		TEnumAsByte<EnumInputsState> _enumInputsState = EnumInputsState::EnableAll;
-	#pragma endregion 
+	#pragma endregion
+	
 	
 	///////////////////// PLAYER STATS /////////////////////
 	#pragma region Player stats
 		UPROPERTY(EditDefaultsOnly, Category="Player stats")
-		float _fSprintSpeed;
+		float SprintSpeed;
 		UPROPERTY(EditDefaultsOnly, Category="Player stats")
-		float _fWalkSpeed;
+		float WalkSpeed;
 		UPROPERTY(EditDefaultsOnly, Category="Player stats")
-		float _fCrouchSpeed = 100;
+		float CrouchSpeed = 100;
+
+		//Tasks
 		UPROPERTY(EditDefaultsOnly, Category="Player stats")
-		float _fMakeTaskSpeed;
+		float MakeTaskSpeed;
+		UPROPERTY(VisibleAnywhere, Category="Player stats")
+		bool SaveTaskState;
+	
 		UPROPERTY(EditDefaultsOnly, Category="Player stats")
-		float _fOpenDoorSpeed;
+		float OpenDoorSpeed;
+	
 	#pragma endregion
 
 	#pragma region Perks

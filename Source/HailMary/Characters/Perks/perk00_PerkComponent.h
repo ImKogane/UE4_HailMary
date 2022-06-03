@@ -13,5 +13,8 @@ UCLASS()
 class HAILMARY_API Uperk00_PerkComponent : public UPerk_BaseComponent
 {
 	GENERATED_BODY()
+
+protected:
+	virtual void UsePerk() override;
 	
 };

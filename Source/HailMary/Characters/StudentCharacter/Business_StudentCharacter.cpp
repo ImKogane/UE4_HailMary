@@ -8,7 +8,7 @@ void ABusiness_StudentCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
-	_fMakeTaskSpeed = _fMakeTaskSpeed * TaskSpeedBoost;
+	MakeTaskSpeed = MakeTaskSpeed * TaskSpeedBoost;
 }
 
 

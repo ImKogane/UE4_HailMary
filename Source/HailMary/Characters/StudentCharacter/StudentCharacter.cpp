@@ -54,7 +54,7 @@ AStudentCharacter::AStudentCharacter()
 	Collider->SetupAttachment(GetMesh());
 	
 	GetCharacterMovement()->MaxWalkSpeed = 200;
-	GetCharacterMovement()->MaxWalkSpeedCrouched = _fCrouchSpeed;
+	GetCharacterMovement()->MaxWalkSpeedCrouched = CrouchSpeed;
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
@@ -123,6 +123,8 @@ void AStudentCharacter::InstanciatePerks()
 	UWorld* world = GetWorld();
 
 	PlayerPerk = NewObject<UPerk_BaseComponent>(this, PlayerPerk_BP);
+
+	PlayerPerk->UsePerk();
 }
 
 void AStudentCharacter::MoveForward(float Value)
@@ -170,11 +172,11 @@ void AStudentCharacter::Sprint()
 {
 	if (IsAiming == false && IsPlayerSprint)
 	{
-		GetCharacterMovement()->MaxWalkSpeed = _fSprintSpeed;
+		GetCharacterMovement()->MaxWalkSpeed = SprintSpeed;
 	}
 	if (IsPlayerSprint == false)
 	{
-		GetCharacterMovement()->MaxWalkSpeed = _fWalkSpeed;
+		GetCharacterMovement()->MaxWalkSpeed = WalkSpeed;
 	}
 }
 
@@ -315,7 +317,7 @@ void AStudentCharacter::CameraForAim(AStudentCharacter* player)
 			LerpResult.X = FMath::Lerp(OffsetAim.X, 200.f, AimStep);
 			LerpResult.Y = FMath::Lerp(OffsetAim.Y, 50.f, AimStep);
 			LerpResult.Z = FMath::Lerp(OffsetAim.Z, 50.f, AimStep);
-			GetCharacterMovement()->MaxWalkSpeed = _fWalkSpeed;
+			GetCharacterMovement()->MaxWalkSpeed = WalkSpeed;
 			GetCameraBoom()->SocketOffset = LerpResult;
 			_gameHud->GetDefaultWidget()->ShowCrosshairPlayer(GetPlayerId());
 		}
