@@ -64,10 +64,7 @@ void APlayCycle::Clock()
 	}
 }
 
-void APlayCycle::ShowTimer()
-{
-	//GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, GetTimer());
-}
+
 
 void APlayCycle::ResetTimer()
 {
@@ -81,7 +78,11 @@ void APlayCycle::ResetTimer()
 	GetWorldTimerManager().SetTimer(GameTimer, this, &APlayCycle::Clock, 1.0f, true);
 }
 
-void APlayCycle::StopTimer()
+void APlayCycle::RestartTimer()
 {
-	
+	//Reset Timer
+	GetWorldTimerManager().ClearTimer(GameTimer);
+	LoopTime = InitialLoopTime;
+	GetWorldTimerManager().SetTimer(GameTimer, this, &APlayCycle::Clock, 1.0f, true);
 }
+

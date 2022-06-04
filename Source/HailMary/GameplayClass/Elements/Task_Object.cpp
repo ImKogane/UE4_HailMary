@@ -20,6 +20,7 @@ void ATask_Object::BeginPlay()
 	//Get References
 	_gameHud = Cast<AGameHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
 
+	TheGameInstance = Cast<UMainGameInstance>(GetGameInstance());
 }
 
 void ATask_Object::GenerateTask()
@@ -168,7 +169,7 @@ void ATask_Object::UnlockTask()
 void ATask_Object::CompleteTask()
 {
 	TaskCompleted = true;
-	//TheGameInstance->GetPlayCycle()->ResetTimer();
+	TheGameInstance->GetPlayCycle()->RestartTimer();
 	
 	if(StorageDoor != nullptr) StorageDoor->OpenDoor();
 	_strDisplayText = _strDisplayTextCompleted;

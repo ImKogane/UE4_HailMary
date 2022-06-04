@@ -23,7 +23,7 @@ public:
 		UFUNCTION()
 		void ResetTimer();
 		UFUNCTION()
-		void StopTimer();
+		void RestartTimer();
 	#pragma endregion 
 
 protected:
@@ -34,7 +34,7 @@ protected:
 		int LoopTime;
 		UPROPERTY(VisibleAnywhere, Category = "Gameplay")
 		FTimerHandle GameTimer;
-		UPROPERTY()
+
 		UMainGameInstance* TheGameInstance;
 	#pragma endregion
 	
@@ -44,7 +44,5 @@ protected:
 		void Loop();
 		UFUNCTION()
 		void Clock();
-		UFUNCTION()
-		void ShowTimer();
 	#pragma endregion 
 };
