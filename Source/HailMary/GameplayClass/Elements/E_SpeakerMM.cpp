@@ -32,7 +32,6 @@ void AE_SpeakerMM::Interaction(AActor* Character)
 	AAICharacter* MerryMaker = Cast<AAICharacter>(Character);
 	if(IsValid(MerryMaker))
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Boss near speaker"));	
 		PlaySpeakerSound();
 		_bIsActivate = true;
 		_strDisplayText = "Press E to stop speaker";
@@ -42,7 +41,6 @@ void AE_SpeakerMM::Interaction(AActor* Character)
 	AStudentCharacter* studentCharacter = Cast<AStudentCharacter>(Character);
 	if(IsValid(studentCharacter) && _bIsActivate)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Player near speaker"));	
 		StopSpeakerSound();
 		_bIsActivate = false;
 		MerryMakerManager->DesactivateSpeaker(this);
