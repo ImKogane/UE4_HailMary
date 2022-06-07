@@ -130,20 +130,20 @@ protected:
 	///////////////////// PLAYER STATS /////////////////////
 	#pragma region Player stats
 		UPROPERTY(EditDefaultsOnly, Category="Player stats")
-		float SprintSpeed;
+		float SprintSpeed = 500;
 		UPROPERTY(EditDefaultsOnly, Category="Player stats")
-		float WalkSpeed;
+		float WalkSpeed = 300;
 		UPROPERTY(EditDefaultsOnly, Category="Player stats")
 		float CrouchSpeed = 100;
 
 		//Tasks
 		UPROPERTY(EditDefaultsOnly, Category="Player stats")
-		float MakeTaskSpeed;
+		float MakeTaskSpeed = 0.005;
 		UPROPERTY(VisibleAnywhere, Category="Player stats")
 		bool SaveTaskState;
 	
 		UPROPERTY(EditDefaultsOnly, Category="Player stats")
-		float OpenDoorSpeed;
+		float OpenDoorSpeed = 0.01;
 	
 	#pragma endregion
 

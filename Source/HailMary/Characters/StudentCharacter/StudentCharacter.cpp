@@ -283,6 +283,7 @@ void AStudentCharacter::Interact()
 	if(NearElement != nullptr)
 	{
 		NearElement->Interaction(this);
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Near element interaction"));	
 	}
 }
 

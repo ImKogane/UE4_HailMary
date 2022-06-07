@@ -33,11 +33,11 @@ void AMerryMaker_BossManager::Tick(float DeltaTime)
 
 }
 
-void AMerryMaker_BossManager::ActivateSpeaker(AE_SpeakerMM* speaker)
+void AMerryMaker_BossManager::ActivateSpeaker(AE_SpeakerMM* aSpeaker)
 {
 	if(!BossBanger)
 	{
-		ActivesSpeakers.Add(speaker);
+		ActivesSpeakers.Add(aSpeaker);
 		
 		if(ActivesSpeakers.Num() == 2)
 		{
