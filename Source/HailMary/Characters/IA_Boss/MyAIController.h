@@ -43,8 +43,7 @@ class HAILMARY_API AMyAIController : public AAIController
 
 		#pragma region Accessors
 			FORCEINLINE UBlackboardComponent* GetBlackboardComp() const { return BlackboardComp; }
-			TArray<AActor*> GetAvailableTargetPoints();
-			TArray<AActor*> GetAvailableTasksPoints();
+			TArray<AActor*> GetAvailablePoints();
 			FORCEINLINE FName GetTargetKey(){return  TargetKey;}
 		#pragma endregion
 
@@ -64,10 +63,8 @@ class HAILMARY_API AMyAIController : public AAIController
 			FName bIsHoldingPlayer;
 			UPROPERTY(EditDefaultsOnly, Category = AI)
 			FName bIsActivateSpeaker;
-	        UPROPERTY()
-			TArray<AActor*> BotTargetPoints;
 			UPROPERTY()
-			TArray<AActor*> BotTasksPoints;
+			TArray<AActor*> BotDestinationPoints;
 			/*----------Blackboard----------*/
 			/*Blackboard comp ref*/
 	        UPROPERTY()

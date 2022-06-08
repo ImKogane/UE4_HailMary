@@ -4,13 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "BehaviorTree/BTTaskNode.h"
-#include "BTTaskPointSelection.generated.h"
+#include "BTSelectRandomPoint.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class HAILMARY_API UBTTaskPointSelection : public UBTTaskNode
+class HAILMARY_API UBTSelectRandomPoint : public UBTTaskNode
 {
 	GENERATED_BODY()
 
