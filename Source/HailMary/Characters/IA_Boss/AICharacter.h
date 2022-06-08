@@ -70,6 +70,8 @@ public:
 
 	UFUNCTION() void SetDefaultSpeed();
 
+	FORCEINLINE int GetBossFloor(){return BossFloor;}
+
 	
 protected:
 	// Called when the game starts or when spawned
@@ -86,7 +88,7 @@ protected:
 		float RunningSpeed;
 	
 		UPROPERTY(EditInstanceOnly, Category="Boss stats")
-		int BossArea;
+		int BossFloor;
 	
 	#pragma endregion 
 };

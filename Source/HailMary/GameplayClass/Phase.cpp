@@ -30,7 +30,7 @@ void APhase::Init()
 		ABotTargetPoint* l_currentTargetPoint= Cast<ABotTargetPoint>(currentActor);
 		
 		//only add to the list if the id of the phase is the same
-		if( l_currentTargetPoint->GetPhase() == this->GetPhase())
+		if( l_currentTargetPoint->GetPhase() == this->GetPhaseIndex())
 		{
 			_arrBotTargetPoints.Add(l_currentTargetPoint);
 		}
@@ -43,7 +43,7 @@ void APhase::Init()
 		ATask_Object* l_currentTaskObject= Cast<ATask_Object>(currentActor);
 		
 		//only add to the list if the id of the phase is the same
-		if( l_currentTaskObject->GetPhase() == this->GetPhase())
+		if( l_currentTaskObject->GetPhase() == this->GetPhaseIndex())
 		{
 			_ArrTask_Objects.Add(l_currentTaskObject);
 		}

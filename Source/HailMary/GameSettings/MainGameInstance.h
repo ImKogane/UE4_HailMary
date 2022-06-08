@@ -21,11 +21,11 @@ public:
 	#pragma region PublicFunctions
 		FORCEINLINE UFUNCTION() APlayCycle* GetPlayCycle(){return playCycle;}
 		FORCEINLINE UFUNCTION() int GetTaskCount(){return TaskCount;}
-		FORCEINLINE UFUNCTION() void SetDoorIsOpen(bool State){DoorIsOpen = State;}
+		FORCEINLINE UFUNCTION() void SetDoorIsOpen(bool State){WakeDoorIsOpen = State;}
 		UFUNCTION() void AddTaskCount(int NewTaskCount);
 		FORCEINLINE UFUNCTION() void SetPlayCycle(APlayCycle* newPlayCycle){ playCycle = newPlayCycle; }
-		FORCEINLINE UFUNCTION() APhase* GetCurrentPhase(){return _currentPhase;}
-		UFUNCTION() TArray<APhase*> GetPlayablePhases();
+		FORCEINLINE UFUNCTION() APhase* GetCurrentPhase(){return CurrentGamePhase;}
+		UFUNCTION() TArray<APhase*> GetPlayablePhases(int _bossFloor);
 		UFUNCTION() void ResetInstance();
 		UFUNCTION() void AddLockedPlayer(AStudentCharacter* studentToAdd);
 		UFUNCTION() void RemoveLockedPlayer(AStudentCharacter* studentToRem);
@@ -37,17 +37,19 @@ protected:
 		UPROPERTY(VisibleAnywhere)
 		int TaskCount;
 		UPROPERTY(VisibleAnywhere)
-		bool DoorIsOpen;
+		bool WakeDoorIsOpen;
 		UPROPERTY(VisibleAnywhere)
 		APlayCycle* playCycle;
-		UPROPERTY(VisibleAnywhere, Category="Phase")
-		APhase* _currentPhase;
-		UPROPERTY(VisibleAnywhere, Category="Phase")
-		TArray<APhase*> _arrPlayablePhases;
-		UPROPERTY(VisibleAnywhere, Category="Phase")
-		TArray<APhase*> _arrPhases;
+	
+		UPROPERTY(VisibleAnywhere, Category="Phase system")
+		APhase* CurrentGamePhase;
+		UPROPERTY(VisibleAnywhere, Category="Phase system")
+		TArray<APhase*> ArrayPlayablePhases;
+		UPROPERTY(VisibleAnywhere, Category="Phase system")
+		TArray<APhase*> ArrayPhases;
+	
 		UPROPERTY()
-		TArray<AStudentCharacter*> _lstLockedPlayer;
+		TArray<AStudentCharacter*> ArrayLockedPlayer;
 	#pragma 
 	
 	#pragma region ProtectedFunctions

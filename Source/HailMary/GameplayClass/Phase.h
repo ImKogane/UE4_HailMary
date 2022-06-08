@@ -17,7 +17,7 @@ class HAILMARY_API APhase : public AActor
 public:
 	#pragma region Accessors
 		UFUNCTION()
-		FORCEINLINE int GetPhase(){return _nbPhase;}
+		FORCEINLINE int GetPhaseIndex(){return _nbPhase;}
 		FORCEINLINE TArray<ABotTargetPoint*> GetBotTargetPoints(){return _arrBotTargetPoints;}
 		FORCEINLINE TArray<ATask_Object*> GetTaskObjects(){return _ArrTask_Objects;}
 	#pragma endregion 

@@ -44,7 +44,7 @@ TArray<AActor*> AMyAIController::GetAvailablePoints()
 			TArray<ABotTargetPoint*> l_arrBotTargetPoints;
 			
 			//For each Playbable phases
-			TArray<APhase*> l_arrPhases = _gameInstance->GetPlayablePhases();
+			TArray<APhase*> l_arrPhases = _gameInstance->GetPlayablePhases(AIChar->GetBossFloor());
 			for(APhase* currentPhase : l_arrPhases)
 			{
 				if(IsValid(currentPhase))

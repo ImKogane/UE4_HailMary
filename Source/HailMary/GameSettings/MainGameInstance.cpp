@@ -15,10 +15,10 @@ void UMainGameInstance::Init()
 
 	//Init variables
 	TaskCount = 1;
-	_lstLockedPlayer.Reset();
+	ArrayLockedPlayer.Reset();
 		
 	//Clear array content
-	_arrPhases.Empty(); //crash here
+	ArrayPhases.Empty(); //crash here
 	
 	//Get all phases
 	TArray<AActor*> FoundActors;
@@ -26,12 +26,12 @@ void UMainGameInstance::Init()
 	for (AActor* currentActor : FoundActors)
 	{
 		APhase* l_currentPhase = Cast<APhase>(currentActor);
-		_arrPhases.Add(l_currentPhase);
+		ArrayPhases.Add(l_currentPhase);
 
 		//Initial current phase
-		if( l_currentPhase->GetPhase() == 0)
+		if( l_currentPhase->GetPhaseIndex() == 0)
 		{
-			_currentPhase = l_currentPhase;
+			CurrentGamePhase = l_currentPhase;
 		}
 	}
 }
@@ -43,17 +43,17 @@ void UMainGameInstance::ResetInstance()
 
 void UMainGameInstance::AddLockedPlayer(AStudentCharacter* studentToAdd)
 {
-	_lstLockedPlayer.Add(studentToAdd);
+	ArrayLockedPlayer.Add(studentToAdd);
 }
 
 void UMainGameInstance::RemoveLockedPlayer(AStudentCharacter* studentToRem)
 {
-	_lstLockedPlayer.Remove(studentToRem);
+	ArrayLockedPlayer.Remove(studentToRem);
 }
 
 int UMainGameInstance::GetnbLockedPlayer()
 {
-	return _lstLockedPlayer.Num();
+	return ArrayLockedPlayer.Num();
 }
 
 void UMainGameInstance::AddTaskCount(int NewTaskCount)
@@ -61,28 +61,29 @@ void UMainGameInstance::AddTaskCount(int NewTaskCount)
 	//Increment current phase
 	TaskCount += NewTaskCount;
 	//Update current phase
-	if( _arrPhases.IsValidIndex(0))
+	if( ArrayPhases.IsValidIndex(0))
 	{
-		for (APhase* l_currentPhase : _arrPhases)
+		for (APhase* l_currentPhase : ArrayPhases)
 		{
-			if( l_currentPhase->GetPhase() == TaskCount)
+			if(l_currentPhase->GetPhaseIndex() == TaskCount)
 			{
-				_currentPhase = l_currentPhase;
+				CurrentGamePhase = l_currentPhase;
 			}
 		}
 	}
 }
 
-TArray<APhase*> UMainGameInstance::GetPlayablePhases()
+TArray<APhase*> UMainGameInstance::GetPlayablePhases(int _bossFloor)
 {
+
 	//Get Current Phase + Previous Phases
-	for (APhase* l_currentPhase : _arrPhases)
+	for (APhase* l_currentPhase : ArrayPhases)
 	{
-		if( l_currentPhase->GetPhase() <= _currentPhase->GetPhase())
+		if( l_currentPhase->GetPhaseIndex() <= CurrentGamePhase->GetPhaseIndex())
 		{
-			_arrPlayablePhases.Add(l_currentPhase);
+			ArrayPlayablePhases.Add(l_currentPhase);
 		}
 	}
-	return _arrPlayablePhases;
+	return ArrayPlayablePhases;
 }
 
