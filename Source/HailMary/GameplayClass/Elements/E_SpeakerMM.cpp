@@ -14,7 +14,7 @@ AE_SpeakerMM::AE_SpeakerMM()
 	SpeakerAudioComponent->SetupAttachment(BaseComponent);
 
 	_sceneComponentEntrancePosition= CreateDefaultSubobject<USceneComponent>("Entrance Position");
-	_sceneComponentEntrancePosition->SetupAttachment(ElementMesh);
+	_sceneComponentEntrancePosition->SetupAttachment(BaseComponent);
 }
 
 void AE_SpeakerMM::BeginPlay()
