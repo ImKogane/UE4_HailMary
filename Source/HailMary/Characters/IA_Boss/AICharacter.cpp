@@ -32,8 +32,8 @@ void AAICharacter::BeginPlay()
 
 	//Get references
 	 AIController = Cast<AMyAIController>(GetController());
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(),ABackDoor::StaticClass(), m_arrDoors);
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(),AE_SpeakerMM::StaticClass(), m_arrMerryMaker);
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(),ABackDoor::StaticClass(), ArrayBackDoors);
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(),AE_SpeakerMM::StaticClass(), ArraySpeakers);
 	_gameHud = Cast<AGameHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
 	
 	//Register the function that is going to fire when the character sees a Pawn
@@ -45,44 +45,44 @@ void AAICharacter::BeginPlay()
 	//Setup Values
 	APlayerController* l_playerController = UGameplayStatics::GetPlayerController(this, 0);
 	AStudentCharacter* l_studentCharacter = Cast<AStudentCharacter>(l_playerController->GetCharacter());
-	_fDefaultSpeed = GetCharacterMovement()->GetMaxSpeed();
-	_fRunningSpeed = l_studentCharacter->GetRunningSpeed() * _fPlayerSeenSpeedMultiplicator;
+	DefaultSpeed = GetCharacterMovement()->GetMaxSpeed();
+	RunningSpeed = l_studentCharacter->GetRunningSpeed() * PlayerSeenSpeedMultiplicator;
 }
 
 AActor* AAICharacter::GetNearestDoor()
 {
-	if(m_arrDoors.Num()>0 )
+	if(ArrayBackDoors.Num()>0 )
 	{
 		float fNearestDoorDist = -1;
-		for (AActor*  currentDoor : m_arrDoors)
+		for (AActor*  currentDoor : ArrayBackDoors)
 		{
 			float fDistance = FVector::Dist(this->GetActorLocation(),currentDoor->GetActorLocation());
 			if(fDistance < fNearestDoorDist || fNearestDoorDist == -1) // si la nouvelle distance est plus courte
 			{
-				NearestDoor = currentDoor;
+				NearestBackDoor = currentDoor;
 				fNearestDoorDist = fDistance;
 			}
 		}
-		return NearestDoor;
+		return NearestBackDoor;
 	}
 	return nullptr;
 }
 
-AActor* AAICharacter::GetNearestMerryMaker()
+AActor* AAICharacter::GetNearestSpeaker()
 {
-	if(m_arrMerryMaker.Num()>0 )
+	if(ArraySpeakers.Num()>0 )
 	{
 		float fNearestMerryMakerDist = -1;
-		for (AActor*  currentMerryMaker : m_arrMerryMaker)
+		for (AActor*  currentMerryMaker : ArraySpeakers)
 		{
 			float fDistance = FVector::Dist(this->GetActorLocation(),currentMerryMaker->GetActorLocation());
 			if(fDistance < fNearestMerryMakerDist || fNearestMerryMakerDist == -1) // si la nouvelle distance est plus courte
 				{
-				NearestMerryMaker = currentMerryMaker;
+				NearestSpeaker = currentMerryMaker;
 				fNearestMerryMakerDist = fDistance;
 				}
 		}
-		return NearestMerryMaker;
+		return NearestSpeaker;
 	}
 	return nullptr;
 }
@@ -96,7 +96,7 @@ void AAICharacter::Tick(float DeltaTime)
 	//AMyAIController* AIController = Cast<AMyAIController>(GetController());
 	if(bAIVisible == true)
 	{
-		if(GetWorld()->TimeSeconds - LastSeenTime > m_fTimeOut)
+		if(GetWorld()->TimeSeconds - LastSeenTime > SeenTimeOut)
 		{
 			AIController->SetNotSeenTarget();
 		}
@@ -121,7 +121,7 @@ void AAICharacter::StopBossAura()
 
 void AAICharacter::SetDefaultSpeed()
 {
-	GetCharacterMovement()->MaxWalkSpeed = _fDefaultSpeed;
+	GetCharacterMovement()->MaxWalkSpeed = DefaultSpeed;
 }
 
 void AAICharacter::OnSeePlayer(APawn* InPawn)
@@ -136,7 +136,7 @@ void AAICharacter::OnSeePlayer(APawn* InPawn)
 		}
 		
 		//Default behavior
-		GetCharacterMovement()->MaxWalkSpeed = _fRunningSpeed;
+		GetCharacterMovement()->MaxWalkSpeed = RunningSpeed;
 		LastSeenTime = GetWorld()->GetTimeSeconds();
 //		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Je te vois "));
 		AIController->SetSeenTarget(InPawn);
@@ -162,7 +162,7 @@ void AAICharacter::Drop()
 		if(IsValid(Character))
 		{
 			Character->DropPlayer();
-			GetCharacterMovement()->MaxWalkSpeed = _fDefaultSpeed;
+			GetCharacterMovement()->MaxWalkSpeed = DefaultSpeed;
 
 			//Port player to the other side if the dooor
 			ABackDoor* backDoorNearest = Cast<ABackDoor>(GetNearestDoor());

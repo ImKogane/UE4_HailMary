@@ -27,39 +27,39 @@ public:
 	AStudentCharacter* Character;
 	UPROPERTY(VisibleAnywhere,Category="AIDebug")
 	class AMyAIController* AIController;
-	UPROPERTY(VisibleAnywhere, Category="Door")
-	TArray<AActor*> m_arrDoors;
-	UPROPERTY(VisibleAnywhere, Category="Door")
-	AActor* NearestDoor;
+	
+	UPROPERTY(VisibleAnywhere, Category="Doors")
+	TArray<AActor*> ArrayBackDoors;
+	UPROPERTY(VisibleAnywhere, Category="Doors")
+	AActor* NearestBackDoor;
+	
 	UPROPERTY(VisibleAnywhere, Category="MerryMaker")
-	TArray<AActor*> m_arrMerryMaker;
+	TArray<AActor*> ArraySpeakers;
 	UPROPERTY(VisibleAnywhere, Category="MerryMaker")
-	AActor* NearestMerryMaker;
+	AActor* NearestSpeaker;
+	
 	UPROPERTY()
 	bool bAIVisible = false;
 	UPROPERTY()
 	float LastSeenTime;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite,Category="Speed")
-	float m_fTimeOut = 1.0f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite,Category="Boss stats")
+	float SeenTimeOut = 1.0f;
 
 	
 	
 	// Sets default values for this character's properties
 	AAICharacter();
+	UFUNCTION() void Pick();
+	UFUNCTION() void Drop();
+	UFUNCTION() void OnSeePlayer(APawn* Pawn);
+	UFUNCTION() AActor* GetNearestDoor();
+	UFUNCTION() AActor* GetNearestSpeaker();
+	
 	UFUNCTION()
-	void Pick();
+	float GetRunningSpeed() { return RunningSpeed; }
 	UFUNCTION()
-	void Drop();
-	UFUNCTION()
-	void OnSeePlayer(APawn* Pawn);
-	UFUNCTION()
-	AActor* GetNearestDoor();
-	UFUNCTION()
-	AActor* GetNearestMerryMaker();
-	UFUNCTION()
-	float GetRunningSpeed() { return _fRunningSpeed; }
-	UFUNCTION()
-	void SetRunningSpeed(float speed) { _fRunningSpeed = speed; }
+	void SetRunningSpeed(float speed) { RunningSpeed = speed; }
+	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 	// Called to bind functionality to input
@@ -78,11 +78,15 @@ protected:
 	AGameHUD * _gameHud;
 
 	#pragma region ProtectedVariable
-		UPROPERTY(EditAnywhere, BlueprintReadWrite,Category="Speed")
-		float _fPlayerSeenSpeedMultiplicator = 1.2f;
-		UPROPERTY(VisibleAnywhere, Category="Speed")
-		float _fDefaultSpeed;
-		UPROPERTY(VisibleAnywhere, Category="Speed")
-		float _fRunningSpeed;
+		UPROPERTY(EditAnywhere, BlueprintReadWrite,Category="Boss stats")
+		float PlayerSeenSpeedMultiplicator = 1.01f;
+		UPROPERTY(VisibleInstanceOnly, Category="Boss stats")
+		float DefaultSpeed;
+		UPROPERTY(VisibleInstanceOnly, Category="Boss stats")
+		float RunningSpeed;
+	
+		UPROPERTY(EditInstanceOnly, Category="Boss stats")
+		int BossArea;
+	
 	#pragma endregion 
 };
