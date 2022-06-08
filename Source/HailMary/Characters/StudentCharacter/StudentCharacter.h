@@ -143,7 +143,7 @@ protected:
 		bool SaveTaskState;
 	
 		UPROPERTY(EditDefaultsOnly, Category="Player stats")
-		float OpenDoorSpeed = 0.01;
+		float OpenDoorSpeed = 0.05;
 	
 	#pragma endregion
 

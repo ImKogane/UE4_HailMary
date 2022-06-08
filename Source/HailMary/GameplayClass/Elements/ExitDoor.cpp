@@ -53,7 +53,7 @@ void AExitDoor::Tick(float DeltaSeconds)
 			if(NearPlayer->GetIsDoAction() && ElementProgress <= ElementMaxProgress)
 			{
 				IsOpening = true;
-				ElementProgress += NearPlayer->GetMakeTaskSpeed();
+				ElementProgress += NearPlayer->GetOpenDoorSpeed();
 				
 				if(_gameHud)
 				{
