@@ -68,6 +68,8 @@ public:
 	UFUNCTION() void PlayBossAura();
 	UFUNCTION() void StopBossAura();
 
+	UFUNCTION() void SetDefaultSpeed();
+
 	
 protected:
 	// Called when the game starts or when spawned

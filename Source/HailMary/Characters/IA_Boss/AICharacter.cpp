@@ -96,11 +96,9 @@ void AAICharacter::Tick(float DeltaTime)
 	//AMyAIController* AIController = Cast<AMyAIController>(GetController());
 	if(bAIVisible == true)
 	{
-		if((GetWorld()->TimeSeconds - LastSeenTime) > m_fTimeOut)
+		if(GetWorld()->TimeSeconds - LastSeenTime > m_fTimeOut)
 		{
 			AIController->SetNotSeenTarget();
-			//Reset Speed
-			GetCharacterMovement()->MaxWalkSpeed = _fRunningSpeed;
 		}
 	}
 }
@@ -119,6 +117,11 @@ void AAICharacter::PlayBossAura()
 void AAICharacter::StopBossAura()
 {
 	BossAuraAudioComponent->Stop();
+}
+
+void AAICharacter::SetDefaultSpeed()
+{
+	GetCharacterMovement()->MaxWalkSpeed = _fDefaultSpeed;
 }
 
 void AAICharacter::OnSeePlayer(APawn* InPawn)
