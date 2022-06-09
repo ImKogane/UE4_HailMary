@@ -28,10 +28,11 @@ EBTNodeResult::Type UBTSelectRandomPoint::ExecuteTask(UBehaviorTreeComponent & O
  
 		//Here, we store the possible next target point
 		AActor* NextDestinationPoint = nullptr;
- 
+		
 		//Find a next point which is different from the current one
 		if(AvailableDestinationPoints.IsValidIndex(0))
 		{
+			
 			do
 			{
 				RandomIndex = FMath::RandRange(0, AvailableDestinationPoints.Num()-1);
@@ -41,6 +42,7 @@ EBTNodeResult::Type UBTSelectRandomPoint::ExecuteTask(UBehaviorTreeComponent & O
 
 			//Update the next location in the Blackboard so the bot can move to the next Blackboard value
 			FVector vecLocation = NextDestinationPoint->GetActorLocation();
+			
 			BlackboardComp->SetValueAsVector("LocationToGo", vecLocation );
 			//		BlackboardComp->SetValueAsObject("LocationToGo", NextTargetPoint); //Old way, move to actor instead
 

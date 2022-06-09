@@ -29,7 +29,7 @@ void UMainGameInstance::Init()
 		ArrayPhases.Add(l_currentPhase);
 
 		//Initial current phase
-		if( l_currentPhase->GetPhaseIndex() == 0)
+		if( l_currentPhase->GetPhaseIndex() == 1)
 		{
 			CurrentGamePhase = l_currentPhase;
 		}
